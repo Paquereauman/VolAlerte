@@ -426,29 +426,37 @@
 
           <!-- Détail étape par étape -->
           <div style="display: flex; flex-direction: column; gap: 0.28rem; font-size: 0.82rem; background: rgba(0,0,0,0.18); padding: 0.65rem 0.8rem; border-radius: 6px;">
-            <div>• {{ c.leg1_label }} — <b style="color: #10b981;">{{ c.leg1_price }} €</b></div>
-            <div>• {{ c.leg2_label }} — <b style="color: #10b981;">{{ c.leg2_price }} €</b></div>
+            <div>• {{ c.leg1_label }} — <b style="color: #10b981;">{{ c.leg1_price }} € / pers.</b></div>
+            <div>• {{ c.leg2_label }} — <b style="color: #10b981;">{{ c.leg2_price }} € / pers.</b></div>
             {% if c.china_tgv_price > 0 %}
-            <div>• 🚅 Approche Chine : {{ c.china_tgv_label }} — <b>{{ c.china_tgv_price }} €</b></div>
+            <div>• 🚅 Approche Chine : {{ c.china_tgv_label }} — <b>{{ c.china_tgv_price }} € / pers.</b></div>
             {% endif %}
             <div style="color: #f59e0b;">
-              • 🏨 <b>Option 1 nuit d'hôtel ({{ c.hotel_city }})</b> : <b>+{{ c.hotel_price }} €</b> — <i>{{ c.hotel_note }}</i>
+              • 🛏️ <b>Petite chambre 2 personnes ({{ c.hotel_city }})</b> : <b>{{ c.hotel_room_2p_eur }} € la chambre</b> (soit <b>+{{ c.hotel_per_person_eur }} € / pers.</b> à deux) — <i>{{ c.hotel_note }}</i>
+            </div>
+            <div style="font-size: 0.76rem; color: var(--text-muted);">
+              🏨 Hôtels 2 pers. recommandés : <b>{{ c.hotel_examples }}</b>
             </div>
           </div>
         </div>
 
-        <!-- Colonne Prix Total (Sans Hôtel vs Avec 1 Nuit Hôtel) + Boutons -->
-        <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 230px; gap: 0.6rem;">
-          <div style="display: flex; gap: 0.6rem; text-align: right;">
-            <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; border-radius: 8px; padding: 0.5rem 0.75rem;">
-              <div style="font-size: 0.68rem; font-weight: 700; color: #10b981; text-transform: uppercase;">SANS HÔTEL</div>
-              <div style="font-size: 1.55rem; font-weight: 900; color: #10b981; line-height: 1.1;">{{ c.total_sans_hotel }} €</div>
-              <div style="font-size: 0.68rem; color: var(--text-muted);">Vol + Train/Vol NTE</div>
+        <!-- Colonne Prix Total (Sans Hôtel / Par pers. chambre partagée / Total Duo 2 pers.) + Boutons -->
+        <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 280px; gap: 0.6rem;">
+          <div style="display: flex; gap: 0.5rem; text-align: right; flex-wrap: wrap; justify-content: flex-end;">
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; border-radius: 8px; padding: 0.45rem 0.65rem;">
+              <div style="font-size: 0.65rem; font-weight: 700; color: #10b981; text-transform: uppercase;">SANS HÔTEL (1 PERS.)</div>
+              <div style="font-size: 1.45rem; font-weight: 900; color: #10b981; line-height: 1.1;">{{ c.total_sans_hotel }} €</div>
+              <div style="font-size: 0.65rem; color: var(--text-muted);">Duo 2 pers : {{ c.total_duo_sans_hotel }} €</div>
             </div>
-            <div style="background: rgba(245, 158, 11, 0.1); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.5rem 0.75rem;">
-              <div style="font-size: 0.68rem; font-weight: 700; color: #f59e0b; text-transform: uppercase;">AVEC 1 NUIT HÔTEL</div>
-              <div style="font-size: 1.55rem; font-weight: 900; color: #f59e0b; line-height: 1.1;">{{ c.total_avec_hotel }} €</div>
-              <div style="font-size: 0.68rem; color: var(--text-muted);">Tout compris + Hôtel</div>
+            <div style="background: rgba(245, 158, 11, 0.1); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.45rem 0.65rem;">
+              <div style="font-size: 0.65rem; font-weight: 700; color: #f59e0b; text-transform: uppercase;">AVEC CHAMBRE 2P (/PERS.)</div>
+              <div style="font-size: 1.45rem; font-weight: 900; color: #f59e0b; line-height: 1.1;">{{ c.total_avec_hotel }} €</div>
+              <div style="font-size: 0.65rem; color: var(--text-muted);">1 pers. + ½ chambre ({{ c.hotel_per_person_eur }} €)</div>
+            </div>
+            <div style="background: rgba(59, 130, 246, 0.12); border: 1.5px solid #3b82f6; border-radius: 8px; padding: 0.45rem 0.65rem;">
+              <div style="font-size: 0.65rem; font-weight: 700; color: #60a5fa; text-transform: uppercase;">TOTAL DUO (2 PERS. + HÔTEL)</div>
+              <div style="font-size: 1.45rem; font-weight: 900; color: #60a5fa; line-height: 1.1;">{{ c.total_duo_avec_hotel }} €</div>
+              <div style="font-size: 0.65rem; color: var(--text-muted);">2 billets + 1 chambre ({{ c.hotel_room_2p_eur }} €)</div>
             </div>
           </div>
 
@@ -456,11 +464,11 @@
             <a href="{{ c.leg1_url }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
               🎯 Étape 1 : Vol ({{ c.leg1_price }} €)
             </a>
-            <a href="{{ c.leg1_trip_url }}" target="_blank" class="btn btn-secondary btn-sm">
-              Trip.com
-            </a>
             <a href="{{ c.leg2_url }}" target="_blank" class="btn btn-secondary btn-sm" style="border-color: var(--accent); color: var(--accent); font-weight: 700;">
               {{ c.leg2_btn_text }}
+            </a>
+            <a href="{{ c.hotel_booking_url }}" target="_blank" class="btn btn-secondary btn-sm" style="border-color: #f59e0b; color: #f59e0b; font-weight: 700;">
+              🏨 Chambre 2 pers. ({{ c.hotel_room_2p_eur }} €)
             </a>
           </div>
         </div>

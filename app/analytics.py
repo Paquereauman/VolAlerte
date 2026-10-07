@@ -1243,6 +1243,18 @@ def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str
     trainline_cdg_nte = "https://www.thetrainline.com/fr/horaires-train/aeroport-charles-de-gaulle-2-tgv-a-nantes"
     sncf_cdg_nte = "https://www.sncf-connect.com/train/trajet/roissy-charles-de-gaulle/nantes"
 
+    try:
+        day_plus_2 = (datetime.date.fromisoformat(next_day) + datetime.timedelta(days=1)).isoformat()
+    except Exception:
+        day_plus_2 = "2026-11-17"
+
+    def _booking_2p_url(dest_query: str, checkin: str, checkout: str) -> str:
+        from urllib.parse import quote_plus
+        return (
+            f"https://www.booking.com/searchresults.fr.html?ss={quote_plus(dest_query)}"
+            f"&checkin={checkin}&checkout={checkout}&group_adults=2&no_rooms=1&group_children=0&order=price"
+        )
+
     combos = [
         {
             "badge": "🥇 LE MEILLEUR COMPROMIS (0 CHANGEMENT DANS PARIS)",
@@ -1262,19 +1274,26 @@ def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str
             "china_tgv_price": 0,
             "china_tgv_label": "Départ direct de Zhengzhou (CGO) — aucun TGV en Chine",
             "hotel_recommended": False,
-            "hotel_city": "Roissy CDG (optionnel, arrivée matin 07h45)",
-            "hotel_price": 55,
-            "hotel_note": "Aucune nuit d'hôtel nécessaire car le vol atterrit à 07h45 du matin. (+55 € si vous souhaitez dormir sur place)",
+            "hotel_city": "Roissy CDG (petite chambre 2 pers. optionnelle)",
+            "hotel_examples": "Ibis Budget Roissy CDG Paris Nord 2 • Première Classe Roissy • B&B HOTEL Paris Roissy CDG",
+            "hotel_room_2p_eur": 52,
+            "hotel_per_person_eur": 26,
+            "hotel_price": 52,
+            "hotel_booking_url": _booking_2p_url("Roissy-en-France Aéroport CDG", next_day, day_plus_2),
+            "hotel_note": "Arrivée à 07h45 du matin (0 nuit requise). Si repos souhaité : petite chambre 2 pers. à 52 € (soit 26 €/pers.).",
             "total_sans_hotel": cgo_cdg["price"] + 42,
-            "total_avec_hotel": cgo_cdg["price"] + 42 + 55,
+            "total_avec_hotel": cgo_cdg["price"] + 42 + 26,
+            "total_avec_chambre_entiere": cgo_cdg["price"] + 42 + 52,
+            "total_duo_sans_hotel": (cgo_cdg["price"] + 42) * 2,
+            "total_duo_avec_hotel": (cgo_cdg["price"] + 42) * 2 + 52,
             "total_active_duration": "21h20 (18h05 vol + 3h15 TGV)",
         },
         {
             "badge": "💎 LE MOINS CHER VIA SHANGHAI (PVG)",
             "title": "Shanghai (PVG) ➔ Paris (CDG) + TGV Direct Terminal 2 ➔ Nantes",
             "why_smart": (
-                "Au départ de Shanghai Pudong (PVG), le vol vers Paris CDG descend à 333 € et atterrit à 06h45 du matin, "
-                "idéal pour attraper le premier TGV direct CDG 2 ➔ Nantes à 39 €-42 €."
+                "Au départ de Shanghai Pudong (PVG), le vol vers Paris CDG descend à 333 € et atterrit à 06h45 du matin. "
+                "Une petite chambre double pour 2 personnes près de PVG (avec navette gratuite) ne coûte que 28 € la nuit (14 €/pers.) !"
             ),
             "leg1_label": f"✈️ Vol {pvg_cdg['dep_date_fr']} : {pvg_cdg['schedule_str']} ({pvg_cdg['airline']} {pvg_cdg['flight_numbers']}, {pvg_cdg['duration_str']})",
             "leg1_price": pvg_cdg["price"],
@@ -1285,13 +1304,20 @@ def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str
             "leg2_url": sncf_cdg_nte,
             "leg2_btn_text": "🚅 TGV CDG 2 ➔ Nantes (42 €)",
             "china_tgv_price": 55,
-            "china_tgv_label": "Si départ de Shanghai : 0 € • Si départ de Zhengzhou : TGV 4h00 (+55 €)",
+            "china_tgv_label": "Si départ de Shanghai : 0 € • Si départ de Zhengzhou : TGV 4h00 (+55 €/pers.)",
             "hotel_recommended": True,
-            "hotel_city": "Shanghai (1 nuit avant départ si TGV depuis Zhengzhou)",
-            "hotel_price": 32,
-            "hotel_note": "375 € depuis Shanghai • Ou 462 € depuis Zhengzhou en incluant le TGV (55 €) + 1 nuit d'hôtel à Shanghai (32 €).",
+            "hotel_city": "Shanghai Pudong PVG (petite chambre 2 pers. + navette)",
+            "hotel_examples": "Jinjiang Inn Select Shanghai Pudong Airport • Hanting Hotel PVG • Holiday Inn Express Pudong",
+            "hotel_room_2p_eur": 28,
+            "hotel_per_person_eur": 14,
+            "hotel_price": 28,
+            "hotel_booking_url": _booking_2p_url("Shanghai Pudong International Airport", flight_date[:10], next_day),
+            "hotel_note": "Petite chambre double à Shanghai PVG : ~28 € pour 2 personnes (soit seulement 14 €/pers. !) avec navette aéroport gratuite.",
             "total_sans_hotel": pvg_cdg["price"] + 42,
-            "total_avec_hotel": pvg_cdg["price"] + 42 + 32,
+            "total_avec_hotel": pvg_cdg["price"] + 42 + 14,
+            "total_avec_chambre_entiere": pvg_cdg["price"] + 42 + 28,
+            "total_duo_sans_hotel": (pvg_cdg["price"] + 42) * 2,
+            "total_duo_avec_hotel": (pvg_cdg["price"] + 42) * 2 + 28,
             "total_active_duration": "24h30 (vol + TGV direct Nantes)",
         },
         {
@@ -1310,21 +1336,28 @@ def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str
             "leg2_url": trainline_cdg_nte,
             "leg2_btn_text": "🚅 TGV CDG 2 ➔ Nantes (42 €)",
             "china_tgv_price": 38,
-            "china_tgv_label": "TGV Zhengzhou ➔ Pékin (2h15, ~38 €) dans l'après-midi pour le vol de 19h45",
+            "china_tgv_label": "TGV Zhengzhou ➔ Pékin (2h15, ~38 €/pers.) dans l'après-midi pour le vol de 19h45",
             "hotel_recommended": False,
-            "hotel_city": "Aucune nuit requise (départ 19h45, arrivée 06h45)",
-            "hotel_price": 50,
-            "hotel_note": "Le vol partant à 19h45 et arrivant à 06h45 à CDG, aucune nuit d'hôtel n'est nécessaire.",
+            "hotel_city": "Pékin Daxing PKX (petite chambre 2 pers. optionnelle)",
+            "hotel_examples": "Jinjiang Inn Beijing Daxing Airport • Hanting Hotel PKX • James Joyce Coffetel PKX",
+            "hotel_room_2p_eur": 30,
+            "hotel_per_person_eur": 15,
+            "hotel_price": 30,
+            "hotel_booking_url": _booking_2p_url("Beijing Daxing International Airport", flight_date[:10], next_day),
+            "hotel_note": "Aucune nuit requise (vol à 19h45). Si arrivée la veille à Pékin : petite chambre 2 pers. à 30 € (15 €/pers.).",
             "total_sans_hotel": pkx_cdg["price"] + 42 + 38,
-            "total_avec_hotel": pkx_cdg["price"] + 42 + 38 + 50,
+            "total_avec_hotel": pkx_cdg["price"] + 42 + 38 + 15,
+            "total_avec_chambre_entiere": pkx_cdg["price"] + 42 + 38 + 30,
+            "total_duo_sans_hotel": (pkx_cdg["price"] + 42 + 38) * 2,
+            "total_duo_avec_hotel": (pkx_cdg["price"] + 42 + 38) * 2 + 30,
             "total_active_duration": "23h30 (TGV 2h15 + Vol 18h00 + TGV 3h15)",
         },
         {
             "badge": "🏨 ASTUCE 1 NUIT HÔTEL + VOL DIRECT NANTES (SANS TRAIN EN FRANCE)",
-            "title": "Pékin / Chine ➔ Barcelone (BCN) + 1 Nuit Hôtel + Vol Direct Volotea BCN ➔ Nantes (46 €)",
+            "title": "Pékin / Chine ➔ Barcelone (BCN) + Petite Chambre 2 pers. + Vol Direct Volotea BCN ➔ Nantes (46 €)",
             "why_smart": (
                 "Au lieu d'atterrir à Paris et de prendre le train avec vos valises, vous volez vers Barcelone (arrivée 18h55), "
-                "dormez dans un vrai lit d'hôtel (~52 €) pour couper la fatigue et sécuriser votre correspondance, "
+                "prenez une petite chambre 2 personnes (~56 € la chambre, soit 28 €/pers.) pour couper la fatigue et sécuriser votre correspondance, "
                 "puis prenez le vol direct Volotea (1h40, 46 €) qui atterrit directement à Nantes Atlantique (NTE) !"
             ),
             "leg1_label": f"✈️ Vol 1 ({pek_bcn['dep_date_fr']}) : {pek_bcn['schedule_str']} ({pek_bcn['airline']} {pek_bcn['flight_numbers']}, {pek_bcn['duration_str']})",
@@ -1338,19 +1371,26 @@ def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str
             "china_tgv_price": 0,
             "china_tgv_label": "Arrivée directe à l'aéroport de Nantes Atlantique (NTE)",
             "hotel_recommended": True,
-            "hotel_city": "Barcelone (1 nuit d'étape sécurisant la correspondance)",
-            "hotel_price": 52,
-            "hotel_note": "1 nuit d'hôtel à Barcelone (~52 €) recommandée : zéro risque de rater le 2e billet et repos complet.",
+            "hotel_city": "Barcelone BCN / Viladecans (petite chambre 2 pers.)",
+            "hotel_examples": "Ibis Budget Barcelona Viladecans • B&B HOTEL Barcelona Viladecans • Airhostel BCN",
+            "hotel_room_2p_eur": 56,
+            "hotel_per_person_eur": 28,
+            "hotel_price": 56,
+            "hotel_booking_url": _booking_2p_url("Barcelona El Prat Airport Viladecans", next_day, day_plus_2),
+            "hotel_note": "Petite chambre 2 pers. type Ibis Budget / B&B près de BCN : ~56 € la chambre (soit 28 €/pers. à deux).",
             "total_sans_hotel": pek_bcn["price"] + bcn_nte["price"],
-            "total_avec_hotel": pek_bcn["price"] + bcn_nte["price"] + 52,
+            "total_avec_hotel": pek_bcn["price"] + bcn_nte["price"] + 28,
+            "total_avec_chambre_entiere": pek_bcn["price"] + bcn_nte["price"] + 56,
+            "total_duo_sans_hotel": (pek_bcn["price"] + bcn_nte["price"]) * 2,
+            "total_duo_avec_hotel": (pek_bcn["price"] + bcn_nte["price"]) * 2 + 56,
             "total_active_duration": "20h45 de vol (coupé par 1 nuit d'hôtel)",
         },
         {
             "badge": "🇮🇹 ASTUCE ESCALE MILAN + VOL DIRECT EASYJET ➔ NANTES",
-            "title": "TGV Xi'an (XIY) ➔ Milan (MXP, 315 €) + 1 Nuit ou Journée Milan + Vol Direct easyJet MXP ➔ Nantes",
+            "title": "TGV Xi'an (XIY) ➔ Milan (MXP, 315 €) + Petite Chambre 2 pers. + Vol Direct easyJet MXP ➔ Nantes",
             "why_smart": (
                 "Xi'an (1h30 TGV de Zhengzhou) propose un tarif très bas vers Milan Malpensa (315 € sur Hainan Airlines, bagage soute inclus). "
-                "Depuis Milan MXP, easyJet assure un vol direct quotidien de 1h55 vers Nantes (NTE)."
+                "Depuis Milan MXP, easyJet assure un vol direct de 1h55 vers Nantes (NTE). À deux, la petite chambre près de Malpensa ne revient qu'à 27 €/pers. !"
             ),
             "leg1_label": f"✈️ Vol 1 ({xiy_mxp['dep_date_fr']}) : {xiy_mxp['schedule_str']} ({xiy_mxp['airline']} {xiy_mxp['flight_numbers']})",
             "leg1_price": xiy_mxp["price"],
@@ -1361,13 +1401,20 @@ def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str
             "leg2_url": mxp_nte["booking_url"],
             "leg2_btn_text": f"🎯 Vol Direct MXP ➔ NTE ({mxp_nte['price']} €)",
             "china_tgv_price": 22,
-            "china_tgv_label": "TGV Zhengzhou ➔ Xi'an (1h30, 22 €)",
+            "china_tgv_label": "TGV Zhengzhou ➔ Xi'an (1h30, 22 €/pers.)",
             "hotel_recommended": True,
-            "hotel_city": "Milan Malpensa (optionnel : arrivée 07h40, vol easyJet à 18h40 ou J+1)",
-            "hotel_price": 55,
-            "hotel_note": "Même jour possible (arrivée 07h40, départ 18h40) ou +55 € avec 1 nuit d'hôtel à Milan pour couper le voyage.",
+            "hotel_city": "Milan Malpensa MXP (petite chambre 2 pers.)",
+            "hotel_examples": "Idea Hotel Milano Malpensa Airport • B&B Hotel Milano Malpensa • First Hotel Malpensa",
+            "hotel_room_2p_eur": 54,
+            "hotel_per_person_eur": 27,
+            "hotel_price": 54,
+            "hotel_booking_url": _booking_2p_url("Milan Malpensa Airport", next_day, day_plus_2),
+            "hotel_note": "Même jour possible (arrivée 07h40, départ 18h40) ou petite chambre 2 pers. à 54 € la nuit (27 €/pers.).",
             "total_sans_hotel": xiy_mxp["price"] + mxp_nte["price"] + 22,
-            "total_avec_hotel": xiy_mxp["price"] + mxp_nte["price"] + 22 + 55,
+            "total_avec_hotel": xiy_mxp["price"] + mxp_nte["price"] + 22 + 27,
+            "total_avec_chambre_entiere": xiy_mxp["price"] + mxp_nte["price"] + 22 + 54,
+            "total_duo_sans_hotel": (xiy_mxp["price"] + mxp_nte["price"] + 22) * 2,
+            "total_duo_avec_hotel": (xiy_mxp["price"] + mxp_nte["price"] + 22) * 2 + 54,
             "total_active_duration": "Arrivée directe à Nantes (NTE) en 1h55 depuis Milan",
         },
     ]
