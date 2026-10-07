@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Radar Bons Plans — VolAlerte{% endblock %}
+{% block title %}Radar Bons Plans & Comparateur Aéroports — VolAlerte{% endblock %}
 
 {% block content %}
 <!-- EN-TÊTE ÉPURÉ -->
 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
   <div>
     <h1 style="font-size: 1.45rem; font-weight: 800; margin: 0; letter-spacing: -0.02em;">
-      📡 Radar Bons Plans <span style="color: #10b981;">EUR (€)</span>
+      📡 Radar Bons Plans &amp; Aéroports Proches <span style="color: #10b981;">EUR (€)</span>
     </h1>
     <p style="color: var(--text-secondary); font-size: 0.82rem; margin: 0.15rem 0 0 0;">
-      Scan multi-jours (Mar / Mer / Ven / Dim) • Tarifs OTA (Trip.com) &amp; Direct Google Flights
+      Choisis une destination pour voir quel aéroport proche de chez toi est le moins cher (Vol + TGV &amp; Prix Moyen)
     </p>
   </div>
   <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -24,13 +24,13 @@
   </div>
 </div>
 
-<!-- BARRE DE FILTRES MINIMALISTE -->
+<!-- BARRE DE FILTRES MINIMALISTE AVEC SÉLECTEUR DE DESTINATION -->
 <div class="card" style="margin-bottom: 1.15rem; padding: 0.85rem 1rem;">
   <form method="GET" action="/radar">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 0.65rem; align-items: flex-end;">
 
       <div class="form-group" style="margin-bottom: 0;">
-        <label class="form-label" for="origin" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🛫 Départ</label>
+        <label class="form-label" for="origin" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🏠 Chez moi (Départ)</label>
         <select id="origin" name="origin" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="this.form.submit()">
           <option value="CGO" {% if radar.origin_code == 'CGO' %}selected{% endif %}>Zhengzhou (CGO)</option>
           <option value="PKX" {% if radar.origin_code in ('PKX', 'PEK', 'BJS') %}selected{% endif %}>Pékin (PKX / PEK)</option>
@@ -38,6 +38,17 @@
           <option value="XIY" {% if radar.origin_code == 'XIY' %}selected{% endif %}>Xi'an (XIY)</option>
           <option value="WUH" {% if radar.origin_code == 'WUH' %}selected{% endif %}>Wuhan (WUH)</option>
           <option value="PAR" {% if radar.origin_code == 'PAR' %}selected{% endif %}>Paris (CDG/ORY/BVA)</option>
+        </select>
+      </div>
+
+      <!-- Sélecteur de destination pour comparer les aéroports proches -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="dest_pick" style="font-size: 0.74rem; margin-bottom: 0.2rem; color: #10b981; font-weight: 800;">🎯 Pick une Destination</label>
+        <select id="dest_pick" name="dest_pick" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem; border-color: #10b981; font-weight: 700;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
+          <option value="">🌍 Toutes les destinations ({{ radar.deals|length }})</option>
+          {% for d in radar.deals %}
+          <option value="{{ d.dest_code }}">{{ d.flag }} {{ d.city }} ({{ d.dest_code }}) — dès {{ d.effective_best_price }} €</option>
+          {% endfor %}
         </select>
       </div>
 
@@ -54,8 +65,8 @@
       </div>
 
       <div class="form-group" style="margin-bottom: 0;">
-        <label class="form-label" for="bagage" style="font-size: 0.74rem; margin-bottom: 0.2rem; color: #10b981;">🧳 Bagages</label>
-        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem; border-color: rgba(16,185,129,0.5);" onchange="this.form.submit()">
+        <label class="form-label" for="bagage" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🧳 Bagages</label>
+        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="this.form.submit()">
           <option value="cabine" {% if radar.bagage_mode == 'cabine' %}selected{% endif %}>Cabine incluse</option>
           <option value="soute_1" {% if radar.bagage_mode == 'soute_1' %}selected{% endif %}>Soute 23 kg</option>
           <option value="aucun" {% if radar.bagage_mode == 'aucun' %}selected{% endif %}>Sans bagage</option>
@@ -85,15 +96,15 @@
 
     </div>
 
-    <!-- Ligne secondaire ultra-compacte -->
+    <!-- Ligne secondaire : Raccourcis destinations populaires + TGV -->
     <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
-      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.82rem; font-weight: 600;">
+      <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
           <input type="checkbox" name="include_nearby" value="1" {% if radar.include_nearby %}checked{% endif %} onchange="this.form.submit()">
-          <span>🚅 Inclure hubs TGV voisins (Xi'an, Wuhan, Pékin, Qingdao)</span>
+          <span>🚅 Croiser les aéroports TGV proches (Xi'an 1h30, Wuhan 1h45, Shijiazhuang 1h20, Pékin 2h15)</span>
         </label>
 
-        <details style="font-size: 0.78rem; color: var(--text-secondary);">
+        <details style="font-size: 0.76rem; color: var(--text-secondary);">
           <summary style="cursor: pointer; user-select: none;">⚙️ Date précise / Escale</summary>
           <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem; flex-wrap: wrap;">
             <input type="date" id="exact_date" name="exact_date" class="form-control"
@@ -109,18 +120,29 @@
         </details>
       </div>
 
-      <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
-        <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&bagage={{ radar.bagage_mode }}&filter=all"
-           class="btn btn-sm {% if radar.filter_tag == 'all' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.22rem 0.55rem; font-size: 0.75rem;">
-          Tous ({{ radar.deals|length }})
-        </a>
+      <!-- Boutons rapides : Pick direct d'une destination ou filtre -->
+      <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+        <button type="button" onclick="window.pickRadarDest('')" class="btn btn-sm btn-primary" id="btn-dest-all" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🌍 Toutes
+        </button>
+        <button type="button" onclick="window.pickRadarDest('HAN')" class="btn btn-sm btn-secondary" id="btn-dest-HAN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇻🇳 Hanoï
+        </button>
+        <button type="button" onclick="window.pickRadarDest('CNX')" class="btn btn-sm btn-secondary" id="btn-dest-CNX" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇹🇭 Chiang Mai
+        </button>
+        <button type="button" onclick="window.pickRadarDest('BKK')" class="btn btn-sm btn-secondary" id="btn-dest-BKK" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇹🇭 Bangkok
+        </button>
+        <button type="button" onclick="window.pickRadarDest('ICN')" class="btn btn-sm btn-secondary" id="btn-dest-ICN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇰🇷 Séoul
+        </button>
+        <button type="button" onclick="window.pickRadarDest('NRT')" class="btn btn-sm btn-secondary" id="btn-dest-NRT" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇯🇵 Tokyo
+        </button>
         <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&bagage={{ radar.bagage_mode }}&filter=under_100"
-           class="btn btn-sm {% if radar.filter_tag == 'under_100' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.22rem 0.55rem; font-size: 0.75rem;">
+           class="btn btn-sm {% if radar.filter_tag == 'under_100' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
           💰 &lt; 100 €
-        </a>
-        <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&bagage={{ radar.bagage_mode }}&filter=southeast_asia"
-           class="btn btn-sm {% if radar.filter_tag == 'southeast_asia' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.22rem 0.55rem; font-size: 0.75rem;">
-          🌴 Asie du Sud-Est
         </a>
       </div>
     </div>
@@ -135,16 +157,16 @@
 {% else %}
 
 <!-- TABLEAU SYNTHÉTIQUE ÉPURÉ -->
-<div class="card" style="margin-bottom: 1.25rem; padding: 0.75rem 1rem;">
+<div class="card" id="radar-summary-table-card" style="margin-bottom: 1.15rem; padding: 0.7rem 0.95rem;">
   <div class="table-container" style="overflow-x: auto;">
-    <table style="font-size: 0.83rem; width: 100%; border-collapse: collapse;">
+    <table style="font-size: 0.82rem; width: 100%; border-collapse: collapse;">
       <thead>
         <tr>
-          <th style="padding: 0.5rem 0.6rem;">Destination</th>
-          <th style="padding: 0.5rem 0.6rem;">Vol &amp; Date</th>
-          <th style="padding: 0.5rem 0.6rem;">Trajet</th>
-          <th style="padding: 0.5rem 0.6rem;">Meilleur Prix</th>
-          <th style="padding: 0.5rem 0.6rem; text-align: right;">Réserver</th>
+          <th style="padding: 0.45rem 0.55rem;">Destination</th>
+          <th style="padding: 0.45rem 0.55rem;">🏆 Meilleur Aéroport Proche</th>
+          <th style="padding: 0.45rem 0.55rem;">Trajet (Train + Vol)</th>
+          <th style="padding: 0.45rem 0.55rem;">Prix Vol / Total avec TGV</th>
+          <th style="padding: 0.45rem 0.55rem; text-align: right;">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -161,40 +183,39 @@
             data-price-cabine="{{ deal.cabine_total }}"
             data-price-soute="{{ deal.soute_total }}"
             data-price-sans="{{ deal.best_price }}">
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: var(--text-primary);">{{ deal.flag }} {{ deal.city }}</span>
-            <span style="font-size: 0.73rem; color: {% if deal.is_nearby_deal %}#f59e0b{% else %}var(--text-muted){% endif %}; margin-left: 0.3rem; font-weight: 600;">
-              {{ deal.departure_code }} ➔ {{ deal.dest_code }}
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <a href="javascript:void(0)" onclick="window.pickRadarDest('{{ deal.dest_code }}')" style="font-weight: 800; color: var(--text-primary); text-decoration: none;" title="Comparer tous les aéroports pour {{ deal.city }}">
+              {{ deal.flag }} {{ deal.city }} ({{ deal.dest_code }}) 🔍
+            </a>
+          </td>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <span style="font-weight: 800; color: {% if deal.departure_code == radar.origin_code %}#10b981{% else %}#f59e0b{% endif %};">
+              {% if deal.departure_code == radar.origin_code %}🏠 {{ deal.departure_code }} (Sur place){% else %}🚅 {{ deal.departure_code }}{% endif %}
             </span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• {{ deal.dep_date_fr }} ({{ deal.airline }})</span>
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-weight: 700; color: var(--accent);">{{ deal.dep_date_fr }}</span>
-            <span style="color: var(--text-muted); margin: 0 0.25rem;">•</span>
-            <span style="font-weight: 600;">{{ deal.dep_time }} ➔ {{ deal.arr_time }}</span>
-            <div style="font-size: 0.72rem; color: var(--text-secondary);">{{ deal.airline }}</div>
-          </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: {% if deal.stops == 0 %}#10b981{% else %}var(--text-primary){% endif %};">
-              {{ deal.flight_duration_str }} ({% if deal.stops == 0 %}Direct{% else %}{{ deal.stops }} esc.{% endif %})
+              ✈️ {{ deal.flight_duration_str }} ({% if deal.stops == 0 %}Direct{% else %}{{ deal.stops }} esc.{% endif %})
             </span>
             {% if deal.tgv_name %}
             <div style="font-size: 0.72rem; color: #f59e0b;">🚅 + {{ deal.tgv_name }}</div>
             {% endif %}
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            {% if deal.ota_trip_price and deal.ota_trip_price < deal.display_price %}
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">{{ deal.ota_trip_price }} €</span>
-              <span style="font-size: 0.7rem; color: #10b981; font-weight: 700;">Trip</span>
-              <span style="font-size: 0.73rem; color: var(--text-muted);">• {{ deal.display_price }} € Dir.</span>
-            {% else %}
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">{{ deal.display_price }} €</span>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
+            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">{{ deal.effective_best_price }} €</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">{% if deal.ota_trip_price < deal.display_price %}Trip ({{ deal.display_price }}€ Dir.){% else %}Direct{% endif %}</span>
+            {% if deal.tgv_cost_eur > 0 %}
+            <div style="font-size: 0.71rem; color: #f59e0b; font-weight: 700;">
+              Total Vol + TGV : {{ deal.total_with_tgv_eur }} €
+            </div>
             {% endif %}
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.75rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
+            <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ {{ deal.effective_best_price }} €
             </a>
-            <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.5rem; font-size: 0.75rem; margin-left: 0.25rem;" title="Ouvrir sur Google Flights">
+            <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -205,8 +226,8 @@
   </div>
 </div>
 
-<!-- CARTES DESTINATION ÉPURÉES ("LESS IS MORE") -->
-<div class="grid grid-2" style="gap: 0.9rem;">
+<!-- CARTES DESTINATION AVEC COMPARATEUR D'AÉROPORTS PROCHES -->
+<div class="grid grid-2" id="radar-cards-grid" style="gap: 0.9rem;">
   {% for deal in radar.deals %}
   <div class="card radar-deal-card"
        data-dest="{{ deal.dest_code }}"
@@ -223,96 +244,132 @@
        style="margin-bottom: 0; padding: 1rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid {% if deal.stops == 0 %}#10b981{% else %}var(--accent){% endif %};">
 
     <div>
-      <!-- Ligne 1 : Ville + Badge vs Prix -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem;">
+      <!-- Ligne 1 : Ville + Meilleur Aéroport vs Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div>
           <div style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-            <span>{{ deal.flag }} {{ deal.city }}</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">{{ deal.departure_code }} ➔ {{ deal.dest_code }}</span>
+            <span>{{ deal.flag }} {{ deal.city }} ({{ deal.dest_code }})</span>
             <span class="badge {% if deal.stops == 0 %}badge-success{% else %}badge-info{% endif %}" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
               {% if deal.stops == 0 %}Direct{% else %}{{ deal.stops }} escale{% endif %}
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            {{ deal.airline }} <code style="font-size: 0.72rem;">{{ deal.flight_numbers }}</code>
+            🏆 Meilleur départ proche : <b style="color: {% if deal.departure_code == radar.origin_code %}#10b981{% else %}#f59e0b{% endif %};">{{ deal.departure_code }}</b> • {{ deal.airline }}
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
-          {% if deal.ota_trip_price and deal.ota_trip_price < deal.display_price %}
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              {{ deal.ota_trip_price }} € <span style="font-size: 0.7rem; font-weight: 700;">Trip</span>
-            </div>
-            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem;">
-              Direct {{ deal.display_price }} €{% if deal.ota_booking_price < deal.display_price %} • Booking {{ deal.ota_booking_price }} €{% endif %}
-            </div>
-          {% else %}
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              {{ deal.display_price }} €
-            </div>
-          {% endif %}
+          <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
+            {{ deal.effective_best_price }} € <span style="font-size: 0.68rem; font-weight: 700;">{% if deal.ota_trip_price < deal.display_price %}Trip{% else %}Direct{% endif %}</span>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            {% if deal.tgv_cost_eur > 0 %}
+              Total Vol + TGV : <b style="color: #f59e0b;">{{ deal.total_with_tgv_eur }} €</b>
+            {% else %}
+              🏠 Sur place (0 € TGV)
+            {% endif %}
+          </div>
         </div>
       </div>
 
-      <!-- Ligne 2 : Résumé Horaire + Train en un coup d'œil -->
-      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.8rem;">
+      <!-- Ligne 2 : Résumé Horaire + Train -->
+      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 {{ deal.dep_date_fr }} • {{ deal.dep_time }} ➔ {{ deal.arr_time }}</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 {{ deal.dep_date_fr }} • {{ deal.dep_time }} {{ deal.departure_code }} ➔ {{ deal.arr_time }} {{ deal.dest_code }}</span>
           <span style="font-weight: 700; color: #10b981;">✈️ {{ deal.flight_duration_str }}</span>
         </div>
         {% if deal.tgv_name %}
-        <div style="font-size: 0.75rem; color: #f59e0b; margin-top: 0.25rem; font-weight: 600;">
-          🚅 {{ deal.tgv_name }} • Total train + vol : <b>{{ deal.total_journey_str }}</b>
+        <div style="font-size: 0.74rem; color: #f59e0b; margin-top: 0.22rem; font-weight: 600;">
+          🚅 {{ deal.tgv_name }} • Durée totale (Train + Vol) : <b>{{ deal.total_journey_str }}</b>
         </div>
         {% endif %}
       </div>
 
-      <!-- Ligne 3 : Bagages compacts sur une seule ligne + Détails pliables -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.55rem;">
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
-          <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            🎒 Sans <b>{{ deal.best_price }}€</b>
-          </a>
-          <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-            🧳 Cabine <b>{{ deal.cabine_total }}€</b>
-          </a>
-          <a href="{{ deal.url_avec_soute }}" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            📦 Soute <b>{{ deal.soute_total }}€</b>
-          </a>
-        </div>
-
-        {% if (deal.airport_comparisons and deal.airport_comparisons|length > 1) or deal.ota_tip %}
-        <details style="width: 100%; margin-top: 0.2rem;">
-          <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.73rem; user-select: none;">
-            + Comparer les autres départs ({{ deal.airport_comparisons|length }}) &amp; astuce
-          </summary>
-          <div style="margin-top: 0.35rem; padding: 0.45rem 0.6rem; background: var(--bg-card-hover); border-radius: 6px; font-size: 0.73rem;">
-            {% for comp in deal.airport_comparisons %}
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>{{ comp.dept_code }}</b> ({{ comp.dep_date_fr }}) • {{ comp.airline }} ({% if comp.stops == 0 %}Direct{% else %}{{ comp.stops }} esc.{% endif %})</span>
-              <a href="{{ comp.booking_url }}" target="_blank" style="color: #10b981; font-weight: 700;">{{ comp.display_price }} € →</a>
-            </div>
-            {% endfor %}
-            {% if deal.ota_tip %}
-            <div style="margin-top: 0.3rem; padding-top: 0.3rem; border-top: 1px dashed var(--border); color: var(--text-secondary);">
-              💡 {{ deal.ota_tip }}
-            </div>
-            {% endif %}
+      <!-- Ligne 3 : COMPARATEUR DES AÉROPORTS PROCHES DE CHEZ TOI (Moyenne + Vol + TGV) -->
+      {% if deal.airport_comparisons and deal.airport_comparisons|length >= 1 %}
+      <details class="airport-comp-details" {% if deal.dest_code in ('HAN', 'CNX') %}open{% endif %} style="margin-bottom: 0.55rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 0.45rem 0.6rem;">
+        <summary style="cursor: pointer; color: #10b981; font-weight: 800; font-size: 0.76rem; user-select: none;">
+          🏆 Quel aéroport choisir pas loin de chez moi ? ({{ deal.airport_comparisons|length }} aéroports comparés : Vol + TGV &amp; Prix Moyen)
+        </summary>
+        <div style="margin-top: 0.45rem; overflow-x: auto;">
+          <table style="width: 100%; font-size: 0.73rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 0.25rem 0.3rem;">Aéroport &amp; TGV</th>
+                <th style="padding: 0.25rem 0.3rem;">Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Moyenne</th>
+                <th style="padding: 0.25rem 0.3rem;">Billet Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Total (Vol+TGV)</th>
+                <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for comp in deal.airport_comparisons %}
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: {% if loop.first %}#10b981{% else %}var(--text-primary){% endif %};">
+                    {% if loop.first %}🥇 {% endif %}{{ comp.dept_label }}
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    {% if comp.tgv_cost_eur == 0 %}🏠 0 € de train{% else %}🚅 TGV +{{ comp.tgv_cost_eur }} € ({{ comp.tgv_approach_str }}){% endif %}
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: {% if comp.stops == 0 %}#10b981{% else %}var(--text-secondary){% endif %}; font-weight: 700;">
+                    {% if comp.stops == 0 %}Direct{% else %}{{ comp.stops }} esc.{% endif %} ({{ comp.flight_duration_str }})
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">{{ comp.airline }}</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~{{ comp.avg_airport_price }} €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  {{ comp.ota_trip_price }} € <span style="font-weight: 400; color: var(--text-muted);">({{ comp.display_price }}€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: {% if loop.first %}#10b981{% else %}#f59e0b{% endif %};">
+                  {{ comp.total_with_tgv_eur }} €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="{{ comp.trip_url }}" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="{{ comp.booking_url }}" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% if deal.ota_tip %}
+          <div style="margin-top: 0.35rem; font-size: 0.71rem; color: var(--text-secondary);">
+            💡 {{ deal.ota_tip }}
           </div>
-        </details>
-        {% endif %}
+          {% endif %}
+        </div>
+      </details>
+      {% endif %}
+
+      <!-- Ligne 4 : Pilules Bagages -->
+      <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
+        <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          🎒 Sans <b>{{ deal.best_price }}€</b>
+        </a>
+        <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
+          🧳 Cabine <b>{{ deal.cabine_total }}€</b>
+        </a>
+        <a href="{{ deal.url_avec_soute }}" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          📦 Soute <b>{{ deal.soute_total }}€</b>
+        </a>
       </div>
     </div>
 
-    <!-- Ligne 4 : 2 Boutons d'action clairs -->
-    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+    <!-- Ligne 5 : Boutons d'action -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
+      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com ({{ deal.ota_trip_price }} €)
       </a>
-      <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+      <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google ({{ deal.display_price }} €)
       </a>
-      <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.38rem 0.55rem;" title="Skyscanner">
+      <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -372,4 +429,31 @@
   </div>
 </div>
 {% endif %}
+
+<script>
+// Fonction universelle (local + GitHub Pages) pour "pick une destination" et comparer tous ses aéroports proches
+window.pickRadarDest = function(destCode) {
+  var sel = document.getElementById("dest_pick");
+  if (sel) sel.value = destCode || "";
+  if (window.handleRadarFilterChange) {
+    window.handleRadarFilterChange();
+    return;
+  }
+  var rows = document.querySelectorAll("tr.radar-deal-row");
+  var cards = document.querySelectorAll("div.radar-deal-card");
+  rows.forEach(function(r) {
+    r.style.display = (!destCode || r.getAttribute("data-dest") === destCode) ? "" : "none";
+  });
+  cards.forEach(function(c) {
+    var match = (!destCode || c.getAttribute("data-dest") === destCode);
+    c.style.display = match ? "flex" : "none";
+    var det = c.querySelector("details.airport-comp-details");
+    if (det && destCode && match) det.open = true;
+  });
+  var grid = document.getElementById("radar-cards-grid");
+  if (grid) {
+    grid.style.gridTemplateColumns = destCode ? "1fr" : "";
+  }
+};
+</script>
 {% endblock %}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radar Bons Plans — VolAlerte</title>
+  <title>Radar Bons Plans & Comparateur Aéroports — VolAlerte</title>
   <link rel="icon" href="/VolAlerte/static/icons/favicon.ico" type="image/x-icon">
   <link rel="manifest" href="/VolAlerte/static/manifest.json">
   <meta name="theme-color" content="#2563eb">
@@ -52,10 +52,10 @@
 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
   <div>
     <h1 style="font-size: 1.45rem; font-weight: 800; margin: 0; letter-spacing: -0.02em;">
-      📡 Radar Bons Plans <span style="color: #10b981;">EUR (€)</span>
+      📡 Radar Bons Plans &amp; Aéroports Proches <span style="color: #10b981;">EUR (€)</span>
     </h1>
     <p style="color: var(--text-secondary); font-size: 0.82rem; margin: 0.15rem 0 0 0;">
-      Scan multi-jours (Mar / Mer / Ven / Dim) • Tarifs OTA (Trip.com) &amp; Direct Google Flights
+      Choisis une destination pour voir quel aéroport proche de chez toi est le moins cher (Vol + TGV &amp; Prix Moyen)
     </p>
   </div>
   <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -69,13 +69,13 @@
   </div>
 </div>
 
-<!-- BARRE DE FILTRES MINIMALISTE -->
+<!-- BARRE DE FILTRES MINIMALISTE AVEC SÉLECTEUR DE DESTINATION -->
 <div class="card" style="margin-bottom: 1.15rem; padding: 0.85rem 1rem;">
   <form method="GET" action="/VolAlerte/radar/">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 0.65rem; align-items: flex-end;">
 
       <div class="form-group" style="margin-bottom: 0;">
-        <label class="form-label" for="origin" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🛫 Départ</label>
+        <label class="form-label" for="origin" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🏠 Chez moi (Départ)</label>
         <select id="origin" name="origin" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="window.handleRadarFilterChange()">
           <option value="CGO" >Zhengzhou (CGO)</option>
           <option value="PKX" >Pékin (PKX / PEK)</option>
@@ -83,6 +83,25 @@
           <option value="XIY" >Xi'an (XIY)</option>
           <option value="WUH" >Wuhan (WUH)</option>
           <option value="PAR" selected>Paris (CDG/ORY/BVA)</option>
+        </select>
+      </div>
+
+      <!-- Sélecteur de destination pour comparer les aéroports proches -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="dest_pick" style="font-size: 0.74rem; margin-bottom: 0.2rem; color: #10b981; font-weight: 800;">🎯 Pick une Destination</label>
+        <select id="dest_pick" name="dest_pick" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem; border-color: #10b981; font-weight: 700;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
+          <option value="">🌍 Toutes les destinations (5)</option>
+          
+          <option value="ATH">🇬🇷 Athènes (ATH) — dès 38 €</option>
+          
+          <option value="BCN">🇪🇸 Barcelone (BCN) — dès 40 €</option>
+          
+          <option value="FCO">🇮🇹 Rome (FCO) — dès 55 €</option>
+          
+          <option value="LIS">🇵🇹 Lisbonne (LIS) — dès 56 €</option>
+          
+          <option value="RAK">🇲🇦 Marrakech (RAK) — dès 56 €</option>
+          
         </select>
       </div>
 
@@ -99,8 +118,8 @@
       </div>
 
       <div class="form-group" style="margin-bottom: 0;">
-        <label class="form-label" for="bagage" style="font-size: 0.74rem; margin-bottom: 0.2rem; color: #10b981;">🧳 Bagages</label>
-        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem; border-color: rgba(16,185,129,0.5);" onchange="window.handleRadarFilterChange()">
+        <label class="form-label" for="bagage" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🧳 Bagages</label>
+        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="window.handleRadarFilterChange()">
           <option value="cabine" selected>Cabine incluse</option>
           <option value="soute_1" >Soute 23 kg</option>
           <option value="aucun" >Sans bagage</option>
@@ -130,15 +149,15 @@
 
     </div>
 
-    <!-- Ligne secondaire ultra-compacte -->
+    <!-- Ligne secondaire : Raccourcis destinations populaires + TGV -->
     <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
-      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.82rem; font-weight: 600;">
+      <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
+        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
           <input type="checkbox" name="include_nearby" value="1" checked onchange="window.handleRadarFilterChange()">
-          <span>🚅 Inclure hubs TGV voisins (Xi'an, Wuhan, Pékin, Qingdao)</span>
+          <span>🚅 Croiser les aéroports TGV proches (Xi'an 1h30, Wuhan 1h45, Shijiazhuang 1h20, Pékin 2h15)</span>
         </label>
 
-        <details style="font-size: 0.78rem; color: var(--text-secondary);">
+        <details style="font-size: 0.76rem; color: var(--text-secondary);">
           <summary style="cursor: pointer; user-select: none;">⚙️ Date précise / Escale</summary>
           <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem; flex-wrap: wrap;">
             <input type="date" id="exact_date" name="exact_date" class="form-control"
@@ -154,18 +173,29 @@
         </details>
       </div>
 
-      <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
-        <a href="/VolAlerte/radar/?origin=PAR&month=2026-11&bagage=cabine&filter=all"
-           class="btn btn-sm btn-primary" style="padding: 0.22rem 0.55rem; font-size: 0.75rem;">
-          Tous (5)
-        </a>
+      <!-- Boutons rapides : Pick direct d'une destination ou filtre -->
+      <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+        <button type="button" onclick="window.pickRadarDest('')" class="btn btn-sm btn-primary" id="btn-dest-all" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🌍 Toutes
+        </button>
+        <button type="button" onclick="window.pickRadarDest('HAN')" class="btn btn-sm btn-secondary" id="btn-dest-HAN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇻🇳 Hanoï
+        </button>
+        <button type="button" onclick="window.pickRadarDest('CNX')" class="btn btn-sm btn-secondary" id="btn-dest-CNX" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇹🇭 Chiang Mai
+        </button>
+        <button type="button" onclick="window.pickRadarDest('BKK')" class="btn btn-sm btn-secondary" id="btn-dest-BKK" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇹🇭 Bangkok
+        </button>
+        <button type="button" onclick="window.pickRadarDest('ICN')" class="btn btn-sm btn-secondary" id="btn-dest-ICN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇰🇷 Séoul
+        </button>
+        <button type="button" onclick="window.pickRadarDest('NRT')" class="btn btn-sm btn-secondary" id="btn-dest-NRT" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+          🇯🇵 Tokyo
+        </button>
         <a href="/VolAlerte/radar/?origin=PAR&month=2026-11&bagage=cabine&filter=under_100"
-           class="btn btn-sm btn-secondary" style="padding: 0.22rem 0.55rem; font-size: 0.75rem;">
+           class="btn btn-sm btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
           💰 &lt; 100 €
-        </a>
-        <a href="/VolAlerte/radar/?origin=PAR&month=2026-11&bagage=cabine&filter=southeast_asia"
-           class="btn btn-sm btn-secondary" style="padding: 0.22rem 0.55rem; font-size: 0.75rem;">
-          🌴 Asie du Sud-Est
         </a>
       </div>
     </div>
@@ -175,16 +205,16 @@
 
 
 <!-- TABLEAU SYNTHÉTIQUE ÉPURÉ -->
-<div class="card" style="margin-bottom: 1.25rem; padding: 0.75rem 1rem;">
+<div class="card" id="radar-summary-table-card" style="margin-bottom: 1.15rem; padding: 0.7rem 0.95rem;">
   <div class="table-container" style="overflow-x: auto;">
-    <table style="font-size: 0.83rem; width: 100%; border-collapse: collapse;">
+    <table style="font-size: 0.82rem; width: 100%; border-collapse: collapse;">
       <thead>
         <tr>
-          <th style="padding: 0.5rem 0.6rem;">Destination</th>
-          <th style="padding: 0.5rem 0.6rem;">Vol &amp; Date</th>
-          <th style="padding: 0.5rem 0.6rem;">Trajet</th>
-          <th style="padding: 0.5rem 0.6rem;">Meilleur Prix</th>
-          <th style="padding: 0.5rem 0.6rem; text-align: right;">Réserver</th>
+          <th style="padding: 0.45rem 0.55rem;">Destination</th>
+          <th style="padding: 0.45rem 0.55rem;">🏆 Meilleur Aéroport Proche</th>
+          <th style="padding: 0.45rem 0.55rem;">Trajet (Train + Vol)</th>
+          <th style="padding: 0.45rem 0.55rem;">Prix Vol / Total avec TGV</th>
+          <th style="padding: 0.45rem 0.55rem; text-align: right;">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -201,34 +231,33 @@
             data-price-cabine="38"
             data-price-soute="76"
             data-price-sans="38">
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: var(--text-primary);">🇬🇷 Athènes</span>
-            <span style="font-size: 0.73rem; color: var(--text-muted); margin-left: 0.3rem; font-weight: 600;">
-              PAR ➔ ATH
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <a href="javascript:void(0)" onclick="window.pickRadarDest('ATH')" style="font-weight: 800; color: var(--text-primary); text-decoration: none;" title="Comparer tous les aéroports pour Athènes">
+              🇬🇷 Athènes (ATH) 🔍
+            </a>
+          </td>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <span style="font-weight: 800; color: #10b981;">
+              🏠 PAR (Sur place)
             </span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Dim. 15 nov. 2026 (easyJet)</span>
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-weight: 700; color: var(--accent);">Dim. 15 nov. 2026</span>
-            <span style="color: var(--text-muted); margin: 0 0.25rem;">•</span>
-            <span style="font-weight: 600;">07:00 ➔ 11:10</span>
-            <div style="font-size: 0.72rem; color: var(--text-secondary);">easyJet</div>
-          </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
-              3h10 (Direct)
+              ✈️ 3h10 (Direct)
             </span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">38 €</span>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
+            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">38 €</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.75rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 38 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.5rem; font-size: 0.75rem; margin-left: 0.25rem;" title="Ouvrir sur Google Flights">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -246,34 +275,33 @@
             data-price-cabine="40"
             data-price-soute="78"
             data-price-sans="40">
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: var(--text-primary);">🇪🇸 Barcelone</span>
-            <span style="font-size: 0.73rem; color: var(--text-muted); margin-left: 0.3rem; font-weight: 600;">
-              PAR ➔ BCN
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <a href="javascript:void(0)" onclick="window.pickRadarDest('BCN')" style="font-weight: 800; color: var(--text-primary); text-decoration: none;" title="Comparer tous les aéroports pour Barcelone">
+              🇪🇸 Barcelone (BCN) 🔍
+            </a>
+          </td>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <span style="font-weight: 800; color: #10b981;">
+              🏠 PAR (Sur place)
             </span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Dim. 15 nov. 2026 (Transavia)</span>
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-weight: 700; color: var(--accent);">Dim. 15 nov. 2026</span>
-            <span style="color: var(--text-muted); margin: 0 0.25rem;">•</span>
-            <span style="font-weight: 600;">06:20 ➔ 08:00</span>
-            <div style="font-size: 0.72rem; color: var(--text-secondary);">Transavia</div>
-          </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
-              1h40 (Direct)
+              ✈️ 1h40 (Direct)
             </span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">40 €</span>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
+            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">40 €</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.75rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 40 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.5rem; font-size: 0.75rem; margin-left: 0.25rem;" title="Ouvrir sur Google Flights">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -291,34 +319,33 @@
             data-price-cabine="55"
             data-price-soute="93"
             data-price-sans="55">
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: var(--text-primary);">🇮🇹 Rome</span>
-            <span style="font-size: 0.73rem; color: var(--text-muted); margin-left: 0.3rem; font-weight: 600;">
-              PAR ➔ FCO
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <a href="javascript:void(0)" onclick="window.pickRadarDest('FCO')" style="font-weight: 800; color: var(--text-primary); text-decoration: none;" title="Comparer tous les aéroports pour Rome">
+              🇮🇹 Rome (FCO) 🔍
+            </a>
+          </td>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <span style="font-weight: 800; color: #10b981;">
+              🏠 PAR (Sur place)
             </span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Ven. 13 nov. 2026 (Transavia)</span>
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-weight: 700; color: var(--accent);">Ven. 13 nov. 2026</span>
-            <span style="color: var(--text-muted); margin: 0 0.25rem;">•</span>
-            <span style="font-weight: 600;">06:15 ➔ 08:20</span>
-            <div style="font-size: 0.72rem; color: var(--text-secondary);">Transavia</div>
-          </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
-              2h05 (Direct)
+              ✈️ 2h05 (Direct)
             </span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">55 €</span>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
+            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">55 €</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.75rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 55 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.5rem; font-size: 0.75rem; margin-left: 0.25rem;" title="Ouvrir sur Google Flights">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -336,34 +363,33 @@
             data-price-cabine="56"
             data-price-soute="28"
             data-price-sans="28">
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: var(--text-primary);">🇵🇹 Lisbonne</span>
-            <span style="font-size: 0.73rem; color: var(--text-muted); margin-left: 0.3rem; font-weight: 600;">
-              PAR ➔ LIS
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <a href="javascript:void(0)" onclick="window.pickRadarDest('LIS')" style="font-weight: 800; color: var(--text-primary); text-decoration: none;" title="Comparer tous les aéroports pour Lisbonne">
+              🇵🇹 Lisbonne (LIS) 🔍
+            </a>
+          </td>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <span style="font-weight: 800; color: #10b981;">
+              🏠 PAR (Sur place)
             </span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Mer. 18 nov. 2026 (Ryanair)</span>
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-weight: 700; color: var(--accent);">Mer. 18 nov. 2026</span>
-            <span style="color: var(--text-muted); margin: 0 0.25rem;">•</span>
-            <span style="font-weight: 600;">16:05 ➔ 17:40</span>
-            <div style="font-size: 0.72rem; color: var(--text-secondary);">Ryanair</div>
-          </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
-              2h35 (Direct)
+              ✈️ 2h35 (Direct)
             </span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">56 €</span>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
+            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">56 €</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.75rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 56 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.5rem; font-size: 0.75rem; margin-left: 0.25rem;" title="Ouvrir sur Google Flights">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -381,34 +407,33 @@
             data-price-cabine="56"
             data-price-soute="94"
             data-price-sans="56">
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: var(--text-primary);">🇲🇦 Marrakech</span>
-            <span style="font-size: 0.73rem; color: var(--text-muted); margin-left: 0.3rem; font-weight: 600;">
-              PAR ➔ RAK
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <a href="javascript:void(0)" onclick="window.pickRadarDest('RAK')" style="font-weight: 800; color: var(--text-primary); text-decoration: none;" title="Comparer tous les aéroports pour Marrakech">
+              🇲🇦 Marrakech (RAK) 🔍
+            </a>
+          </td>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
+            <span style="font-weight: 800; color: #10b981;">
+              🏠 PAR (Sur place)
             </span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Dim. 15 nov. 2026 (easyJet)</span>
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-weight: 700; color: var(--accent);">Dim. 15 nov. 2026</span>
-            <span style="color: var(--text-muted); margin: 0 0.25rem;">•</span>
-            <span style="font-weight: 600;">06:00 ➔ 08:30</span>
-            <div style="font-size: 0.72rem; color: var(--text-secondary);">easyJet</div>
-          </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
-              3h30 (Direct)
+              ✈️ 3h30 (Direct)
             </span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; white-space: nowrap;">
-            
-              <span style="font-size: 1.15rem; font-weight: 900; color: #10b981;">56 €</span>
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
+            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">56 €</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
-          <td style="padding: 0.55rem 0.6rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.75rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+          <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 56 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.5rem; font-size: 0.75rem; margin-left: 0.25rem;" title="Ouvrir sur Google Flights">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -419,8 +444,8 @@
   </div>
 </div>
 
-<!-- CARTES DESTINATION ÉPURÉES ("LESS IS MORE") -->
-<div class="grid grid-2" style="gap: 0.9rem;">
+<!-- CARTES DESTINATION AVEC COMPARATEUR D'AÉROPORTS PROCHES -->
+<div class="grid grid-2" id="radar-cards-grid" style="gap: 0.9rem;">
   
   <div class="card radar-deal-card"
        data-dest="ATH"
@@ -437,86 +462,153 @@
        style="margin-bottom: 0; padding: 1rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid #10b981;">
 
     <div>
-      <!-- Ligne 1 : Ville + Badge vs Prix -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem;">
+      <!-- Ligne 1 : Ville + Meilleur Aéroport vs Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div>
           <div style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-            <span>🇬🇷 Athènes</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PAR ➔ ATH</span>
+            <span>🇬🇷 Athènes (ATH)</span>
             <span class="badge badge-success" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
               Direct
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            easyJet <code style="font-size: 0.72rem;">U2 4855</code>
+            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • easyJet
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
-          
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              38 €
-            </div>
-          
+          <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
+            38 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            
+              🏠 Sur place (0 € TGV)
+            
+          </div>
         </div>
       </div>
 
-      <!-- Ligne 2 : Résumé Horaire + Train en un coup d'œil -->
-      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.8rem;">
+      <!-- Ligne 2 : Résumé Horaire + Train -->
+      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 07:00 ➔ 11:10</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 07:00 PAR ➔ 11:10 ATH</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 3h10</span>
         </div>
         
       </div>
 
-      <!-- Ligne 3 : Bagages compacts sur une seule ligne + Détails pliables -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.55rem;">
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            🎒 Sans <b>38€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-            🧳 Cabine <b>38€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            📦 Soute <b>76€</b>
-          </a>
+      <!-- Ligne 3 : COMPARATEUR DES AÉROPORTS PROCHES DE CHEZ TOI (Moyenne + Vol + TGV) -->
+      
+      <details class="airport-comp-details"  style="margin-bottom: 0.55rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 0.45rem 0.6rem;">
+        <summary style="cursor: pointer; color: #10b981; font-weight: 800; font-size: 0.76rem; user-select: none;">
+          🏆 Quel aéroport choisir pas loin de chez moi ? (2 aéroports comparés : Vol + TGV &amp; Prix Moyen)
+        </summary>
+        <div style="margin-top: 0.45rem; overflow-x: auto;">
+          <table style="width: 100%; font-size: 0.73rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 0.25rem 0.3rem;">Aéroport &amp; TGV</th>
+                <th style="padding: 0.25rem 0.3rem;">Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Moyenne</th>
+                <th style="padding: 0.25rem 0.3rem;">Billet Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Total (Vol+TGV)</th>
+                <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: #10b981;">
+                    🥇 PAR
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🏠 0 € de train
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (3h10)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">easyJet</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~69 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  38 € <span style="font-weight: 400; color: var(--text-muted);">(38€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                  38 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: var(--text-primary);">
+                    BVA
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🚅 TGV +25 € (1h15)
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (3h10)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Ryanair</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~76 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  64 € <span style="font-weight: 400; color: var(--text-muted);">(64€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                  89 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=BVA&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQlZBcgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
         </div>
+      </details>
+      
 
-        
-        <details style="width: 100%; margin-top: 0.2rem;">
-          <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.73rem; user-select: none;">
-            + Comparer les autres départs (2) &amp; astuce
-          </summary>
-          <div style="margin-top: 0.35rem; padding: 0.45rem 0.6rem; background: var(--bg-card-hover); border-radius: 6px; font-size: 0.73rem;">
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>PAR</b> (Dim. 15 nov. 2026) • easyJet (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">38 € →</a>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>BVA</b> (Dim. 15 nov. 2026) • Ryanair (Direct)</span>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQlZBcgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">64 € →</a>
-            </div>
-            
-            
-          </div>
-        </details>
-        
+      <!-- Ligne 4 : Pilules Bagages -->
+      <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          🎒 Sans <b>38€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
+          🧳 Cabine <b>38€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          📦 Soute <b>76€</b>
+        </a>
       </div>
     </div>
 
-    <!-- Ligne 4 : 2 Boutons d'action clairs -->
-    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+    <!-- Ligne 5 : Boutons d'action -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com (38 €)
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google (38 €)
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/ath/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.38rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/ath/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -538,86 +630,153 @@
        style="margin-bottom: 0; padding: 1rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid #10b981;">
 
     <div>
-      <!-- Ligne 1 : Ville + Badge vs Prix -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem;">
+      <!-- Ligne 1 : Ville + Meilleur Aéroport vs Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div>
           <div style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-            <span>🇪🇸 Barcelone</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PAR ➔ BCN</span>
+            <span>🇪🇸 Barcelone (BCN)</span>
             <span class="badge badge-success" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
               Direct
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            Transavia <code style="font-size: 0.72rem;">TO 4750</code>
+            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • Transavia
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
-          
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              40 €
-            </div>
-          
+          <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
+            40 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            
+              🏠 Sur place (0 € TGV)
+            
+          </div>
         </div>
       </div>
 
-      <!-- Ligne 2 : Résumé Horaire + Train en un coup d'œil -->
-      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.8rem;">
+      <!-- Ligne 2 : Résumé Horaire + Train -->
+      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 06:20 ➔ 08:00</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 06:20 PAR ➔ 08:00 BCN</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 1h40</span>
         </div>
         
       </div>
 
-      <!-- Ligne 3 : Bagages compacts sur une seule ligne + Détails pliables -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.55rem;">
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            🎒 Sans <b>40€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-            🧳 Cabine <b>40€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            📦 Soute <b>78€</b>
-          </a>
+      <!-- Ligne 3 : COMPARATEUR DES AÉROPORTS PROCHES DE CHEZ TOI (Moyenne + Vol + TGV) -->
+      
+      <details class="airport-comp-details"  style="margin-bottom: 0.55rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 0.45rem 0.6rem;">
+        <summary style="cursor: pointer; color: #10b981; font-weight: 800; font-size: 0.76rem; user-select: none;">
+          🏆 Quel aéroport choisir pas loin de chez moi ? (2 aéroports comparés : Vol + TGV &amp; Prix Moyen)
+        </summary>
+        <div style="margin-top: 0.45rem; overflow-x: auto;">
+          <table style="width: 100%; font-size: 0.73rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 0.25rem 0.3rem;">Aéroport &amp; TGV</th>
+                <th style="padding: 0.25rem 0.3rem;">Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Moyenne</th>
+                <th style="padding: 0.25rem 0.3rem;">Billet Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Total (Vol+TGV)</th>
+                <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: #10b981;">
+                    🥇 PAR
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🏠 0 € de train
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (1h40)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Transavia</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~68 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  40 € <span style="font-weight: 400; color: var(--text-muted);">(40€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                  40 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: var(--text-primary);">
+                    BVA
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🚅 TGV +25 € (1h15)
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (1h45)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Ryanair</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~73 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  73 € <span style="font-weight: 400; color: var(--text-muted);">(73€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                  98 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=BVA&amp;acity=BCN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQlZBcgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIT21CXzZpbGpWVWNBVUp4UFFCRy0tLS0tLS0tLS10bGQyNUFBQUFBR3JHQmNNSUtfZnlBEgZGUjMxMjIaCgi/OBACGgNFVVI4HXCZPw==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
         </div>
+      </details>
+      
 
-        
-        <details style="width: 100%; margin-top: 0.2rem;">
-          <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.73rem; user-select: none;">
-            + Comparer les autres départs (2) &amp; astuce
-          </summary>
-          <div style="margin-top: 0.35rem; padding: 0.45rem 0.6rem; background: var(--bg-card-hover); border-radius: 6px; font-size: 0.73rem;">
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>PAR</b> (Dim. 15 nov. 2026) • Transavia (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">40 € →</a>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>BVA</b> (Ven. 13 nov. 2026) • Ryanair (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQlZBcgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIT21CXzZpbGpWVWNBVUp4UFFCRy0tLS0tLS0tLS10bGQyNUFBQUFBR3JHQmNNSUtfZnlBEgZGUjMxMjIaCgi/OBACGgNFVVI4HXCZPw==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">73 € →</a>
-            </div>
-            
-            
-          </div>
-        </details>
-        
+      <!-- Ligne 4 : Pilules Bagages -->
+      <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          🎒 Sans <b>40€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
+          🧳 Cabine <b>40€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          📦 Soute <b>78€</b>
+        </a>
       </div>
     </div>
 
-    <!-- Ligne 4 : 2 Boutons d'action clairs -->
-    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+    <!-- Ligne 5 : Boutons d'action -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com (40 €)
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google (40 €)
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/bcn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.38rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/bcn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -639,86 +798,153 @@
        style="margin-bottom: 0; padding: 1rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid #10b981;">
 
     <div>
-      <!-- Ligne 1 : Ville + Badge vs Prix -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem;">
+      <!-- Ligne 1 : Ville + Meilleur Aéroport vs Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div>
           <div style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-            <span>🇮🇹 Rome</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PAR ➔ FCO</span>
+            <span>🇮🇹 Rome (FCO)</span>
             <span class="badge badge-success" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
               Direct
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            Transavia <code style="font-size: 0.72rem;">TO 3910</code>
+            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • Transavia
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
-          
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              55 €
-            </div>
-          
+          <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
+            55 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            
+              🏠 Sur place (0 € TGV)
+            
+          </div>
         </div>
       </div>
 
-      <!-- Ligne 2 : Résumé Horaire + Train en un coup d'œil -->
-      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.8rem;">
+      <!-- Ligne 2 : Résumé Horaire + Train -->
+      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Ven. 13 nov. 2026 • 06:15 ➔ 08:20</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 Ven. 13 nov. 2026 • 06:15 PAR ➔ 08:20 FCO</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 2h05</span>
         </div>
         
       </div>
 
-      <!-- Ligne 3 : Bagages compacts sur une seule ligne + Détails pliables -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.55rem;">
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            🎒 Sans <b>55€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-            🧳 Cabine <b>55€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            📦 Soute <b>93€</b>
-          </a>
+      <!-- Ligne 3 : COMPARATEUR DES AÉROPORTS PROCHES DE CHEZ TOI (Moyenne + Vol + TGV) -->
+      
+      <details class="airport-comp-details"  style="margin-bottom: 0.55rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 0.45rem 0.6rem;">
+        <summary style="cursor: pointer; color: #10b981; font-weight: 800; font-size: 0.76rem; user-select: none;">
+          🏆 Quel aéroport choisir pas loin de chez moi ? (2 aéroports comparés : Vol + TGV &amp; Prix Moyen)
+        </summary>
+        <div style="margin-top: 0.45rem; overflow-x: auto;">
+          <table style="width: 100%; font-size: 0.73rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 0.25rem 0.3rem;">Aéroport &amp; TGV</th>
+                <th style="padding: 0.25rem 0.3rem;">Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Moyenne</th>
+                <th style="padding: 0.25rem 0.3rem;">Billet Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Total (Vol+TGV)</th>
+                <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: #10b981;">
+                    🥇 PAR
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🏠 0 € de train
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (2h05)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Transavia</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~97 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  55 € <span style="font-weight: 400; color: var(--text-muted);">(55€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                  55 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: var(--text-primary);">
+                    BVA
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🚅 TGV +25 € (1h15)
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (2h05)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Ryanair</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~90 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  85 € <span style="font-weight: 400; color: var(--text-muted);">(85€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                  110 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=BVA&amp;acity=FCO&amp;ddate=2026-11-17&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTdqBRIDQlZBcgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIUjVLbUFkRFE4OEFBYlBIT3dCRy0tLS0tLS0tLS10bHkyN0FBQUFBR3JHQ2pNTEcyY2lBEgVGUjE2NhoKCPpBEAIaA0VVUjgdcORJ&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
         </div>
+      </details>
+      
 
-        
-        <details style="width: 100%; margin-top: 0.2rem;">
-          <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.73rem; user-select: none;">
-            + Comparer les autres départs (2) &amp; astuce
-          </summary>
-          <div style="margin-top: 0.35rem; padding: 0.45rem 0.6rem; background: var(--bg-card-hover); border-radius: 6px; font-size: 0.73rem;">
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>PAR</b> (Ven. 13 nov. 2026) • Transavia (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">55 € →</a>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>BVA</b> (Mar. 17 nov. 2026) • Ryanair (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTdqBRIDQlZBcgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIUjVLbUFkRFE4OEFBYlBIT3dCRy0tLS0tLS0tLS10bHkyN0FBQUFBR3JHQ2pNTEcyY2lBEgVGUjE2NhoKCPpBEAIaA0VVUjgdcORJ&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">85 € →</a>
-            </div>
-            
-            
-          </div>
-        </details>
-        
+      <!-- Ligne 4 : Pilules Bagages -->
+      <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          🎒 Sans <b>55€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
+          🧳 Cabine <b>55€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          📦 Soute <b>93€</b>
+        </a>
       </div>
     </div>
 
-    <!-- Ligne 4 : 2 Boutons d'action clairs -->
-    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+    <!-- Ligne 5 : Boutons d'action -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com (55 €)
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google (55 €)
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/fco/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.38rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/fco/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -740,86 +966,153 @@
        style="margin-bottom: 0; padding: 1rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid #10b981;">
 
     <div>
-      <!-- Ligne 1 : Ville + Badge vs Prix -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem;">
+      <!-- Ligne 1 : Ville + Meilleur Aéroport vs Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div>
           <div style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-            <span>🇵🇹 Lisbonne</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PAR ➔ LIS</span>
+            <span>🇵🇹 Lisbonne (LIS)</span>
             <span class="badge badge-success" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
               Direct
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            Ryanair <code style="font-size: 0.72rem;">FR 1084</code>
+            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • Ryanair
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
-          
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              56 €
-            </div>
-          
+          <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
+            56 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            
+              🏠 Sur place (0 € TGV)
+            
+          </div>
         </div>
       </div>
 
-      <!-- Ligne 2 : Résumé Horaire + Train en un coup d'œil -->
-      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.8rem;">
+      <!-- Ligne 2 : Résumé Horaire + Train -->
+      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Mer. 18 nov. 2026 • 16:05 ➔ 17:40</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 Mer. 18 nov. 2026 • 16:05 PAR ➔ 17:40 LIS</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 2h35</span>
         </div>
         
       </div>
 
-      <!-- Ligne 3 : Bagages compacts sur une seule ligne + Détails pliables -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.55rem;">
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            🎒 Sans <b>28€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-            🧳 Cabine <b>56€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            📦 Soute <b>28€</b>
-          </a>
+      <!-- Ligne 3 : COMPARATEUR DES AÉROPORTS PROCHES DE CHEZ TOI (Moyenne + Vol + TGV) -->
+      
+      <details class="airport-comp-details"  style="margin-bottom: 0.55rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 0.45rem 0.6rem;">
+        <summary style="cursor: pointer; color: #10b981; font-weight: 800; font-size: 0.76rem; user-select: none;">
+          🏆 Quel aéroport choisir pas loin de chez moi ? (2 aéroports comparés : Vol + TGV &amp; Prix Moyen)
+        </summary>
+        <div style="margin-top: 0.45rem; overflow-x: auto;">
+          <table style="width: 100%; font-size: 0.73rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 0.25rem 0.3rem;">Aéroport &amp; TGV</th>
+                <th style="padding: 0.25rem 0.3rem;">Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Moyenne</th>
+                <th style="padding: 0.25rem 0.3rem;">Billet Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Total (Vol+TGV)</th>
+                <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: #10b981;">
+                    🥇 PAR
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🏠 0 € de train
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (2h35)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Ryanair</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~104 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  56 € <span style="font-weight: 400; color: var(--text-muted);">(56€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                  56 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: var(--text-primary);">
+                    BVA
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🚅 TGV +25 € (1h15)
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (2h35)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Ryanair</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~70 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  64 € <span style="font-weight: 400; color: var(--text-muted);">(64€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                  89 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=BVA&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDQlZBcgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIUjVLbUFkRFE4OEFBYlBIU1FCRy0tLS0tLS0tLS10bHkyN0FBQUFBR3JHQ2pNTzVJNm1BEgZGUjEwODQaCgj/MRACGgNFVVI4HXD2Nw==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
         </div>
+      </details>
+      
 
-        
-        <details style="width: 100%; margin-top: 0.2rem;">
-          <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.73rem; user-select: none;">
-            + Comparer les autres départs (2) &amp; astuce
-          </summary>
-          <div style="margin-top: 0.35rem; padding: 0.45rem 0.6rem; background: var(--bg-card-hover); border-radius: 6px; font-size: 0.73rem;">
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>PAR</b> (Mer. 18 nov. 2026) • Ryanair (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">56 € →</a>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>BVA</b> (Mer. 18 nov. 2026) • Ryanair (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDQlZBcgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIUjVLbUFkRFE4OEFBYlBIU1FCRy0tLS0tLS0tLS10bHkyN0FBQUFBR3JHQ2pNTzVJNm1BEgZGUjEwODQaCgj/MRACGgNFVVI4HXD2Nw==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">64 € →</a>
-            </div>
-            
-            
-          </div>
-        </details>
-        
+      <!-- Ligne 4 : Pilules Bagages -->
+      <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          🎒 Sans <b>28€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
+          🧳 Cabine <b>56€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          📦 Soute <b>28€</b>
+        </a>
       </div>
     </div>
 
-    <!-- Ligne 4 : 2 Boutons d'action clairs -->
-    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+    <!-- Ligne 5 : Boutons d'action -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com (56 €)
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google (56 €)
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/lis/261118/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.38rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/lis/261118/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -841,86 +1134,153 @@
        style="margin-bottom: 0; padding: 1rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 3px solid #10b981;">
 
     <div>
-      <!-- Ligne 1 : Ville + Badge vs Prix -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.55rem;">
+      <!-- Ligne 1 : Ville + Meilleur Aéroport vs Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div>
           <div style="font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-            <span>🇲🇦 Marrakech</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PAR ➔ RAK</span>
+            <span>🇲🇦 Marrakech (RAK)</span>
             <span class="badge badge-success" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
               Direct
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            easyJet <code style="font-size: 0.72rem;">U2 4663</code>
+            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • easyJet
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
-          
-            <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
-              56 €
-            </div>
-          
+          <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
+            56 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            
+              🏠 Sur place (0 € TGV)
+            
+          </div>
         </div>
       </div>
 
-      <!-- Ligne 2 : Résumé Horaire + Train en un coup d'œil -->
-      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; margin-bottom: 0.55rem; font-size: 0.8rem;">
+      <!-- Ligne 2 : Résumé Horaire + Train -->
+      <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 06:00 ➔ 08:30</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 06:00 PAR ➔ 08:30 RAK</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 3h30</span>
         </div>
         
       </div>
 
-      <!-- Ligne 3 : Bagages compacts sur une seule ligne + Détails pliables -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.55rem;">
-        <div style="display: flex; gap: 0.4rem; align-items: center;">
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            🎒 Sans <b>56€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-            🧳 Cabine <b>56€</b>
-          </a>
-          <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-            📦 Soute <b>94€</b>
-          </a>
+      <!-- Ligne 3 : COMPARATEUR DES AÉROPORTS PROCHES DE CHEZ TOI (Moyenne + Vol + TGV) -->
+      
+      <details class="airport-comp-details"  style="margin-bottom: 0.55rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 6px; padding: 0.45rem 0.6rem;">
+        <summary style="cursor: pointer; color: #10b981; font-weight: 800; font-size: 0.76rem; user-select: none;">
+          🏆 Quel aéroport choisir pas loin de chez moi ? (2 aéroports comparés : Vol + TGV &amp; Prix Moyen)
+        </summary>
+        <div style="margin-top: 0.45rem; overflow-x: auto;">
+          <table style="width: 100%; font-size: 0.73rem; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">
+                <th style="padding: 0.25rem 0.3rem;">Aéroport &amp; TGV</th>
+                <th style="padding: 0.25rem 0.3rem;">Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Moyenne</th>
+                <th style="padding: 0.25rem 0.3rem;">Billet Vol</th>
+                <th style="padding: 0.25rem 0.3rem;">Total (Vol+TGV)</th>
+                <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: #10b981;">
+                    🥇 PAR
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🏠 0 € de train
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (3h30)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">easyJet</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~84 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  56 € <span style="font-weight: 400; color: var(--text-muted);">(56€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                  56 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+                <td style="padding: 0.3rem;">
+                  <b style="color: var(--text-primary);">
+                    BVA
+                  </b>
+                  <div style="font-size: 0.68rem; color: var(--text-muted);">
+                    🚅 TGV +25 € (1h15)
+                  </div>
+                </td>
+                <td style="padding: 0.3rem;">
+                  <span style="color: #10b981; font-weight: 700;">
+                    Direct (3h20)
+                  </span>
+                  <div style="font-size: 0.67rem; color: var(--text-muted);">Ryanair</div>
+                </td>
+                <td style="padding: 0.3rem; color: var(--text-secondary);">
+                  ~80 €
+                </td>
+                <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
+                  63 € <span style="font-weight: 400; color: var(--text-muted);">(63€)</span>
+                </td>
+                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                  88 €
+                </td>
+                <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
+                  <a href="https://fr.trip.com/flights/showfarefirst?dcity=BVA&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 800; text-decoration: underline;">Trip</a>
+                  •
+                  <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQlZBcgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIU0k5ZmJ4MmswQ3dBSXM0S3dCRy0tLS0tLS0tdGJibGgxNEFBQUFBR3JHQmNNTE16RDZBEgRGUjY0GgoImzEQAhoDRVVSOB1whjc=&amp;gl=fr" target="_blank" style="color: var(--accent); text-decoration: underline;">Google</a>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
         </div>
+      </details>
+      
 
-        
-        <details style="width: 100%; margin-top: 0.2rem;">
-          <summary style="cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.73rem; user-select: none;">
-            + Comparer les autres départs (2) &amp; astuce
-          </summary>
-          <div style="margin-top: 0.35rem; padding: 0.45rem 0.6rem; background: var(--bg-card-hover); border-radius: 6px; font-size: 0.73rem;">
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>PAR</b> (Dim. 15 nov. 2026) • easyJet (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">56 € →</a>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; padding: 0.12rem 0;">
-              <span><b>BVA</b> (Dim. 15 nov. 2026) • Ryanair (Direct)</span>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQlZBcgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIU0k5ZmJ4MmswQ3dBSXM0S3dCRy0tLS0tLS0tdGJibGgxNEFBQUFBR3JHQmNNTE16RDZBEgRGUjY0GgoImzEQAhoDRVVSOB1whjc=&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700;">63 € →</a>
-            </div>
-            
-            
-          </div>
-        </details>
-        
+      <!-- Ligne 4 : Pilules Bagages -->
+      <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          🎒 Sans <b>56€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
+          🧳 Cabine <b>56€</b>
+        </a>
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
+          📦 Soute <b>94€</b>
+        </a>
       </div>
     </div>
 
-    <!-- Ligne 4 : 2 Boutons d'action clairs -->
-    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+    <!-- Ligne 5 : Boutons d'action -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com (56 €)
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.38rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google (56 €)
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/rak/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.38rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/rak/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -1105,6 +1465,33 @@
 </div>
 
 
+<script>
+// Fonction universelle (local + GitHub Pages) pour "pick une destination" et comparer tous ses aéroports proches
+window.pickRadarDest = function(destCode) {
+  var sel = document.getElementById("dest_pick");
+  if (sel) sel.value = destCode || "";
+  if (window.handleRadarFilterChange) {
+    window.handleRadarFilterChange();
+    return;
+  }
+  var rows = document.querySelectorAll("tr.radar-deal-row");
+  var cards = document.querySelectorAll("div.radar-deal-card");
+  rows.forEach(function(r) {
+    r.style.display = (!destCode || r.getAttribute("data-dest") === destCode) ? "" : "none";
+  });
+  cards.forEach(function(c) {
+    var match = (!destCode || c.getAttribute("data-dest") === destCode);
+    c.style.display = match ? "flex" : "none";
+    var det = c.querySelector("details.airport-comp-details");
+    if (det && destCode && match) det.open = true;
+  });
+  var grid = document.getElementById("radar-cards-grid");
+  if (grid) {
+    grid.style.gridTemplateColumns = destCode ? "1fr" : "";
+  }
+};
+</script>
+
   </main>
 
   <div id="toast-container"></div>
@@ -1146,6 +1533,7 @@
     if (!form) return;
 
     const originEl = form.querySelector('#origin');
+    const destPickEl = form.querySelector('#dest_pick');
     const monthEl = form.querySelector('#month');
     const dateEl = form.querySelector('#exact_date');
     const bagageEl = form.querySelector('#bagage');
@@ -1158,6 +1546,7 @@
     const filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
 
     const origin = originEl ? originEl.value : "CGO";
+    const destPick = destPickEl ? destPickEl.value : "";
     const month = monthEl ? monthEl.value : "2026-11";
     let exactDate = dateEl ? dateEl.value : "";
     if (!exactDate && month) {
@@ -1172,6 +1561,7 @@
 
     const q = new URLSearchParams({
       origin: origin,
+      dest_pick: destPick,
       month: month,
       exact_date: exactDate,
       bagage: bagage,
@@ -1200,6 +1590,7 @@
     if (!form) return;
 
     const origin = q.get("origin") || "";
+    const destPick = q.get("dest_pick") || "";
     const month = q.get("month") || "";
     const exactDate = q.get("exact_date") || "";
     const bagage = q.get("bagage") || "";
@@ -1210,6 +1601,7 @@
     const filterTag = q.get("filter") || "all";
 
     if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
+    if (form.querySelector('#dest_pick')) form.querySelector('#dest_pick').value = destPick;
     if (month && form.querySelector('#month')) form.querySelector('#month').value = month;
     if (exactDate && form.querySelector('#exact_date')) form.querySelector('#exact_date').value = exactDate;
     if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
@@ -1221,21 +1613,20 @@
     }
 
     function matchesDeal(el) {
+      const dest = el.getAttribute("data-dest") || "";
       const durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
       const stops = parseInt(el.getAttribute("data-stops") || "0", 10);
       const layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
       const isNearby = el.getAttribute("data-is-nearby") === "1";
       const region = el.getAttribute("data-region") || "";
-      const priceCab = parseInt(el.getAttribute("data-price-cabine") || "0", 10);
-      const priceSou = parseInt(el.getAttribute("data-price-soute") || "0", 10);
-      const priceSans = parseInt(el.getAttribute("data-price-sans") || "0", 10);
-      const activePrice = bagage === "soute_1" ? priceSou : (bagage === "aucun" ? priceSans : priceCab);
+      const priceDisp = parseInt(el.getAttribute("data-price-display") || "0", 10);
 
+      if (destPick && dest !== destPick) return false;
       if (!incNear && isNearby) return false;
       if (maxDur > 0 && durMin > maxDur * 60) return false;
       if (maxStops >= 0 && stops > maxStops) return false;
       if (maxLay > 0 && layMin > maxLay * 60) return false;
-      if (filterTag === "under_100" && activePrice >= 100) return false;
+      if (filterTag === "under_100" && priceDisp >= 100) return false;
       if (filterTag === "southeast_asia" && region !== "Asie du Sud-Est") return false;
       return true;
     }
@@ -1252,24 +1643,24 @@
     cards.forEach(function(card) {
       const show = matchesDeal(card);
       card.style.display = show ? "flex" : "none";
+      const det = card.querySelector("details.airport-comp-details");
+      if (det && destPick && show) {
+        det.open = true;
+      }
     });
 
-    // Mettre à jour le badge de compteur en haut de page
-    const dateFr = exactDate ? formatDateFrClient(exactDate) : "";
-    const topBadges = document.querySelectorAll(".badge.badge-success");
-    if (topBadges.length > 0 && topBadges[0].textContent.includes("destination")) {
-      topBadges[0].textContent = "⚡ " + visibleCount + " destination(s)" + (dateFr ? (" • " + dateFr) : "");
+    const grid = document.getElementById("radar-cards-grid");
+    if (grid) {
+      grid.style.gridTemplateColumns = destPick ? "1fr" : "";
     }
 
-    // Mettre à jour l'état visuel des boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
-    const filterLinks = form.querySelectorAll('a[href*="filter="]');
-    filterLinks.forEach(function(a) {
-      const href = a.getAttribute("href") || "";
-      const isMatch = href.includes("filter=" + filterTag);
-      a.classList.toggle("btn-primary", isMatch);
-      a.classList.toggle("btn-secondary", !isMatch);
-      if (href.includes("filter=all")) {
-        a.textContent = "Tous (" + visibleCount + ")";
+    // Mettre à jour l'état visuel des boutons de raccourci destination
+    ["", "HAN", "CNX", "BKK", "ICN", "NRT"].forEach(function(code) {
+      const btn = document.getElementById(code ? ("btn-dest-" + code) : "btn-dest-all");
+      if (btn) {
+        const active = (destPick === code);
+        btn.classList.toggle("btn-primary", active);
+        btn.classList.toggle("btn-secondary", !active);
       }
     });
   }

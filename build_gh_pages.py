@@ -77,6 +77,7 @@ RADAR_CLIENT_FILTER_JS = """
     if (!form) return;
 
     const originEl = form.querySelector('#origin');
+    const destPickEl = form.querySelector('#dest_pick');
     const monthEl = form.querySelector('#month');
     const dateEl = form.querySelector('#exact_date');
     const bagageEl = form.querySelector('#bagage');
@@ -89,6 +90,7 @@ RADAR_CLIENT_FILTER_JS = """
     const filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
 
     const origin = originEl ? originEl.value : "CGO";
+    const destPick = destPickEl ? destPickEl.value : "";
     const month = monthEl ? monthEl.value : "2026-11";
     let exactDate = dateEl ? dateEl.value : "";
     if (!exactDate && month) {
@@ -103,6 +105,7 @@ RADAR_CLIENT_FILTER_JS = """
 
     const q = new URLSearchParams({
       origin: origin,
+      dest_pick: destPick,
       month: month,
       exact_date: exactDate,
       bagage: bagage,
@@ -131,6 +134,7 @@ RADAR_CLIENT_FILTER_JS = """
     if (!form) return;
 
     const origin = q.get("origin") || "";
+    const destPick = q.get("dest_pick") || "";
     const month = q.get("month") || "";
     const exactDate = q.get("exact_date") || "";
     const bagage = q.get("bagage") || "";
@@ -141,6 +145,7 @@ RADAR_CLIENT_FILTER_JS = """
     const filterTag = q.get("filter") || "all";
 
     if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
+    if (form.querySelector('#dest_pick')) form.querySelector('#dest_pick').value = destPick;
     if (month && form.querySelector('#month')) form.querySelector('#month').value = month;
     if (exactDate && form.querySelector('#exact_date')) form.querySelector('#exact_date').value = exactDate;
     if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
@@ -152,21 +157,20 @@ RADAR_CLIENT_FILTER_JS = """
     }
 
     function matchesDeal(el) {
+      const dest = el.getAttribute("data-dest") || "";
       const durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
       const stops = parseInt(el.getAttribute("data-stops") || "0", 10);
       const layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
       const isNearby = el.getAttribute("data-is-nearby") === "1";
       const region = el.getAttribute("data-region") || "";
-      const priceCab = parseInt(el.getAttribute("data-price-cabine") || "0", 10);
-      const priceSou = parseInt(el.getAttribute("data-price-soute") || "0", 10);
-      const priceSans = parseInt(el.getAttribute("data-price-sans") || "0", 10);
-      const activePrice = bagage === "soute_1" ? priceSou : (bagage === "aucun" ? priceSans : priceCab);
+      const priceDisp = parseInt(el.getAttribute("data-price-display") || "0", 10);
 
+      if (destPick && dest !== destPick) return false;
       if (!incNear && isNearby) return false;
       if (maxDur > 0 && durMin > maxDur * 60) return false;
       if (maxStops >= 0 && stops > maxStops) return false;
       if (maxLay > 0 && layMin > maxLay * 60) return false;
-      if (filterTag === "under_100" && activePrice >= 100) return false;
+      if (filterTag === "under_100" && priceDisp >= 100) return false;
       if (filterTag === "southeast_asia" && region !== "Asie du Sud-Est") return false;
       return true;
     }
@@ -183,24 +187,24 @@ RADAR_CLIENT_FILTER_JS = """
     cards.forEach(function(card) {
       const show = matchesDeal(card);
       card.style.display = show ? "flex" : "none";
+      const det = card.querySelector("details.airport-comp-details");
+      if (det && destPick && show) {
+        det.open = true;
+      }
     });
 
-    // Mettre à jour le badge de compteur en haut de page
-    const dateFr = exactDate ? formatDateFrClient(exactDate) : "";
-    const topBadges = document.querySelectorAll(".badge.badge-success");
-    if (topBadges.length > 0 && topBadges[0].textContent.includes("destination")) {
-      topBadges[0].textContent = "⚡ " + visibleCount + " destination(s)" + (dateFr ? (" • " + dateFr) : "");
+    const grid = document.getElementById("radar-cards-grid");
+    if (grid) {
+      grid.style.gridTemplateColumns = destPick ? "1fr" : "";
     }
 
-    // Mettre à jour l'état visuel des boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
-    const filterLinks = form.querySelectorAll('a[href*="filter="]');
-    filterLinks.forEach(function(a) {
-      const href = a.getAttribute("href") || "";
-      const isMatch = href.includes("filter=" + filterTag);
-      a.classList.toggle("btn-primary", isMatch);
-      a.classList.toggle("btn-secondary", !isMatch);
-      if (href.includes("filter=all")) {
-        a.textContent = "Tous (" + visibleCount + ")";
+    // Mettre à jour l'état visuel des boutons de raccourci destination
+    ["", "HAN", "CNX", "BKK", "ICN", "NRT"].forEach(function(code) {
+      const btn = document.getElementById(code ? ("btn-dest-" + code) : "btn-dest-all");
+      if (btn) {
+        const active = (destPick === code);
+        btn.classList.toggle("btn-primary", active);
+        btn.classList.toggle("btn-secondary", !active);
       }
     });
   }

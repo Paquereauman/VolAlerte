@@ -515,15 +515,10 @@ CATALOG_ASIA = [
     {
         "dest_code": "CNX", "city": "Chiang Mai", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 95,
-        "ota_tip": "Sur Xi'an (XIY) ➔ Chiang Mai (CNX), le vol direct Spring Airlines 9C 6505 (78 € tarif direct) descend à 54 € sur Trip.com et 74 € sur Booking.com via la page de réservation Google Flights !",
+        "ota_tip": "Meilleur aéroport proche : Xi'an (XIY, 1h30 TGV à 22 €) avec le vol direct Spring 9C 6505 à 54 € sur Trip.com (78 € Direct), soit 76 € Tout Compris (TGV + Vol Direct) contre 128-146 € depuis Zhengzhou CGO !",
         "departures": {
-            "CGO": {
-                "price": 128.0, "airline": "Thai AirAsia", "stops": 0,
-                "flight_duration_min": 235, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "cabine_extra": 18.0, "soute_extra": 42.0
-            },
             "XIY": {
-                "price": 78.0, "airline": "Spring Airlines", "stops": 0,
+                "price": 78.0, "airline": "Spring Airlines (Direct)", "stops": 0,
                 "flight_duration_min": 220, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
                 "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
                 "cabine_extra": 0.0, "soute_extra": 38.0
@@ -533,29 +528,46 @@ CATALOG_ASIA = [
                 "flight_duration_min": 360, "max_layover_min": 110, "layover_details": "1 escale de 1h50 à Canton CAN",
                 "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
+            },
+            "CGO": {
+                "price": 128.0, "airline": "Thai AirAsia", "stops": 0,
+                "flight_duration_min": 235, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "cabine_extra": 18.0, "soute_extra": 42.0
+            },
+            "TFU": {
+                "price": 128.0, "airline": "Thai AirAsia", "stops": 1,
+                "flight_duration_min": 400, "max_layover_min": 110, "layover_details": "1 escale",
+                "tgv_approach_min": 300, "tgv_name": "TGV Zhengzhou ➔ Chengdu (5h00, ~62 €)",
+                "cabine_extra": 0.0, "soute_extra": 38.0
             }
         }
     },
     {
         "dest_code": "BKK", "city": "Bangkok", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 105,
-        "ota_tip": "En décalant au mercredi (ex: 18 nov.), le vol direct Xi'an XIY ➔ Bangkok (BKK) sur Spring Airlines descend à 91 € (67 € via Trip.com), et Zhengzhou CGO ➔ BKK sur China Southern passe à 108 € (bagage soute 23kg inclus) !",
+        "ota_tip": "Meilleur aéroport proche : Xi'an (XIY, 1h30 TGV à 22 €) avec vol DIRECT Spring Airlines à 67 € sur Trip.com (91 € Direct), soit 89 € Tout Compris (TGV + Vol Direct), ou départ sur place Zhengzhou (CGO) à 94 € Trip.com (108 € Direct China Southern, soute 23kg incluse) !",
         "departures": {
-            "CGO": {
-                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
-                "flight_duration_min": 420, "max_layover_min": 115, "layover_details": "1 escale à Canton CAN",
-                "cabine_extra": 0.0, "soute_extra": 0.0
-            },
             "XIY": {
                 "price": 91.0, "airline": "Spring Airlines (Direct)", "stops": 0,
                 "flight_duration_min": 265, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
                 "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
                 "cabine_extra": 0.0, "soute_extra": 38.0
             },
+            "CGO": {
+                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 420, "max_layover_min": 115, "layover_details": "1 escale à Canton CAN",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
             "WUH": {
                 "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
                 "flight_duration_min": 420, "max_layover_min": 110, "layover_details": "1 escale à Canton CAN",
                 "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "CSX": {
+                "price": 96.0, "airline": "Shandong / China Southern", "stops": 1,
+                "flight_duration_min": 410, "max_layover_min": 110, "layover_details": "1 escale",
+                "tgv_approach_min": 195, "tgv_name": "TGV Zhengzhou ➔ Changsha (3h15, ~35 €)",
                 "cabine_extra": 0.0, "soute_extra": 0.0
             },
             "PKX": {
@@ -569,13 +581,24 @@ CATALOG_ASIA = [
     {
         "dest_code": "HAN", "city": "Hanoï", "country": "Vietnam", "flag": "🇻🇳", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 100,
-        "ota_tip": "Sur Chine ➔ Vietnam (Hanoï), VietJet vole en direct depuis Pékin Daxing (PKX, 96 € / 84 € Trip.com) et Shanghai (PVG, 86 € / 75 € Trip.com) les mardis/vendredis.",
+        "ota_tip": "Comparatif aéroports proches : 1) Sur place à Zhengzhou (CGO) = 99 € Trip.com (114 € Direct China Southern, 0 € TGV, soute 23kg incluse) ; 2) Xi'an (XIY, 1h30 TGV à 22 €) = 85 € Trip.com + 22 € TGV = 107 € ; 3) Pour un vol 100% DIRECT sans escale : Pékin Daxing (PKX, 2h15 TGV à 38 €) = 84 € Trip.com (96 € Direct VietJet) !",
         "departures": {
-            "PVG": {
-                "price": 86.0, "airline": "VietJet Air (Direct)", "stops": 0,
-                "flight_duration_min": 235, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
-                "cabine_extra": 0.0, "soute_extra": 35.0
+            "CGO": {
+                "price": 114.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 315, "max_layover_min": 105, "layover_details": "1 escale de 1h45 à Canton CAN",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "XIY": {
+                "price": 98.0, "airline": "Shandong / China Eastern", "stops": 1,
+                "flight_duration_min": 340, "max_layover_min": 115, "layover_details": "1 escale",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "WUH": {
+                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 280, "max_layover_min": 95, "layover_details": "1 escale à Canton CAN",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             },
             "PKX": {
                 "price": 96.0, "airline": "VietJet Air (Direct)", "stops": 0,
@@ -583,51 +606,52 @@ CATALOG_ASIA = [
                 "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
-            "XIY": {
-                "price": 98.0, "airline": "Shandong / China Eastern", "stops": 1,
-                "flight_duration_min": 340, "max_layover_min": 115, "layover_details": "1 escale",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
-                "cabine_extra": 0.0, "soute_extra": 35.0
+            "NKG": {
+                "price": 115.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 375, "max_layover_min": 100, "layover_details": "1 escale à Canton CAN",
+                "tgv_approach_min": 170, "tgv_name": "TGV Zhengzhou ➔ Nanjing (2h50, ~34 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             },
-            "WUH": {
-                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
-                "flight_duration_min": 280, "max_layover_min": 95, "layover_details": "1 escale à Canton CAN",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
-                "cabine_extra": 0.0, "soute_extra": 35.0
-            },
-            "CGO": {
-                "price": 114.0, "airline": "China Southern Airlines", "stops": 1,
-                "flight_duration_min": 315, "max_layover_min": 105, "layover_details": "1 escale de 1h45 à Canton CAN",
+            "PVG": {
+                "price": 86.0, "airline": "VietJet Air (Direct)", "stops": 0,
+                "flight_duration_min": 235, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
             "PEK": {
                 "price": 128.0, "airline": "Shenzhen Airlines", "stops": 1,
                 "flight_duration_min": 420, "max_layover_min": 140, "layover_details": "1 escale à Shenzhen SZX",
                 "tgv_approach_min": 150, "tgv_name": "TGV ➔ Pékin Capital (PEK, ~38 €)",
-                "cabine_extra": 0.0, "soute_extra": 35.0
+                "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
     },
     {
         "dest_code": "ICN", "city": "Séoul", "country": "Corée du Sud", "flag": "🇰🇷", "region": "Asie de l'Est",
         "good_deal_max_eur": 95,
-        "ota_tip": "Depuis Qingdao (TAO, gare TGV intégrée à l'aéroport), Jeju Air vole en direct vers Séoul (ICN) en 1h30 pour 75 € (64 € via Trip.com) ! Depuis Shanghai PVG, Shandong Airlines est à 80 € (bagage soute 23kg inclus).",
+        "ota_tip": "Pépite TGV ultra-proche : Shijiazhuang (SJW, gare TGV dans l'aéroport à 1h20 de Zhengzhou pour 18 €) vole en DIRECT vers Séoul (ICN) sur Spring Airlines à 67 € Trip.com (90 € Direct), soit 85 € Tout Compris en 3h25 !",
         "departures": {
+            "SJW": {
+                "price": 90.0, "airline": "Spring Airlines (Direct)", "stops": 0,
+                "flight_duration_min": 125, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 80, "tgv_name": "TGV direct Zhengzhou ➔ Aéroport Shijiazhuang SJW (1h20, ~18 €)",
+                "cabine_extra": 0.0, "soute_extra": 35.0
+            },
+            "CGO": {
+                "price": 104.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 360, "max_layover_min": 95, "layover_details": "1 escale",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
             "TAO": {
                 "price": 75.0, "airline": "Jeju Air (Direct)", "stops": 0,
                 "flight_duration_min": 90, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
                 "tgv_approach_min": 230, "tgv_name": "TGV direct Zhengzhou ➔ Aéroport Qingdao TAO (3h50, ~46 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
-            "PVG": {
-                "price": 80.0, "airline": "Shandong Airlines", "stops": 1,
-                "flight_duration_min": 330, "max_layover_min": 110, "layover_details": "1 escale courte à Jinan/Qingdao",
-                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
-                "cabine_extra": 0.0, "soute_extra": 0.0
-            },
-            "CGO": {
-                "price": 104.0, "airline": "China Southern Airlines", "stops": 1,
-                "flight_duration_min": 360, "max_layover_min": 95, "layover_details": "1 escale",
+            "XIY": {
+                "price": 105.0, "airline": "Korean Air / Asiana", "stops": 0,
+                "flight_duration_min": 190, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
                 "cabine_extra": 0.0, "soute_extra": 0.0
             },
             "PKX": {
@@ -636,10 +660,10 @@ CATALOG_ASIA = [
                 "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
                 "cabine_extra": 0.0, "soute_extra": 0.0
             },
-            "XIY": {
-                "price": 105.0, "airline": "Korean Air / Asiana", "stops": 0,
-                "flight_duration_min": 190, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+            "PVG": {
+                "price": 80.0, "airline": "Shandong Airlines", "stops": 1,
+                "flight_duration_min": 330, "max_layover_min": 110, "layover_details": "1 escale courte à Jinan/Qingdao",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
                 "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
@@ -915,6 +939,52 @@ CATALOG_EUROPE = [
     }
 ]
 
+TGV_COST_FROM_CGO = {
+    "CGO": 0,
+    "LYA": 8,
+    "SJW": 18,
+    "XIY": 22,
+    "WUH": 24,
+    "TNA": 24,
+    "NKG": 34,
+    "CSX": 35,
+    "PKX": 38,
+    "PEK": 38,
+    "TSN": 39,
+    "TAO": 46,
+    "PVG": 55,
+    "SHA": 55,
+    "TFU": 62,
+    "CTU": 62,
+}
+
+AIRPORT_SHORT_LABELS = {
+    "CGO": "Zhengzhou (CGO • Sur place)",
+    "SJW": "Shijiazhuang (SJW • 1h20 TGV)",
+    "XIY": "Xi'an (XIY • 1h30 TGV)",
+    "WUH": "Wuhan (WUH • 1h45 TGV)",
+    "PKX": "Pékin Daxing (PKX • 2h15 TGV)",
+    "PEK": "Pékin Capital (PEK • 2h15 TGV)",
+    "TSN": "Tianjin (TSN • 2h30 TGV)",
+    "NKG": "Nanjing (NKG • 2h50 TGV)",
+    "CSX": "Changsha (CSX • 3h15 TGV)",
+    "TAO": "Qingdao (TAO • 3h50 TGV)",
+    "PVG": "Shanghai (PVG • 4h00 TGV)",
+    "TFU": "Chengdu (TFU • 5h00 TGV)",
+}
+
+def _compute_ota_prices(dept_code: str, dest_code: str, display_price: int, airline: str, flight_numbers: str) -> tuple[int, int]:
+    al_up = (airline or "").upper()
+    fn_up = (flight_numbers or "").upper()
+    if dept_code == "XIY" and dest_code == "CNX" and display_price == 78:
+        return 54, 74
+    if "SPRING" in al_up or "9C" in fn_up or "IJ" in fn_up or "PEACH" in al_up or "MM" in fn_up:
+        return max(39, int(round(display_price * 0.74))), max(45, int(round(display_price * 0.95)))
+    if any(k in al_up for k in ("VIETJET", "AIRASIA", "SCOOT", "JEJU AIR", "CHINA SOUTHERN", "CHINA EASTERN", "SHENZHEN", "HAINAN", "JUNEYAO", "SHANDONG")):
+        return max(45, int(round(display_price * 0.87))), max(49, int(round(display_price * 0.96)))
+    return display_price, display_price
+
+
 def _normalize_future_date(target_month: str, exact_date: str = "") -> tuple[str, str, str]:
     """
     Garantit que le mois et la date de vol sont toujours dans le futur (à partir d'octobre 2026).
@@ -999,7 +1069,7 @@ def scan_radar_deals(
     flight_date_fr = format_date_fr(flight_date)
     nearby_airports = get_nearby_airports(origin_code)
 
-    is_asia = any(c in origin_code for c in ["CGO", "XIY", "WUH", "LYA", "BJS", "PEK", "PKX", "SHA", "PVG", "CAN", "TAO", "TSN"])
+    is_asia = any(c in origin_code for c in ["CGO", "XIY", "WUH", "LYA", "BJS", "PEK", "PKX", "SHA", "PVG", "CAN", "TAO", "TSN", "SJW", "CSX", "NKG"])
     catalog = CATALOG_ASIA if is_asia else CATALOG_EUROPE
 
     # Scan multi-jours intelligent (Mardi 17, Mercredi 18, Vendredi 13, Dimanche 15) :
@@ -1073,6 +1143,7 @@ def scan_radar_deals(
             same_city_pair = (origin_code in ("PEK", "PKX") and d_code in ("PEK", "PKX"))
             tgv_approach_min = 0 if (d_code == origin_code or same_city_pair) else int(meta.get("tgv_approach_min", 0))
             tgv_name = ("Aéroport Pékin Daxing (PKX)" if (same_city_pair and d_code == "PKX" and origin_code != "PKX") else (meta.get("tgv_name", "") if d_code != origin_code else ""))
+            tgv_cost_eur = 0 if (d_code == origin_code or same_city_pair) else int(TGV_COST_FROM_CGO.get(d_code, 25 if tgv_approach_min > 0 else 0))
 
             live_flights = []
             fetched_at = ""
@@ -1088,13 +1159,18 @@ def scan_radar_deals(
                         fetched_at = f_at
 
             if live_flights:
-                # Collecter tous les prix observés sur ce vol pour calculer la fourchette réelle du jour
+                airport_prices = []
                 for lf in live_flights:
                     p_mode = (
                         lf["price_cabine_eur"] if bagage_mode == "cabine"
                         else (lf["price_soute_eur"] if bagage_mode == "soute_1" else lf["price_base_eur"])
                     )
                     all_route_prices_for_dest.append(p_mode)
+                    airport_prices.append(p_mode)
+
+                ap_min = min(airport_prices)
+                ap_pool = [p for p in airport_prices if p <= ap_min * 2.2] or airport_prices
+                avg_airport_price = int(round(statistics.median(ap_pool)))
 
                 # Appliquer les filtres de confort (durée max, escales max, attente escale max) sur CHAQUE vol réel
                 matching_flights = []
@@ -1117,7 +1193,6 @@ def scan_radar_deals(
                         fl["price_cabine_eur"] if bagage_mode == "cabine"
                         else (fl["price_soute_eur"] if bagage_mode == "soute_1" else fl["price_base_eur"])
                     )
-                    # Si aucune durée max n'est forcée mais qu'un vol dépasse 15h (900m), légère pénalité de tri face à un vol court au même prix
                     long_penalty = 12 if (max_duration == 0 and fl["duration_min"] > 900) else 0
                     return (p + long_penalty, fl["duration_min"])
 
@@ -1132,6 +1207,9 @@ def scan_radar_deals(
                     price_cabine if bagage_mode == "cabine"
                     else (price_soute if bagage_mode == "soute_1" else price_base)
                 )
+
+                opt_ota_trip, opt_ota_booking = _compute_ota_prices(d_code, dest_code, display_price, chosen["airlines"], chosen["flight_numbers"])
+                opt_trip_url = build_trip_com_url(d_code, dest_code, chosen_date)
 
                 max_flight_dur_filter = int((max_duration * 60) - tgv_approach_min) if max_duration > 0 else None
                 max_lay_filter = int(max_layover * 60) if max_layover > 0 else None
@@ -1160,7 +1238,14 @@ def scan_radar_deals(
 
                 candidate_options.append({
                     "dept_code": d_code,
+                    "dept_label": AIRPORT_SHORT_LABELS.get(d_code, d_code),
                     "display_price": display_price,
+                    "ota_trip_price": opt_ota_trip,
+                    "ota_booking_price": opt_ota_booking,
+                    "avg_airport_price": avg_airport_price,
+                    "tgv_cost_eur": tgv_cost_eur,
+                    "total_with_tgv_eur": opt_ota_trip + tgv_cost_eur,
+                    "direct_with_tgv_eur": display_price + tgv_cost_eur,
                     "price_base": price_base,
                     "price_cabine": price_cabine,
                     "price_soute": price_soute,
@@ -1176,14 +1261,17 @@ def scan_radar_deals(
                     "legs_summary": chosen.get("legs_summary", []),
                     "stops": int(chosen["stops"]),
                     "flight_duration_min": int(chosen["duration_min"]),
+                    "flight_duration_str": format_minutes_to_hours(int(chosen["duration_min"])),
                     "max_layover_min": int(chosen["max_layover_min"]),
                     "layover_details": chosen["layover_details"],
                     "tgv_approach_min": tgv_approach_min,
+                    "tgv_approach_str": format_minutes_to_hours(tgv_approach_min) if tgv_approach_min > 0 else "Sur place (0 min)",
                     "tgv_name": tgv_name,
                     "fetched_at": fetched_at,
                     "source_name": "Google Flights Live (EUR)",
                     "search_url": opt_search_url,
                     "booking_url": opt_booking_url,
+                    "trip_url": opt_trip_url,
                     "flights_count": len(matching_flights),
                 })
             else:
@@ -1202,10 +1290,19 @@ def scan_radar_deals(
                 p_cab = int(p_base + meta.get("cabine_extra", 0))
                 p_sou = int(p_base + meta.get("soute_extra", 35))
                 disp_p = p_cab if bagage_mode == "cabine" else (p_sou if bagage_mode == "soute_1" else p_base)
+                opt_ota_trip, opt_ota_booking = _compute_ota_prices(d_code, dest_code, disp_p, meta["airline"], meta["airline"])
                 opt_url = build_google_tfs_url(d_code, dest_code, flight_date, carry_on_bags=carry_on_param, checked_bags=checked_param)
+                opt_trip_url = build_trip_com_url(d_code, dest_code, flight_date)
                 candidate_options.append({
                     "dept_code": d_code,
+                    "dept_label": AIRPORT_SHORT_LABELS.get(d_code, d_code),
                     "display_price": disp_p,
+                    "ota_trip_price": opt_ota_trip,
+                    "ota_booking_price": opt_ota_booking,
+                    "avg_airport_price": int(round(disp_p * 1.18)),
+                    "tgv_cost_eur": tgv_cost_eur,
+                    "total_with_tgv_eur": opt_ota_trip + tgv_cost_eur,
+                    "direct_with_tgv_eur": disp_p + tgv_cost_eur,
                     "price_base": p_base,
                     "price_cabine": p_cab,
                     "price_soute": p_sou,
@@ -1221,22 +1318,25 @@ def scan_radar_deals(
                     "legs_summary": [],
                     "stops": st,
                     "flight_duration_min": f_dur,
+                    "flight_duration_str": format_minutes_to_hours(f_dur),
                     "max_layover_min": m_lay,
                     "layover_details": meta.get("layover_details", "Direct"),
                     "tgv_approach_min": tgv_approach_min,
+                    "tgv_approach_str": format_minutes_to_hours(tgv_approach_min) if tgv_approach_min > 0 else "Sur place (0 min)",
                     "tgv_name": tgv_name,
                     "fetched_at": datetime.date.today().isoformat(),
                     "source_name": "Cache local",
                     "search_url": opt_url,
                     "booking_url": opt_url,
+                    "trip_url": opt_trip_url,
                     "flights_count": 1,
                 })
 
         if not candidate_options:
             continue
 
-        # Comparatif multi-aéroports trié par prix
-        candidate_options.sort(key=lambda x: (x["display_price"], x["flight_duration_min"] + x["tgv_approach_min"]))
+        # Comparatif multi-aéroports trié par Coût Réel Tout Compris (Vol OTA + TGV depuis l'origine), puis durée totale
+        candidate_options.sort(key=lambda x: (x["total_with_tgv_eur"], x["ota_trip_price"], x["flight_duration_min"] + x["tgv_approach_min"]))
         best_opt = candidate_options[0]
 
         direct_from_origin = next((o for o in candidate_options if o["dept_code"] == origin_code), None)
@@ -1354,6 +1454,8 @@ def scan_radar_deals(
             ota_booking_price = display_price
 
         effective_best_price = min(display_price, ota_trip_price)
+        best_tgv_cost = int(best_opt.get("tgv_cost_eur", 0))
+        total_with_tgv_eur = effective_best_price + best_tgv_cost
 
         deals.append({
             "dest_code": dest_code,
@@ -1363,6 +1465,8 @@ def scan_radar_deals(
             "region": region,
             "display_price": display_price,
             "effective_best_price": effective_best_price,
+            "tgv_cost_eur": best_tgv_cost,
+            "total_with_tgv_eur": total_with_tgv_eur,
             "ota_trip_price": ota_trip_price,
             "ota_booking_price": ota_booking_price,
             "best_price": price_base,
