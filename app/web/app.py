@@ -226,7 +226,8 @@ async def dashboard(request: Request):
                 route_id=route_id,
                 dates_ou_mois=dep_date_iso,
                 baggage_cost=baggage_cost,
-                current_total_price=total_price
+                current_total_price=total_price,
+                live_prices=[float(f["price_base_eur"]) for f in live_flights] if live_flights else None
             )
 
             routes_data.append({
@@ -399,7 +400,8 @@ async def route_detail(request: Request, route_id: int):
         route_id=route_id,
         dates_ou_mois=dep_date_iso,
         baggage_cost=active_cost,
-        current_total_price=active_total
+        current_total_price=active_total,
+        live_prices=[float(f["price_base_eur"]) for f in live_flights] if live_flights else None
     )
 
     carry_on_p = 1 if active_baggage == "cabine" else 0

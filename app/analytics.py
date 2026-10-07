@@ -220,13 +220,15 @@ def compute_monthly_price_stats(
     route_id: Optional[int],
     dates_ou_mois: str,
     baggage_cost: float = 0.0,
-    current_total_price: Optional[float] = None
+    current_total_price: Optional[float] = None,
+    live_prices: Optional[list[float]] = None
 ) -> dict:
     """
-    Calcule les métriques mensuelles de référence :
-    - Prix moyen billet seul du mois (point médian de la fourchette habituelle Google Flights ou médiane de l'historique)
+    Calcule les métriques mensuelles de référence en filtrant les tarifs aberrants
+    (ex: billets multi-compagnies plein tarif à 1 500 € - 2 000 € sur Google Flights) :
+    - Prix moyen billet seul du mois (médiane / moyenne tronquée des vols économiques réalistes)
     - Prix moyen total avec bagage sélectionné
-    - Fourchette habituelle (basse / haute)
+    - Fourchette habituelle (basse / haute réaliste)
     - Économie réalisée par rapport au prix moyen du mois
     """
     month_id, month_name, day_str = parse_month_info(dates_ou_mois)
@@ -248,19 +250,46 @@ def compute_monthly_price_stats(
 
     f_low = float(last_row["fourchette_basse"]) if last_row and last_row["fourchette_basse"] else None
     f_high = float(last_row["fourchette_haute"]) if last_row and last_row["fourchette_haute"] else None
-    latest_ticket = float(last_row["prix_billet_eur"]) if last_row and last_row["prix_billet_eur"] else None
 
-    # Prix moyen billet seul du mois :
-    # 1. Point médian de la fourchette habituelle Google Flights si disponible
-    # 2. Sinon médiane de l'historique réel des prix observés (si au moins 2 relevés en base)
-    # 3. Sinon : AUCUNE invention de chiffre ! On indique données insuffisantes.
+    # Combiner les prix live du jour et l'historique en écartant les valeurs aberrantes (> 2.4x le tarif min)
+    combined_pool = []
+    if live_prices:
+        combined_pool.extend([float(p) for p in live_prices if p and p > 0])
+    if all_prices:
+        combined_pool.extend([float(p) for p in all_prices if p and p > 0])
+
+    if combined_pool:
+        p_min = min(combined_pool)
+        realistic = sorted([p for p in combined_pool if p <= p_min * 2.4])
+        if len(realistic) >= 2 and realistic[-1] > realistic[0]:
+            f_low = round(realistic[0], 1)
+            f_high = round(realistic[-1], 1)
+        elif f_low is not None and f_high is not None and f_high > f_low * 2.4:
+            # Corriger une fourchette haute polluée par un vol hors de prix (ex: 1985 €)
+            f_high = round(f_low * 1.85, 1)
+
+    if f_low is not None and f_high is not None and f_high > f_low * 2.4:
+        f_high = round(f_low * 1.85, 1)
+
     source_avg = ""
-    if f_low is not None and f_high is not None and f_high > f_low:
+    if combined_pool:
+        p_min = min(combined_pool)
+        realistic = sorted([p for p in combined_pool if p <= p_min * 2.4])
+        if len(realistic) >= 2 and realistic[-1] > realistic[0]:
+            # Moyenne pondérée entre la médiane des vols réalistes et le milieu de la fourchette réaliste
+            med = statistics.median(realistic)
+            mid = (realistic[0] + realistic[-1]) / 2.0
+            monthly_ticket_avg = round((med + mid) / 2.0, 1)
+            source_avg = "Fourchette habituelle Google Flights (vols éco)"
+        elif f_low is not None and f_high is not None and f_high > f_low:
+            monthly_ticket_avg = round((f_low + f_high) / 2.0, 1)
+            source_avg = "Fourchette habituelle Google Flights"
+        else:
+            monthly_ticket_avg = round(statistics.median(realistic), 1)
+            source_avg = f"Médiane historique ({len(realistic)} relevés)"
+    elif f_low is not None and f_high is not None and f_high > f_low:
         monthly_ticket_avg = round((f_low + f_high) / 2.0, 1)
         source_avg = "Fourchette habituelle Google Flights"
-    elif len(all_prices) >= 2:
-        monthly_ticket_avg = round(statistics.median(all_prices), 1)
-        source_avg = f"Médiane historique ({len(all_prices)} relevés)"
     else:
         monthly_ticket_avg = None
         source_avg = "Données insuffisantes (historique en cours de collecte)"
@@ -1059,13 +1088,16 @@ def scan_radar_deals(
         if filter_tag == "southeast_asia" and region != "Asie du Sud-Est":
             continue
 
-        # Médiane des tarifs réels observés sur cette route
+        # Médiane des tarifs réels observés sur cette route (en filtrant les vols aberrants > 2.5x le min)
         real_median_price = None
         google_fourchette = None
         if len(all_route_prices_for_dest) >= 2:
-            real_median_price = int(round(statistics.median(all_route_prices_for_dest)))
             p_min = int(min(all_route_prices_for_dest))
-            p_max = int(max(all_route_prices_for_dest))
+            realistic_pool = [p for p in all_route_prices_for_dest if p <= p_min * 2.5]
+            if len(realistic_pool) < 2:
+                realistic_pool = sorted(all_route_prices_for_dest)[:max(2, len(all_route_prices_for_dest) // 2)]
+            real_median_price = int(round(statistics.median(realistic_pool)))
+            p_max = int(max(realistic_pool))
             if p_max > p_min:
                 google_fourchette = f"{p_min} € – {p_max} €"
 
