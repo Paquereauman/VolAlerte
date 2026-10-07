@@ -17,7 +17,7 @@ import app.sources.google_live as _gl
 _gl.warm_radar_cache_async = lambda *a, **kw: None
 
 from fastapi.testclient import TestClient
-from app.web.server import app as _fastapi_app
+from app.web.main import app as _fastapi_app
 
 _CLIENT = TestClient(_fastapi_app)
 
