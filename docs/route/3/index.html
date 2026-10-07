@@ -280,7 +280,7 @@
   <div class="card-header" style="flex-wrap: wrap; gap: 0.75rem;">
     <div>
       <div class="card-title">📈 Évolution chronologique des prix observés</div>
-      <div style="font-size: 0.8rem; color: var(--text-muted);">4 relevés au total</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">5 relevés au total</div>
     </div>
 
     <!-- Boutons de bascule interactifs pour afficher/masquer les options -->
@@ -439,7 +439,7 @@
           </td>
           <td>
             
-              114.0 €
+              114.5 €
             
           </td>
           <td>
@@ -447,7 +447,7 @@
               --
             
           </td>
-          <td>3</td>
+          <td>4</td>
           <td>
             
               <span class="badge badge-muted">Données insuffisantes</span>
@@ -652,6 +652,30 @@
               <b>⏱️ 6h45</b> • <span style="color: var(--text-muted);">1 escale(s) : 2h05 à Canton (CAN)</span>
             
           </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">115 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights Live (EUR)</span>
+          </td>
+          <td><b>China Southern</b></td>
+          <td>
+            
+              <b>⏱️ 6h45</b> • <span style="color: var(--text-muted);">1 escale(s) : 2h05 à Canton (CAN)</span>
+            
+          </td>
           <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">114 €</td>
           <td>
             
@@ -755,11 +779,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const textColor = isDark ? '#94a3b8' : '#475569';
 
   // 1. Graphique Historique Chronologique
-  const dates = ["2026-10-07", "2026-10-07", "2026-10-07", "2026-10-07"];
-  const ticketPrices = [114.0, 114.0, 114.0, 115.0];
-  const cabinePrices = [114.0, 114.0, 114.0, 115.0];
-  const soutePrices = [154.0, 154.0, 154.0, 155.0];
-  const soute2Prices = [199.0, 199.0, 199.0, 200.0];
+  const dates = ["2026-10-07", "2026-10-07", "2026-10-07", "2026-10-07", "2026-10-07"];
+  const ticketPrices = [114.0, 114.0, 114.0, 115.0, 115.0];
+  const cabinePrices = [114.0, 114.0, 114.0, 115.0, 115.0];
+  const soutePrices = [154.0, 154.0, 154.0, 155.0, 155.0];
+  const soute2Prices = [199.0, 199.0, 199.0, 200.0, 200.0];
 
   const ctxHistory = document.getElementById('historyChart').getContext('2d');
   historyChartInstance = new Chart(ctxHistory, {
@@ -842,7 +866,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 2. Graphique Tranches d'anticipation
   const bracketLabels = ["\u003e 180 j", "120-180 j", "90-120 j", "60-90 j", "30-60 j", "14-30 j", "\u003c 14 j"];
-  const bracketMedians = [null, null, null, null, 114.0, 114.0, null];
+  const bracketMedians = [null, null, null, null, 114.5, 114.0, null];
   const bestWindow = "Donn\u00e9es insuffisantes";
 
   const barColors = bracketLabels.map(l => l === bestWindow ? '#10b981' : '#3b82f6');
