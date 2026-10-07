@@ -116,7 +116,10 @@ def build():
     save_page("alerts/index.html", fetch_html("/alerts"))
     save_page("settings/index.html", fetch_html("/settings"))
 
-    for route_id in (1, 2, 3):
+    from app.database import get_db
+    with get_db() as conn:
+        route_ids = [r["id"] for r in conn.execute("SELECT id FROM routes").fetchall()]
+    for route_id in route_ids:
         try:
             save_page(f"route/{route_id}/index.html", fetch_html(f"/route/{route_id}"))
         except Exception as e:
