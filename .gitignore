@@ -1,0 +1,28 @@
+# Configuration locale
+.env
+.env.local
+
+# Environnement virtuel Python
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.pytest_cache/
+
+# Base de données et sauvegardes
+data/vols.db
+data/vols.db-wal
+data/vols.db-shm
+data/backups/
+
+# Logs et runtime
+*.log
+*.pid
+
+# Fichiers OS
+Thumbs.db
+Desktop.ini
+.DS_Store

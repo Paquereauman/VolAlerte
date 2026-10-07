@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}VolAlerte - Suivi Intelligent des Prix de Vols{% endblock %}</title>
+  <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="/static/js/chart.umd.min.js"></script>
+</head>
+<body>
+
+  {% if demo_mode %}
+  <div class="demo-banner">
+    <span>💡</span>
+    <span><b>Mode Démo Actif</b> : Données et relevés simulés réalistes. Aucune clé API requise. Vous pouvez le désactiver dans les Réglages.</span>
+  </div>
+  {% endif %}
+
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="/static/icons/icon-192.png" alt="Logo VolAlerte">
+      <span>VolAlerte</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/" class="nav-link {% if active_page == 'dashboard' %}active{% endif %}">
+        <span>📊</span> Tableau de bord
+      </a>
+      <a href="/radar" class="nav-link {% if active_page == 'radar' %}active{% endif %}">
+        <span>📡</span> Radar Bons Plans
+      </a>
+      <a href="/alerts" class="nav-link {% if active_page == 'alerts' %}active{% endif %}">
+        <span>🔔</span> Alertes
+      </a>
+      <a href="/settings" class="nav-link {% if active_page == 'settings' %}active{% endif %}">
+        <span>⚙️</span> Réglages
+      </a>
+    </nav>
+
+    <div class="nav-actions">
+      <button id="theme-toggle-btn" class="btn btn-secondary btn-sm" title="Changer le thème">☀️</button>
+      <button id="btn-run-now" class="btn btn-primary btn-sm">⚡ Vérifier maintenant</button>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <div id="toast-container"></div>
+
+  <footer>
+    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

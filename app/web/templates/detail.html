@@ -1,0 +1,605 @@
+{% extends "base.html" %}
+
+{% block title %}{{ route.origine }} ➔ {{ route.destination }} - VolAlerte{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <a href="/" style="font-size: 0.85rem; color: var(--text-secondary);">← Retour au tableau de bord</a>
+    <h1 style="font-size: 1.75rem; font-weight: 800; margin-top: 0.25rem;">
+      {{ route.origine }} <span style="color: var(--accent);">➔</span> {{ route.destination }}
+    </h1>
+    <div style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.2rem;">
+      📅 Vol le <b style="color: #10b981;">{{ dep_date_fr }}</b>
+      {% if best_live %}
+        • 🛫 <b>{{ best_live.schedule_str }}</b> • ✈️ <b>{{ best_live.airlines }} ({{ best_live.flight_numbers }})</b> • ⏱️ <b>{{ best_live.duration_str }}</b>
+      {% endif %}
+      • Bagage : <span class="badge badge-info" style="font-size: 0.82rem;">{{ route.bagage }}</span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <a href="{{ google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
+      🎯 Réserver ce vol ({{ options_summary[route.bagage]['total']|int }} €)
+    </a>
+    <a href="{{ google_link }}" target="_blank" class="btn btn-secondary btn-sm">
+      🔍 Tous les vols (Google EUR)
+    </a>
+    <a href="{{ trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm">
+      ✈️ Trip.com (EUR)
+    </a>
+    <a href="/route/{{ route.id }}/export-csv" class="btn btn-secondary btn-sm" download>
+      📥 CSV
+    </a>
+  </div>
+</div>
+
+<!-- Synthèse Mensuelle & Prix Moyen du Mois -->
+<div class="card" style="border-left: 4px solid var(--accent); margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(16, 185, 129, 0.05));">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+    <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">
+      📊 Statistiques Mensuelles & Comparatif ({{ monthly_stats.month_name }})
+    </span>
+    <span class="badge badge-info">
+      Mois visé : {{ monthly_stats.month_name }}
+    </span>
+  </div>
+  <div class="grid grid-3" style="gap: 1rem; margin-bottom: 0;">
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1.5px solid var(--accent);">
+      <div style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase;">📊 PRIX MOYEN DU MOIS (AVEC BAGAGE)</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">
+        {% if monthly_stats.monthly_avg_total is not none %}{{ monthly_stats.monthly_avg_total|int }} €{% else %}En collecte{% endif %}
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        {% if monthly_stats.monthly_ticket_avg is not none %}
+          Billet moyen : {{ monthly_stats.monthly_ticket_avg|int }} € + bagage {{ (monthly_stats.monthly_avg_total - monthly_stats.monthly_ticket_avg)|int }} €
+        {% else %}
+          {{ monthly_stats.source_avg }}
+        {% endif %}
+      </div>
+    </div>
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1.5px solid rgba(16, 185, 129, 0.4);">
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase;">🏷️ MEILLEUR PRIX CONSTATÉ</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 0.2rem 0;">
+        {{ options_summary[route.bagage]['total']|int }} €
+      </div>
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
+        {% if monthly_stats.monthly_savings and monthly_stats.monthly_savings > 0 %}
+          ↘ -{{ monthly_stats.monthly_savings|int }} € (-{{ monthly_stats.monthly_savings_pct }}%) sous la moyenne du mois
+        {% else %}
+          ✓ Prix le plus bas constaté
+        {% endif %}
+      </div>
+    </div>
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1px solid var(--border);">
+      <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase;">GOOGLE FLIGHTS : FOURCHETTE HABITUELLE</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">
+        {% if monthly_stats.range_low and monthly_stats.range_high %}
+          {{ monthly_stats.range_low|int }} € - {{ monthly_stats.range_high|int }} €
+        {% else %}
+          --
+        {% endif %}
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        Prix habituel constaté sur Google Flights pour ce mois
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Synthèse Meilleure Fenêtre -->
+<div class="card" style="border-left: 4px solid var(--success); margin-bottom: 1.5rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+    <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">
+      Analyse Statistique & Recommandation d'Achat
+    </span>
+    <span class="badge {% if best_window.confidence == 'fiable' %}badge-success{% elif best_window.confidence == 'indicatif' %}badge-info{% else %}badge-muted{% endif %}">
+      Confiance : {{ best_window.confidence|capitalize }} ({{ best_window.count }} prix)
+    </span>
+  </div>
+  <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">
+    {{ best_window.advice }}
+  </div>
+  <p style="font-size: 0.85rem; color: var(--text-secondary);">
+    💡 <i>Principe de prudence : ces statistiques sont établies sur l'historique des relevés. Un prix dans la fenêtre optimale reste une indication statistique, vérifiez toujours les conditions exactes sur le site de la compagnie.</i>
+  </p>
+</div>
+
+<!-- SECTION 1 : OPTIONS DE BAGAGES COMPARÉES (CABINE & SOUTE) -->
+<div class="card" style="border-top: 4px solid var(--accent); margin-bottom: 1.5rem;">
+  <div class="card-header">
+    <div>
+      <div class="card-title">🧳 Options de bagages pour ce vol (Tarifs réels comparés)</div>
+      <div style="font-size: 0.8rem; color: var(--text-secondary);">
+        Choisissez l'option que vous souhaitez surveiller pour ce trajet. Les prix sont calculés sur la valeur haute de la compagnie constatée.
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="gap: 1rem;">
+    <!-- Option 1 : Billet Seul (Sans bagage) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid {% if route.bagage == 'aucun' %}var(--accent){% else %}var(--border-color){% endif %}; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">🎒 Billet Seul</span>
+          {% if route.bagage == 'aucun' %}
+            <span class="badge badge-success">Actif pour alerte</span>
+          {% endif %}
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #38bdf8;">
+            {{ options_summary['aucun']['total']|int }} €
+          </div>
+          {% if monthly_stats.monthly_ticket_avg is not none %}
+          <div style="font-size: 0.75rem; color: var(--text-secondary); background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid var(--border);">
+            Moy. mois : <b>{{ (monthly_stats.monthly_ticket_avg + options_summary['aucun']['cost'])|int }} €</b>
+          </div>
+          {% endif %}
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Sans bagage supplémentaire (juste petit sac sous siège).
+        </div>
+      </div>
+
+      <form action="/route/{{ route.id }}/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="aucun">
+        <button type="submit" class="btn btn-sm {% if route.bagage == 'aucun' %}btn-primary{% else %}btn-secondary{% endif %}" style="width: 100%;">
+          {% if route.bagage == 'aucun' %}✓ Option sélectionnée{% else %}Choisir sans bagage{% endif %}
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 2 : Bagage Cabine (10 kg) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid {% if route.bagage == 'cabine' %}var(--success){% else %}var(--border-color){% endif %}; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">🧳 Bagage Cabine</span>
+          {% if route.bagage == 'cabine' %}
+            <span class="badge badge-success">Actif pour alerte</span>
+          {% endif %}
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #10b981;">
+            {{ options_summary['cabine']['total']|int }} €
+          </div>
+          {% if monthly_stats.monthly_ticket_avg is not none %}
+          <div style="font-size: 0.75rem; color: #10b981; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            Moy. mois : <b>{{ (monthly_stats.monthly_ticket_avg + options_summary['cabine']['cost'])|int }} €</b>
+          </div>
+          {% endif %}
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet {{ options_summary['aucun']['total']|int }} € + Cabine {{ options_summary['cabine']['cost']|int }} € (valise 10 kg en cabine).
+        </div>
+      </div>
+
+      <form action="/route/{{ route.id }}/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="cabine">
+        <button type="submit" class="btn btn-sm {% if route.bagage == 'cabine' %}btn-primary{% else %}btn-secondary{% endif %}" style="width: 100%; {% if route.bagage == 'cabine' %}background-color: var(--success);{% endif %}">
+          {% if route.bagage == 'cabine' %}✓ Option sélectionnée{% else %}Choisir bagage cabine{% endif %}
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 3 : Bagage en Soute (1 bagage 15-20 kg) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid {% if route.bagage == 'soute_1' %}var(--warning){% else %}var(--border-color){% endif %}; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">📦 Bagage en Soute</span>
+          {% if route.bagage == 'soute_1' %}
+            <span class="badge badge-success">Actif pour alerte</span>
+          {% endif %}
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #f59e0b;">
+            {{ options_summary['soute_1']['total']|int }} €
+          </div>
+          {% if monthly_stats.monthly_ticket_avg is not none %}
+          <div style="font-size: 0.75rem; color: #f59e0b; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            Moy. mois : <b>{{ (monthly_stats.monthly_ticket_avg + options_summary['soute_1']['cost'])|int }} €</b>
+          </div>
+          {% endif %}
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet {{ options_summary['aucun']['total']|int }} € + Soute {{ options_summary['soute_1']['cost']|int }} € (valise 15-20 kg enregistrée).
+        </div>
+      </div>
+
+      <form action="/route/{{ route.id }}/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="soute_1">
+        <button type="submit" class="btn btn-sm {% if route.bagage == 'soute_1' %}btn-primary{% else %}btn-secondary{% endif %}" style="width: 100%; {% if route.bagage == 'soute_1' %}background-color: var(--warning); border-color: var(--warning);{% endif %}">
+          {% if route.bagage == 'soute_1' %}✓ Option sélectionnée{% else %}Choisir bagage soute{% endif %}
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 4 : 2 Bagages en Soute -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid {% if route.bagage == 'soute_2' %}#a855f7{% else %}var(--border-color){% endif %}; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">📦📦 2 Bagages Soute</span>
+          {% if route.bagage == 'soute_2' %}
+            <span class="badge badge-success">Actif pour alerte</span>
+          {% endif %}
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #a855f7;">
+            {{ options_summary['soute_2']['total']|int }} €
+          </div>
+          {% if monthly_stats.monthly_ticket_avg is not none %}
+          <div style="font-size: 0.75rem; color: #a855f7; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.3);">
+            Moy. mois : <b>{{ (monthly_stats.monthly_ticket_avg + options_summary['soute_2']['cost'])|int }} €</b>
+          </div>
+          {% endif %}
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet {{ options_summary['aucun']['total']|int }} € + 2e soute {{ options_summary['soute_2']['cost']|int }} €.
+        </div>
+      </div>
+
+      <form action="/route/{{ route.id }}/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="soute_2">
+        <button type="submit" class="btn btn-sm {% if route.bagage == 'soute_2' %}btn-primary{% else %}btn-secondary{% endif %}" style="width: 100%; {% if route.bagage == 'soute_2' %}background-color: #a855f7; border-color: #a855f7;{% endif %}">
+          {% if route.bagage == 'soute_2' %}✓ Option sélectionnée{% else %}Choisir 2 bagages soute{% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Graphique 1 : Historique Chronologique Multi-Options -->
+<div class="card">
+  <div class="card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+    <div>
+      <div class="card-title">📈 Évolution chronologique des prix observés</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">{{ observations|length }} relevés au total</div>
+    </div>
+
+    <!-- Boutons de bascule interactifs pour afficher/masquer les options -->
+    <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+      <span style="font-size: 0.8rem; color: var(--text-secondary); margin-right: 0.25rem;">Afficher sur la courbe :</span>
+      <button id="toggle-btn-0" class="btn btn-sm btn-secondary" onclick="toggleDataset(0)" style="border-left: 3px solid #38bdf8;">
+        🟦 Billet seul
+      </button>
+      <button id="toggle-btn-1" class="btn btn-sm btn-secondary" onclick="toggleDataset(1)" style="border-left: 3px solid #10b981; font-weight: 700;">
+        🟩 Bagage Cabine
+      </button>
+      <button id="toggle-btn-2" class="btn btn-sm btn-secondary" onclick="toggleDataset(2)" style="border-left: 3px solid #f59e0b; font-weight: 700;">
+        🟧 Bagage en Soute
+      </button>
+      <button id="toggle-btn-3" class="btn btn-sm btn-secondary" onclick="toggleDataset(3)" style="border-left: 3px solid #a855f7;">
+        🟪 2 Bagages Soute
+      </button>
+    </div>
+  </div>
+
+  <div style="height: 350px;">
+    <canvas id="historyChart"></canvas>
+  </div>
+</div>
+
+<!-- Graphique 2 : Prix médian selon l'anticipation -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🎯 Prix médian selon le délai d'anticipation (date du vol - date du relevé)</div>
+    <span style="font-size: 0.8rem; color: var(--text-muted);">Fenêtre la moins chère surlignée en vert</span>
+  </div>
+  <div style="height: 280px;">
+    <canvas id="anticipationChart"></canvas>
+  </div>
+</div>
+
+<!-- Tableau détaillé des tranches d'anticipation -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">📊 Détail des tranches d'anticipation</div>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Tranche d'anticipation</th>
+          <th>Prix médian (billet seul)</th>
+          <th>Écart avec la meilleure tranche</th>
+          <th>Nombre de relevés</th>
+          <th>Niveau de confiance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in brackets %}
+        <tr {% if b.label == best_window.window and best_window.confidence != 'données insuffisantes' %}style="background-color: var(--success-bg); font-weight: 700;"{% endif %}>
+          <td>
+            {% if b.label == best_window.window and best_window.confidence != 'données insuffisantes' %}
+              ⭐ <b>{{ b.label }} (Optimale)</b>
+            {% else %}
+              {{ b.label }}
+            {% endif %}
+          </td>
+          <td>
+            {% if b.median_price is not none %}
+              {{ b.median_price }} €
+            {% else %}
+              --
+            {% endif %}
+          </td>
+          <td>
+            {% if b.diff_with_best is not none %}
+              {% if b.diff_with_best == 0 %}
+                <span class="badge badge-success">0 € (Moins cher)</span>
+              {% else %}
+                <span style="color: var(--danger);">+{{ b.diff_with_best }} €</span>
+              {% endif %}
+            {% else %}
+              --
+            {% endif %}
+          </td>
+          <td>{{ b.count }}</td>
+          <td>
+            {% if b.confidence == 'fiable' %}
+              <span class="badge badge-success">Fiable</span>
+            {% elif b.confidence == 'indicatif' %}
+              <span class="badge badge-info">Indicatif</span>
+            {% else %}
+              <span class="badge badge-muted">Données insuffisantes</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tableau des prix bagages par compagnie -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🧳 Grille tarifaire des bagages constatée par compagnie</div>
+  </div>
+  {% if not baggage_list %}
+  <p style="color: var(--text-muted); font-size: 0.9rem;">Aucun tarif de bagage spécifique enregistré. Le tarif moyen estimé (cabine 20-25 €, soute 35-45 €) est appliqué.</p>
+  {% else %}
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Compagnie</th>
+          <th>Type de bagage</th>
+          <th>Fourchette constatée</th>
+          <th>Prix retenu (valeur haute pour l'alerte)</th>
+          <th>Dernier relevé</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for bag in baggage_list %}
+        <tr>
+          <td style="font-weight: 600;">{{ bag.compagnie }}</td>
+          <td>
+            {% if bag.type == 'cabine' %}
+              🧳 Bagage cabine (10 kg)
+            {% elif bag.type == 'soute_1' %}
+              📦 1er bagage en soute (15-20 kg)
+            {% else %}
+              📦📦 2e bagage en soute
+            {% endif %}
+          </td>
+          <td style="color: var(--text-secondary);">{{ bag.prix_bas_eur|int }} € - {{ bag.prix_haut_eur|int }} €</td>
+          <td style="font-weight: 700; color: var(--accent);">{{ bag.prix_haut_eur|int }} €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">{{ bag.date_releve }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Tableau complet des relevés réels stockés en base avec traçabilité et durées -->
+<div class="card">
+  <div class="card-header" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+    <div>
+      <div class="card-title">🔍 Historique des relevés réels stockés en base (Traçabilité & Durées)</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">Tous les prix ci-dessous proviennent de requêtes réelles enregistrées dans data/vols.db</div>
+    </div>
+    <a href="/route/{{ route.id }}/export-csv" class="btn btn-secondary btn-sm">📥 Exporter l'historique en CSV</a>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Date relevé</th>
+          <th>Source</th>
+          <th>Compagnie</th>
+          <th>⏱️ Durée & Escales</th>
+          <th>Billet seul</th>
+          <th>Niveau Google</th>
+          <th>Vérification</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in observations|reverse %}
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">{{ o.date_releve }}</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">{{ o.source_label }}</span>
+          </td>
+          <td><b>{{ o.compagnie or 'Non spécifiée' }}</b></td>
+          <td>
+            {% if o.flight_duration_str and o.flight_duration_str != 'Non spécifiée' %}
+              <b>⏱️ {{ o.flight_duration_str }}</b> • <span style="color: var(--text-muted);">{{ o.escales_str }}</span>
+            {% else %}
+              <span style="color: var(--text-muted);">{{ o.escales_str }}</span>
+            {% endif %}
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">{{ o.prix_billet_eur|int }} €</td>
+          <td>
+            {% if o.niveau_google == 'bas' %}
+              <span class="badge badge-success">Bas</span>
+            {% elif o.niveau_google == 'habituel' %}
+              <span class="badge badge-info">Habituel</span>
+            {% elif o.niveau_google == 'eleve' %}
+              <span class="badge badge-warning">Élevé</span>
+            {% else %}
+              <span style="color: var(--text-muted);">--</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ google_link }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let historyChartInstance = null;
+
+function toggleDataset(index) {
+  if (!historyChartInstance) return;
+  const isVisible = historyChartInstance.isDatasetVisible(index);
+  historyChartInstance.setDatasetVisibility(index, !isVisible);
+  historyChartInstance.update();
+
+  const btn = document.getElementById(`toggle-btn-${index}`);
+  if (btn) {
+    if (!isVisible) {
+      btn.classList.add('active');
+      btn.style.opacity = '1';
+    } else {
+      btn.classList.remove('active');
+      btn.style.opacity = '0.5';
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+  const textColor = isDark ? '#94a3b8' : '#475569';
+
+  // 1. Graphique Historique Chronologique
+  const dates = {{ dates_labels|tojson }};
+  const ticketPrices = {{ ticket_prices|tojson }};
+  const cabinePrices = {{ cabine_prices|tojson }};
+  const soutePrices = {{ soute_prices|tojson }};
+  const soute2Prices = {{ soute2_prices|tojson }};
+
+  const ctxHistory = document.getElementById('historyChart').getContext('2d');
+  historyChartInstance = new Chart(ctxHistory, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: 'Billet seul',
+          data: ticketPrices,
+          borderColor: '#38bdf8',
+          backgroundColor: 'rgba(56, 189, 248, 0.05)',
+          borderWidth: 2,
+          pointRadius: 2,
+          borderDash: [5, 5],
+          tension: 0.2
+        },
+        {
+          label: 'Avec Bagage Cabine',
+          data: cabinePrices,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.2,
+          fill: true
+        },
+        {
+          label: 'Avec Bagage en Soute (1)',
+          data: soutePrices,
+          borderColor: '#f59e0b',
+          backgroundColor: 'rgba(245, 158, 11, 0.08)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.2,
+          fill: false
+        },
+        {
+          label: 'Avec 2 Bagages Soute',
+          data: soute2Prices,
+          borderColor: '#a855f7',
+          backgroundColor: 'rgba(168, 85, 247, 0.05)',
+          borderWidth: 2,
+          pointRadius: 2,
+          borderDash: [3, 3],
+          tension: 0.2,
+          hidden: true // masqué par défaut pour ne pas surcharger
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        x: {
+          grid: { color: gridColor },
+          ticks: { color: textColor, maxRotation: 45 }
+        },
+        y: {
+          grid: { color: gridColor },
+          ticks: { color: textColor, callback: v => v + ' €' }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return ` ${context.dataset.label} : ${context.raw} €`;
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // 2. Graphique Tranches d'anticipation
+  const bracketLabels = {{ bracket_labels|tojson }};
+  const bracketMedians = {{ bracket_medians|tojson }};
+  const bestWindow = {{ best_window.window|tojson }};
+
+  const barColors = bracketLabels.map(l => l === bestWindow ? '#10b981' : '#3b82f6');
+
+  const ctxAnticipation = document.getElementById('anticipationChart').getContext('2d');
+  new Chart(ctxAnticipation, {
+    type: 'bar',
+    data: {
+      labels: bracketLabels,
+      datasets: [{
+        label: 'Prix médian (€)',
+        data: bracketMedians,
+        backgroundColor: barColors,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: textColor } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor, callback: v => v + ' €' } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `Médiane billet: ${ctx.raw} €` } }
+      }
+    }
+  });
+});
+</script>
+{% endblock %}

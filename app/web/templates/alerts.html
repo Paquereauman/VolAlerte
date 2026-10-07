@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Historique des Alertes - VolAlerte{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    <h1 style="font-size: 1.75rem; font-weight: 800;">🔔 Alertes Déclenchées</h1>
+    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+      Historique des notifications envoyées lorsque le prix total et les conditions statistiques étaient au plus bas.
+    </p>
+  </div>
+</div>
+
+{% if not alerts %}
+<div class="card" style="text-align: center; padding: 4rem 2rem;">
+  <div style="font-size: 3rem; margin-bottom: 1rem;">🔕</div>
+  <div style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Aucune alerte pour l'instant</div>
+  <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">
+    Dès qu'un vol passe sous votre seuil ou dans les 10% les plus bas de son historique (avec niveau Google favorable), vous recevrez une alerte prudente ici et sur vos canaux configurés.
+  </p>
+</div>
+{% else %}
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+  {% for a in alerts %}
+  <div class="card" style="margin-bottom: 0; border-left: 4px solid #10b981;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+      <div>
+        <div style="font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+          <span>{{ a.origine }}</span>
+          <span style="color: var(--accent);">➔</span>
+          <span>{{ a.destination }}</span>
+          {% if a.airline %}
+          <span class="badge badge-info" style="font-size: 0.75rem;">✈️ {{ a.airline }} (<code>{{ a.flight_numbers }}</code>)</span>
+          {% endif %}
+          {% if a.layover_details %}
+          <span class="badge {% if a.stops == 0 %}badge-success{% else %}badge-info{% endif %}" style="font-size: 0.75rem;">{{ a.layover_details }}</span>
+          {% endif %}
+        </div>
+        <div style="font-size: 0.88rem; color: var(--text-primary); font-weight: 700; margin-top: 0.3rem;">
+          📅 Vol le <span style="color: #10b981;">{{ a.dep_date_fr }}</span>
+          • 🛫 <b>{{ a.schedule_str }}</b>
+          {% if a.duration_str %}• ⏱️ <b>{{ a.duration_str }}</b>{% endif %}
+        </div>
+        <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.15rem;">
+          🔔 Alerte enregistrée le {{ a.date }}
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+        <div style="text-align: right; margin-right: 0.25rem;">
+          <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1.1;">
+            {{ a.prix_total|int }} €
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary);">
+            Billet {{ a.prix_billet|int }} € + Bagage {{ a.prix_bagage|int }} €
+          </div>
+        </div>
+
+        <a href="{{ a.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
+          🎯 Vérifier / Réserver ce vol ({{ a.prix_total|int }} €)
+        </a>
+        <a href="{{ a.google_link }}" target="_blank" class="btn btn-secondary btn-sm" title="Voir tous les vols du {{ a.dep_date_fr }} sur Google Flights en EUR">
+          🔍 Google Flights
+        </a>
+        <a href="{{ a.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm" title="Comparer sur Trip.com en EUR">
+          ✈️ Trip.com
+        </a>
+        {% if a.skyscanner_link %}
+        <a href="{{ a.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" title="Comparer sur Skyscanner en EUR">
+          Skyscanner
+        </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if a.nearby_deal %}
+    <div style="margin-bottom: 0.75rem; background: rgba(245, 158, 11, 0.1); border: 1.5px solid rgba(245, 158, 11, 0.45); padding: 0.6rem 0.85rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+      <div>
+        <div style="font-size: 0.78rem; font-weight: 800; color: #f59e0b;">
+          🚅 ALTERNATIVE ENCORE MOINS CHÈRE DEPUIS {{ a.nearby_deal.name }} (-{{ a.nearby_deal.savings }} €)
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-primary); margin-top: 0.15rem;">
+          📅 <b>{{ a.nearby_deal.dep_date_fr }}</b> • 🛫 <b>{{ a.nearby_deal.schedule_str }}</b> • {{ a.nearby_deal.airline }} (<code>{{ a.nearby_deal.flight_numbers }}</code>, <b>{{ a.nearby_deal.stops_label }}</b>)
+        </div>
+      </div>
+      <a href="{{ a.nearby_deal.booking_url }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #f59e0b; border-color: #f59e0b; color: #000; font-weight: 800;">
+        🎯 Réserver {{ a.nearby_deal.code }} ({{ a.nearby_deal.price }} €)
+      </a>
+    </div>
+    {% endif %}
+
+    <!-- Corps du message -->
+    <div style="background-color: var(--bg-card-hover); padding: 0.75rem 0.9rem; border-radius: 8px; font-size: 0.88rem; line-height: 1.5;">
+      {{ a.message }}
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.65rem; font-size: 0.75rem; color: var(--text-muted);">
+      <span>Diffusée via : <b>{{ a.canaux|upper }}</b></span>
+      <span>Lien direct Google Flights <code>tfs=</code> &amp; <code>tfu=</code> en EUR (€)</span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

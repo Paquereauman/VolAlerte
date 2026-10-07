@@ -1,0 +1,388 @@
+{% extends "base.html" %}
+
+{% block title %}Radar Bons Plans & Comparateur Direct EUR - VolAlerte{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 1.25rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+    <div>
+      <h1 style="font-size: 1.65rem; font-weight: 800; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
+        <span>📡 Radar Vols Directs en Euros (€) — Bagages & Horaires Réels</span>
+      </h1>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+        Prix en temps réel extraits de Google Flights en <b>EUR (€)</b> • Liens officiels <code>tfs=</code> &amp; <code>tfu=</code> garantissant <b>exactement le même prix à l'ouverture</b>.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+        ⚡ {{ radar.deals_count }} destination(s) • {{ radar.flight_date_fr }}
+      </span>
+      <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&exact_date={{ radar.exact_date }}&bagage={{ radar.bagage_mode }}&include_nearby={{ 1 if radar.include_nearby else 0 }}&max_duration={{ radar.max_duration }}&max_stops={{ radar.max_stops }}&max_layover={{ radar.max_layover }}&refresh=1"
+         class="btn btn-secondary btn-sm" title="Forcer une actualisation en direct sur Google Flights">
+        🔄 Actualiser Live
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- BARRE DE CONTRÔLE COMPACTE : DÉPART, DATE, BAGAGES & FILTRES ANTI-TRAJETS LONGS -->
+<div class="card" style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; border-top: 4px solid var(--accent);">
+  <form method="GET" action="/radar">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 0.85rem; align-items: flex-end;">
+      
+      <!-- Aéroport de départ -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="origin" style="font-size: 0.8rem;">🛫 Aéroport de départ</label>
+        <select id="origin" name="origin" class="form-control" onchange="this.form.submit()">
+          <option value="CGO" {% if radar.origin_code == 'CGO' %}selected{% endif %}>Zhengzhou (CGO) - Chine</option>
+          <option value="PKX" {% if radar.origin_code in ('PKX', 'PEK', 'BJS') %}selected{% endif %}>Pékin (PKX Daxing / PEK Capital)</option>
+          <option value="PVG" {% if radar.origin_code in ('PVG', 'SHA') %}selected{% endif %}>Shanghai (PVG Pudong / SHA)</option>
+          <option value="XIY" {% if radar.origin_code == 'XIY' %}selected{% endif %}>Xi'an (XIY) - Chine</option>
+          <option value="WUH" {% if radar.origin_code == 'WUH' %}selected{% endif %}>Wuhan (WUH) - Chine</option>
+          <option value="PAR" {% if radar.origin_code == 'PAR' %}selected{% endif %}>Paris (CDG / ORY / BVA)</option>
+        </select>
+      </div>
+
+      <!-- Mois visé -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="month" style="font-size: 0.8rem;">📅 Mois du départ</label>
+        <select id="month" name="month" class="form-control" onchange="document.getElementById('exact_date').value=''; this.form.submit();">
+          <option value="2026-10" {% if radar.target_month == '2026-10' %}selected{% endif %}>Octobre 2026</option>
+          <option value="2026-11" {% if radar.target_month == '2026-11' %}selected{% endif %}>Novembre 2026</option>
+          <option value="2026-12" {% if radar.target_month == '2026-12' %}selected{% endif %}>Décembre 2026</option>
+          <option value="2027-01" {% if radar.target_month == '2027-01' %}selected{% endif %}>Janvier 2027</option>
+          <option value="2027-02" {% if radar.target_month == '2027-02' %}selected{% endif %}>Février 2027</option>
+          <option value="2027-03" {% if radar.target_month == '2027-03' %}selected{% endif %}>Mars 2027</option>
+        </select>
+      </div>
+
+      <!-- Date précise (optionnelle) -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="exact_date" style="font-size: 0.8rem;">🎯 Date précise du vol</label>
+        <input type="date" id="exact_date" name="exact_date" class="form-control"
+               value="{{ radar.flight_date }}" min="2026-10-07" max="2027-09-30"
+               onchange="this.form.submit()">
+      </div>
+
+      <!-- Bagages inclus dans le prix affiché -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="bagage" style="font-size: 0.8rem; color: #10b981; font-weight: 700;">🧳 Bagage inclus dans le prix (€)</label>
+        <select id="bagage" name="bagage" class="form-control" style="border-color: #10b981; font-weight: 700;" onchange="this.form.submit()">
+          <option value="cabine" {% if radar.bagage_mode == 'cabine' %}selected{% endif %}>🧳 Avec Bagage Cabine inclus (Recommandé)</option>
+          <option value="soute_1" {% if radar.bagage_mode == 'soute_1' %}selected{% endif %}>📦 Avec Bagage en Soute (20-23 kg)</option>
+          <option value="aucun" {% if radar.bagage_mode == 'aucun' %}selected{% endif %}>🎒 Sans bagage (Billet seul)</option>
+        </select>
+      </div>
+
+      <!-- Durée max de voyage -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="max_duration" style="font-size: 0.8rem;">⏱️ Durée max totale</label>
+        <select id="max_duration" name="max_duration" class="form-control" onchange="this.form.submit()">
+          <option value="0" {% if radar.max_duration == 0 %}selected{% endif %}>Toutes durées</option>
+          <option value="6" {% if radar.max_duration == 6 %}selected{% endif %}>Max 6 heures</option>
+          <option value="8" {% if radar.max_duration == 8 %}selected{% endif %}>Max 8 heures</option>
+          <option value="12" {% if radar.max_duration == 12 %}selected{% endif %}>Max 12 heures</option>
+          <option value="16" {% if radar.max_duration == 16 %}selected{% endif %}>Max 16 heures</option>
+        </select>
+      </div>
+
+      <!-- Nombre d'escales max -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="max_stops" style="font-size: 0.8rem;">🛑 Escales max</label>
+        <select id="max_stops" name="max_stops" class="form-control" onchange="this.form.submit()">
+          <option value="-1" {% if radar.max_stops == -1 %}selected{% endif %}>Direct ou avec escale</option>
+          <option value="0" {% if radar.max_stops == 0 %}selected{% endif %}>✈️ Direct uniquement (0 escale)</option>
+          <option value="1" {% if radar.max_stops == 1 %}selected{% endif %}>1 escale maximum</option>
+          <option value="2" {% if radar.max_stops == 2 %}selected{% endif %}>2 escales maximum</option>
+        </select>
+      </div>
+
+      <!-- Attente max en escale -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="max_layover" style="font-size: 0.8rem;">⏳ Attente max escale</label>
+        <select id="max_layover" name="max_layover" class="form-control" onchange="this.form.submit()">
+          <option value="0" {% if radar.max_layover == 0 %}selected{% endif %}>Sans limite</option>
+          <option value="2.5" {% if radar.max_layover == 2.5 %}selected{% endif %}>Max 2h30 d'escale</option>
+          <option value="4" {% if radar.max_layover == 4 %}selected{% endif %}>Max 4h00 d'escale</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Barre inférieure : TGV aéroports voisins + Filtres rapides -->
+    <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+      <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.88rem; font-weight: 600;">
+        <input type="checkbox" name="include_nearby" value="1" {% if radar.include_nearby %}checked{% endif %} onchange="this.form.submit()">
+        <span>🚅 Croiser avec les aéroports voisins en TGV (Wuhan WUH, Xi'an XIY...)</span>
+      </label>
+
+      <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+        <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&exact_date={{ radar.exact_date }}&bagage={{ radar.bagage_mode }}&include_nearby={{ 1 if radar.include_nearby else 0 }}&max_duration={{ radar.max_duration }}&max_stops={{ radar.max_stops }}&max_layover={{ radar.max_layover }}&filter=all" 
+           class="btn btn-sm {% if radar.filter_tag == 'all' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
+          Tous ({{ radar.deals|length }})
+        </a>
+        <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&exact_date={{ radar.exact_date }}&bagage={{ radar.bagage_mode }}&include_nearby={{ 1 if radar.include_nearby else 0 }}&max_duration={{ radar.max_duration }}&max_stops={{ radar.max_stops }}&max_layover={{ radar.max_layover }}&filter=under_100" 
+           class="btn btn-sm {% if radar.filter_tag == 'under_100' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
+          💰 Moins de 100 €
+        </a>
+        <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&exact_date={{ radar.exact_date }}&bagage={{ radar.bagage_mode }}&include_nearby={{ 1 if radar.include_nearby else 0 }}&max_duration={{ radar.max_duration }}&max_stops={{ radar.max_stops }}&max_layover={{ radar.max_layover }}&filter=southeast_asia" 
+           class="btn btn-sm {% if radar.filter_tag == 'southeast_asia' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
+          🌴 Asie du Sud-Est
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% if not radar.deals %}
+<div class="card" style="text-align: center; padding: 2.5rem;">
+  <p style="font-size: 1.05rem; color: var(--text-secondary);">Aucun vol ne correspond à ces filtres stricts de durée ou d'escales.</p>
+  <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}" class="btn btn-primary btn-sm" style="margin-top: 0.75rem;">Réinitialiser les filtres</a>
+</div>
+{% else %}
+
+<!-- ========================================================================= -->
+<!-- VUE COMPACTE ULTRA-RAPIDE : TABLEAU SYNTHÉTIQUE DE TOUS LES VOLS EN EUROS -->
+<!-- ========================================================================= -->
+<div class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; border-left: 4px solid #10b981;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+    <div style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+      <span>⚡ Vue Compacte Rapide — Classement par Prix en Euros (€)</span>
+      <span class="badge badge-success" style="font-size: 0.75rem;">
+        {% if radar.bagage_mode == 'cabine' %}🧳 Bagage Cabine Inclus{% elif radar.bagage_mode == 'soute_1' %}📦 Bagage Soute Inclus{% else %}🎒 Billet Seul{% endif %}
+      </span>
+    </div>
+    <span style="font-size: 0.78rem; color: var(--text-muted);">
+      Cliquez sur <b>« Réserver à XX € »</b> pour ouvrir directement le vol exact en Euros sur Google Flights
+    </span>
+  </div>
+
+  <div class="table-container">
+    <table style="font-size: 0.84rem;">
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>📅 Date &amp; Horaires du Vol</th>
+          <th>✈️ Compagnie &amp; N° Vol</th>
+          <th>⏱️ Durée &amp; Escales</th>
+          <th>🎒 Seul / 🧳 Cabine / 📦 Soute</th>
+          <th>🏷️ Prix Retenu</th>
+          <th>Action Directe (Même Prix Garanti)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for deal in radar.deals %}
+        <tr>
+          <td style="font-weight: 800; white-space: nowrap;">
+            <span>{{ deal.flag }} {{ deal.city }} ({{ deal.dest_code }})</span>
+            <div style="font-size: 0.72rem; color: {% if deal.is_nearby_deal %}#f59e0b{% else %}var(--text-muted){% endif %}; font-weight: 600;">
+              Départ {{ deal.departure_code }}{% if deal.is_nearby_deal %} (TGV){% endif %}
+            </div>
+          </td>
+          <td style="white-space: nowrap;">
+            <div style="font-weight: 700; color: var(--accent);">📅 {{ deal.dep_date_fr }}</div>
+            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 {{ deal.schedule_str }}</div>
+          </td>
+          <td>
+            <div style="font-weight: 700;">{{ deal.airline }}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>{{ deal.flight_numbers }}</code></div>
+          </td>
+          <td>
+            <div style="font-weight: 700;">⏱️ {{ deal.total_journey_str }}</div>
+            <div style="font-size: 0.75rem; color: {% if deal.stops == 0 %}#10b981{% else %}var(--text-secondary){% endif %}; font-weight: 600;">
+              {{ deal.layover_details }}
+            </div>
+          </td>
+          <td style="white-space: nowrap; font-size: 0.78rem;">
+            <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">{{ deal.best_price }} €</a>
+            <span style="color: var(--text-muted);">/</span>
+            <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">{{ deal.cabine_total }} €</a>
+            <span style="color: var(--text-muted);">/</span>
+            <a href="{{ deal.url_avec_soute }}" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">{{ deal.soute_total }} €</a>
+          </td>
+          <td style="white-space: nowrap;">
+            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">{{ deal.display_price }} €</span>
+            {% if deal.cabine_included %}
+              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+            {% endif %}
+          </td>
+          <td style="white-space: nowrap;">
+            <div style="display: flex; gap: 0.35rem;">
+              <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+                🎯 Réserver à {{ deal.display_price }} €
+              </a>
+              <a href="{{ deal.google_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du {{ deal.dep_date_fr }} sur Google Flights en EUR">
+                🔍 Google
+              </a>
+              <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
+                Trip.com
+              </a>
+              {% if deal.skyscanner_link %}
+              <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
+                Skyscanner
+              </a>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- CARTES DÉTAILLÉES PAR DESTINATION (AVEC COMPARATIF AÉROPORTS VOISINS)     -->
+<!-- ========================================================================= -->
+<div class="grid grid-2" style="gap: 1.15rem;">
+  {% for deal in radar.deals %}
+  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid {% if deal.stops == 0 %}#10b981{% else %}var(--accent){% endif %};">
+    <div>
+      
+      <!-- En-tête de la destination + Prix en EUR -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.65rem;">
+        <div>
+          <div style="font-size: 1.3rem; font-weight: 800; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+            <span>{{ deal.flag }}</span>
+            <span>{{ deal.city }} ({{ deal.dest_code }})</span>
+            <span class="badge {% if deal.stops == 0 %}badge-success{% else %}badge-info{% endif %}" style="font-size: 0.72rem;">
+              {{ deal.stops_label }}
+            </span>
+            <span class="badge {% if deal.is_broken %}badge-success{% else %}badge-muted{% endif %}" style="font-size: 0.7rem;">
+              {{ deal.deal_type }}
+            </span>
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.15rem;">
+            {{ deal.country }} • Compagnie : <b style="color: var(--text-primary);">{{ deal.airline }}</b> (Vol <code>{{ deal.flight_numbers }}</code>)
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 1.95rem; font-weight: 900; color: #10b981; line-height: 1;">
+            {{ deal.display_price }} €
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600; margin-top: 0.15rem;">
+            {% if radar.bagage_mode == 'cabine' %}
+              🧳 Cabine incluse
+            {% elif radar.bagage_mode == 'soute_1' %}
+              📦 Soute incluse
+            {% else %}
+              🎒 Billet seul
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- ENCADRÉ QUAND EST LE VOL : DATE EXACTE, HORAIRES DÉPART/ARRIVÉE, DURÉE & ESCALES -->
+      <div style="background: rgba(16, 185, 129, 0.07); border: 1.5px solid rgba(16, 185, 129, 0.35); padding: 0.65rem 0.85rem; border-radius: 8px; margin-bottom: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
+          <div style="font-size: 0.9rem; font-weight: 800; color: #10b981;">
+            📅 {{ deal.dep_date_fr }}
+          </div>
+          <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-primary);">
+            🛫 {{ deal.schedule_str }}
+          </div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
+            ⏱️ {{ deal.total_journey_str }}
+          </div>
+        </div>
+        <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
+          <span>✈️ <b>Vol {{ deal.flight_numbers }}</b> ({{ deal.layover_details }})</span>
+          {% if deal.google_fourchette %}
+            <span>📊 Fourchette du jour : <b>{{ deal.google_fourchette }}</b></span>
+          {% endif %}
+        </div>
+        {% if deal.is_nearby_deal %}
+        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.78rem; color: #f59e0b; font-weight: 700;">
+          🚅 {{ deal.departure_advantage }}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- BOUTONS DE PRIX PAR BAGAGE (CHAQUE CLIC OUVRE LE FILTRE EXACT SUR GOOGLE FLIGHTS) -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin-bottom: 0.75rem;">
+        <a href="{{ deal.url_sans_bagage }}" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid {% if radar.bagage_mode == 'aucun' %}var(--accent){% else %}var(--border){% endif %}; border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
+          <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 600;">🎒 SANS BAGAGE</div>
+          <div style="font-size: 1rem; font-weight: 800; color: var(--text-primary);">{{ deal.best_price }} €</div>
+        </a>
+        <a href="{{ deal.url_avec_cabine }}" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid {% if radar.bagage_mode == 'cabine' %}#10b981{% else %}var(--border){% endif %}; border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
+          <div style="font-size: 0.68rem; color: #10b981; font-weight: 700;">🧳 AVEC CABINE</div>
+          <div style="font-size: 1rem; font-weight: 800; color: #10b981;">
+            {{ deal.cabine_total }} €
+            <span style="font-size: 0.65rem; font-weight: 600;">{% if deal.cabine_included %}(Inclus){% endif %}</span>
+          </div>
+        </a>
+        <a href="{{ deal.url_avec_soute }}" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid {% if radar.bagage_mode == 'soute_1' %}#f59e0b{% else %}var(--border){% endif %}; border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
+          <div style="font-size: 0.68rem; color: #f59e0b; font-weight: 700;">📦 AVEC SOUTE</div>
+          <div style="font-size: 1rem; font-weight: 800; color: #f59e0b;">
+            {{ deal.soute_total }} €
+            <span style="font-size: 0.65rem; font-weight: 600;">{% if deal.soute_included %}(Inclus 23kg){% endif %}</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- CROISEMENT DES DONNÉES : COMPARATIF DES AÉROPORTS DE DÉPART -->
+      {% if deal.airport_comparisons and deal.airport_comparisons|length > 1 %}
+      <div style="background: var(--bg-card-hover); padding: 0.5rem 0.65rem; border-radius: 6px; margin-bottom: 0.65rem; font-size: 0.75rem;">
+        <div style="font-weight: 700; color: var(--text-secondary); margin-bottom: 0.25rem;">
+          🔍 Croisement des aéroports &amp; dates proches :
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+          {% for comp in deal.airport_comparisons %}
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span>
+              <b>{{ comp.dept_code }}</b> ({{ comp.dep_date_fr }}) : {{ comp.schedule_str }} • {{ comp.airline }} ({% if comp.stops == 0 %}<b style="color: #10b981;">Direct</b>{% else %}{{ comp.stops }} esc.{% endif %})
+            </span>
+            <a href="{{ comp.booking_url }}" target="_blank" style="font-weight: 800; color: {% if loop.first %}#10b981{% else %}var(--accent){% endif %}; text-decoration: underline;">
+              {{ comp.display_price }} € →
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if deal.ota_tip %}
+      <div style="background: rgba(59, 130, 246, 0.08); border-left: 3px solid var(--accent); padding: 0.45rem 0.6rem; border-radius: 4px; font-size: 0.73rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+        💡 <b>Info tarifs :</b> {{ deal.ota_tip }}
+      </div>
+      {% endif %}
+
+      <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.65rem;">
+        ✓ Relevé vérifié : <b>{{ deal.date_observation }}</b> • Source : <b>{{ deal.source_name }}</b> ({{ deal.flights_count }} vols analysés)
+      </div>
+
+    </div>
+
+    <!-- Actions directes : Réservation exacte Google Flights + Trip.com + Skyscanner + Surveillance -->
+    <div style="display: flex; gap: 0.4rem; align-items: center; border-top: 1px solid var(--border); padding-top: 0.65rem; flex-wrap: wrap;">
+      <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.4; text-align: center; background-color: #10b981; border-color: #10b981; font-weight: 700;" title="Ouvre directement ce vol précis ({{ deal.flight_numbers }}) à {{ deal.display_price }} € en EUR sur Google Flights">
+        🎯 Réserver ({{ deal.display_price }} €)
+      </a>
+      <a href="{{ deal.google_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.8; text-align: center;" title="Voir tous les vols du {{ deal.dep_date_fr }} sur Google Flights en EUR">
+        🔍 Google
+      </a>
+      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.75; text-align: center;" title="Comparer en EUR sur Trip.com (inclut les OTA chinoises)">
+        ✈️ Trip.com
+      </a>
+      {% if deal.skyscanner_link %}
+      <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.75; text-align: center;" title="Comparer en EUR sur Skyscanner">
+        Skyscanner
+      </a>
+      {% endif %}
+      <form action="/radar/add-to-watchlist" method="POST" style="flex: 0.65;">
+        <input type="hidden" name="origine" value="{{ deal.departure_airport }}">
+        <input type="hidden" name="destination" value="{{ deal.city }} ({{ deal.dest_code }})">
+        <input type="hidden" name="dates_ou_mois" value="{{ deal.flight_date }}">
+        <input type="hidden" name="seuil_eur" value="{{ deal.display_price }}">
+        <button type="submit" class="btn btn-secondary btn-sm" style="width: 100%;" title="Ajouter aux alertes">
+          🔔 Alerte
+        </button>
+      </form>
+    </div>
+
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

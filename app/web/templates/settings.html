@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}Réglages - VolAlerte{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 1.5rem;">
+  <h1 style="font-size: 1.75rem; font-weight: 800;">⚙️ Réglages de l'application</h1>
+  <p style="color: var(--text-secondary); font-size: 0.9rem;">
+    Gérez vos trajets surveillés, vos canaux d'alerte et vos clés d'API (stockées localement dans votre fichier .env).
+  </p>
+</div>
+
+<!-- Section 1 : Trajets Surveillés -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">✈️ Trajets surveillés (1 à 2 recommandés)</div>
+  </div>
+
+  <div class="grid grid-2" style="margin-bottom: 1.5rem;">
+    {% for r in routes %}
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+        <div>
+          <div style="font-weight: 700; font-size: 1.1rem;">
+            {{ r.origine }} ➔ {{ r.destination }}
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary);">
+            {{ "Aller-retour" if r.type == "aller_retour" else "Aller simple" }} • {{ r.dates_ou_mois }}
+          </div>
+        </div>
+        <span class="badge {% if r.actif %}badge-success{% else %}badge-muted{% endif %}">
+          {{ "Actif" if r.actif else "En pause" }}
+        </span>
+      </div>
+
+      <div style="font-size: 0.85rem; margin-bottom: 0.75rem;">
+        Bagage : <b>{{ r.bagage }}</b> • Seuil alerte : <b>{{ r.seuil_eur|int }} €</b> • Passagers : <b>{{ r.passagers }}</b>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-secondary btn-sm" onclick="editRoute({{ r|tojson|forceescape }})">✏️ Modifier</button>
+        <form action="/settings/route/delete" method="POST" onsubmit="return confirm('Supprimer ce trajet ?');">
+          <input type="hidden" name="route_id" value="{{ r.id }}">
+          <button type="submit" class="btn btn-danger btn-sm">🗑️ Supprimer</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Formulaire d'ajout / modification de trajet -->
+  <h3 id="form-route-title" style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">
+    Ajouter ou modifier un trajet
+  </h3>
+
+  <form action="/settings/route/save" method="POST">
+    <input type="hidden" id="route_id" name="route_id" value="0">
+
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label class="form-label">Aéroport de départ (Origine)</label>
+        <input type="text" id="origine" name="origine" class="form-control" placeholder="ex: Paris (CDG, ORY, BVA) ou PAR" required>
+        <div class="form-hint">Supporte les villes multi-aéroports (ex: PAR, CDG, ORY, BVA).</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Aéroport d'arrivée (Destination)</label>
+        <input type="text" id="destination" name="destination" class="form-control" placeholder="ex: Rome (FCO, CIA) ou ROM" required>
+        <div class="form-hint">Supporte les codes IATA ou noms de ville.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="form-group">
+        <label class="form-label">Type de voyage</label>
+        <select id="type_trajet" name="type_trajet" class="form-control">
+          <option value="aller_simple">Aller simple</option>
+          <option value="aller_retour">Aller-retour</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Dates ou Mois visés</label>
+        <input type="text" id="dates_ou_mois" name="dates_ou_mois" class="form-control" placeholder="ex: 2026-11 ou 2026-11-14:2026-11-21" required>
+        <div class="form-hint">Mois (YYYY-MM), date fixe ou aller:retour.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nombre de passagers</label>
+        <input type="number" id="passagers" name="passagers" class="form-control" value="1" min="1" max="9">
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="form-group">
+        <label class="form-label">Option Bagage</label>
+        <select id="bagage" name="bagage" class="form-control">
+          <option value="aucun">Aucun bagage (juste petit sac sous siège)</option>
+          <option value="cabine" selected>Bagage cabine (10 kg)</option>
+          <option value="soute_1">Bagage en soute (1er bagage)</option>
+          <option value="soute_2">Bagage en soute (2 bagages)</option>
+        </select>
+        <div class="form-hint">Le calcul d'alerte utilise la valeur haute de la fourchette.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Seuil d'alerte (€ total avec bagage)</label>
+        <input type="number" id="seuil_eur" name="seuil_eur" class="form-control" value="80" step="1" required>
+        <div class="form-hint">Alerte si prix total ≤ seuil OU dans les 10% les moins chers.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Statut</label>
+        <select id="actif" name="actif" class="form-control">
+          <option value="1">Actif (surveillance quotidienne)</option>
+          <option value="0">En pause</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filtres de confort de trajet (durée & escales) -->
+    <div class="grid grid-3" style="background: rgba(37, 99, 235, 0.04); border: 1px solid rgba(37, 99, 235, 0.15); padding: 0.85rem; border-radius: 6px; margin-bottom: 1rem;">
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label">⏱️ Durée max de voyage</label>
+        <select id="max_duree_heures" name="max_duree_heures" class="form-control">
+          <option value="0">Sans limite</option>
+          <option value="8">Max 8 heures</option>
+          <option value="12" selected>Max 12 heures</option>
+          <option value="16">Max 16 heures</option>
+        </select>
+        <div class="form-hint">Écarte les trajets trop longs.</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label">🛑 Nombre d'escales max</label>
+        <select id="max_escales" name="max_escales" class="form-control">
+          <option value="0">✈️ Direct uniquement (0 escale)</option>
+          <option value="1" selected>1 escale maximum</option>
+          <option value="2">2 escales maximum</option>
+          <option value="99">Sans limite</option>
+        </select>
+        <div class="form-hint">Exclut les vols à escales multiples.</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label">⏳ Attente max en escale</label>
+        <select id="max_escale_duree_heures" name="max_escale_duree_heures" class="form-control">
+          <option value="0">Sans limite d'attente</option>
+          <option value="2.5">Max 2h30 d'attente</option>
+          <option value="4" selected>Max 4h00 d'attente</option>
+          <option value="6">Max 6h00 d'attente</option>
+        </select>
+        <div class="form-hint">Exclut les attentes interminables.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+      <button type="submit" class="btn btn-primary">Enregistrer le trajet</button>
+      <button type="button" class="btn btn-secondary" onclick="resetRouteForm()">Réinitialiser</button>
+    </div>
+  </form>
+</div>
+
+<!-- Section 2 : Configuration Générale & Clés API -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🔐 Configuration de l'application & Clés API</div>
+  </div>
+
+  <form action="/settings/app/save" method="POST">
+    <!-- Mode Démo Toggle -->
+    <div style="background-color: var(--accent-light); border: 1px solid var(--accent); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem;">
+            Mode Démo (Données simulées sans aucune clé API)
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Permet de tester immédiatement l'interface avec des données réalistes sans consommer vos quotas.
+          </div>
+        </div>
+        <div>
+          <select name="demo_mode" class="form-control" style="width: auto; font-weight: 700;">
+            <option value="1" {% if settings.DEMO_MODE %}selected{% endif %}>Activé (Mode Démo)</option>
+            <option value="0" {% if not settings.DEMO_MODE %}selected{% endif %}>Désactivé (Mode Réel)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Clé Travelpayouts -->
+      <div class="form-group">
+        <label class="form-label">Travelpayouts Token (Gratuit et illimité)</label>
+        <input type="text" name="travelpayouts_token" class="form-control"
+               placeholder="{% if settings.TRAVELPAYOUTS_TOKEN %}{{ settings.mask_key(settings.TRAVELPAYOUTS_TOKEN) }}{% else %}Entrez votre token Travelpayouts{% endif %}">
+        <div class="form-hint">Obtenez un token gratuit sur travelpayouts.com (programme développeur).</div>
+      </div>
+
+      <!-- Clé SerpApi -->
+      <div class="form-group">
+        <label class="form-label">
+          SerpApi API Key (Google Flights - 100 req/mois gratuites)
+          <span class="badge {% if serpapi_used >= 90 %}badge-danger{% else %}badge-info{% endif %}">
+            Utilisées : {{ serpapi_used }} / {{ serpapi_max }}
+          </span>
+        </label>
+        <input type="text" name="serpapi_api_key" class="form-control"
+               placeholder="{% if settings.SERPAPI_API_KEY %}{{ settings.mask_key(settings.SERPAPI_API_KEY) }}{% else %}Entrez votre clé SerpApi{% endif %}">
+        <div class="form-hint">Compte gratuit sur serpapi.com (Garde-fou automatique à 90 req).</div>
+      </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+
+    <!-- Canaux d'alerte -->
+    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;">Canaux de notification</h3>
+
+    <div class="grid grid-3" style="margin-bottom: 1rem;">
+      <label class="form-check">
+        <input type="checkbox" name="channel_windows" value="1" {% if 'windows' in settings.ALERT_CHANNELS %}checked{% endif %}>
+        <span>Notification Windows native</span>
+      </label>
+
+      <label class="form-check">
+        <input type="checkbox" name="channel_telegram" value="1" {% if 'telegram' in settings.ALERT_CHANNELS %}checked{% endif %}>
+        <span>Telegram Bot API</span>
+      </label>
+
+      <label class="form-check">
+        <input type="checkbox" name="channel_ntfy" value="1" {% if 'ntfy' in settings.ALERT_CHANNELS %}checked{% endif %}>
+        <span>ntfy.sh (Push Mobile / PC gratuit)</span>
+      </label>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="form-group">
+        <label class="form-label">Telegram Bot Token (Optionnel)</label>
+        <input type="text" name="telegram_bot_token" class="form-control"
+               placeholder="{% if settings.TELEGRAM_BOT_TOKEN %}{{ settings.mask_key(settings.TELEGRAM_BOT_TOKEN) }}{% else %}ex: 123456:ABC-DEF...{% endif %}">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Telegram Chat ID (Optionnel)</label>
+        <input type="text" name="telegram_chat_id" class="form-control"
+               placeholder="{% if settings.TELEGRAM_CHAT_ID %}{{ settings.mask_key(settings.TELEGRAM_CHAT_ID) }}{% else %}ex: 987654321{% endif %}">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Sujet ntfy (Gratuit sans inscription)</label>
+        <input type="text" name="ntfy_topic" class="form-control" value="{{ settings.NTFY_TOPIC }}">
+        <div class="form-hint">Installez l'app ntfy sur Android/iOS et abonnez-vous à ce sujet !</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label class="form-label">Heure de vérification quotidienne</label>
+        <input type="time" name="daily_check_time" class="form-control" value="{{ settings.DAILY_CHECK_TIME }}">
+        <div class="form-hint">Heure d'exécution par la tâche planifiée Windows.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <button type="submit" class="btn btn-primary">Enregistrer la configuration</button>
+    </div>
+  </form>
+</div>
+
+<!-- Section 3 : Maintenance & Sauvegarde -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">💾 Base de données & Sauvegardes</div>
+  </div>
+  <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+    Base SQLite locale : <code>data/vols.db</code>. Une sauvegarde automatique hebdomadaire est effectuée, et les 8 dernières copies datées sont conservées dans <code>data/backups/</code>.
+  </p>
+  <button class="btn btn-secondary btn-sm" onclick="backupNow()">Créer une sauvegarde maintenant</button>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function editRoute(route) {
+  document.getElementById('route_id').value = route.id;
+  document.getElementById('origine').value = route.origine;
+  document.getElementById('destination').value = route.destination;
+  document.getElementById('type_trajet').value = route.type;
+  document.getElementById('dates_ou_mois').value = route.dates_ou_mois;
+  document.getElementById('passagers').value = route.passagers;
+  document.getElementById('bagage').value = route.bagage;
+  document.getElementById('seuil_eur').value = route.seuil_eur;
+  document.getElementById('actif').value = route.actif ? "1" : "0";
+  if (document.getElementById('max_duree_heures')) {
+    document.getElementById('max_duree_heures').value = route.max_duree_heures || "12";
+  }
+  if (document.getElementById('max_escales')) {
+    document.getElementById('max_escales').value = (route.max_escales !== undefined && route.max_escales !== null) ? route.max_escales : "1";
+  }
+  if (document.getElementById('max_escale_duree_heures')) {
+    document.getElementById('max_escale_duree_heures').value = route.max_escale_duree_heures || "4";
+  }
+
+  document.getElementById('form-route-title').innerText = "Modifier le trajet #" + route.id;
+  window.scrollTo({ top: document.getElementById('form-route-title').offsetTop - 80, behavior: 'smooth' });
+}
+
+function resetRouteForm() {
+  document.getElementById('route_id').value = "0";
+  document.getElementById('origine').value = "";
+  document.getElementById('destination').value = "";
+  document.getElementById('dates_ou_mois').value = "";
+  document.getElementById('passagers').value = "1";
+  document.getElementById('seuil_eur').value = "80";
+  if (document.getElementById('max_duree_heures')) document.getElementById('max_duree_heures').value = "12";
+  if (document.getElementById('max_escales')) document.getElementById('max_escales').value = "1";
+  if (document.getElementById('max_escale_duree_heures')) document.getElementById('max_escale_duree_heures').value = "4";
+  document.getElementById('form-route-title').innerText = "Ajouter ou modifier un trajet";
+}
+
+async function backupNow() {
+  try {
+    const res = await fetch('/api/backup-now', { method: 'POST' });
+    const data = await res.json();
+    showToast(data.message || 'Sauvegarde effectuée !', 'success');
+  } catch(e) {
+    showToast('Erreur lors de la sauvegarde', 'danger');
+  }
+}
+</script>
+{% endblock %}
