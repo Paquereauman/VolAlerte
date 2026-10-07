@@ -189,16 +189,27 @@ async def dashboard(request: Request):
                                     carry_on_bags=carry_on_p, checked_bags=checked_p,
                                     tfu_token=best_nb.get("tfu_token"), booking_page=True
                                 )
+                                tgv_min = int(nb.get("tgv_min", 120))
+                                tgv_cost = int(nb.get("tgv_cost_eur", 22))
+                                tgv_time_str = nb.get("tgv_time_str", nb["detail"])
+                                tot_j_str = format_minutes_to_hours(int(best_nb.get("duration_min", 220)) + tgv_min)
+                                raw_sav = int(total_price - nb_price)
                                 nearby_deal = {
                                     "code": nb_code,
                                     "name": nb["name"],
                                     "detail": nb["detail"],
+                                    "tgv_time_str": tgv_time_str,
+                                    "tgv_cost_eur": tgv_cost,
                                     "price": int(nb_price),
-                                    "savings": int(total_price - nb_price),
+                                    "price_with_tgv": int(nb_price) + tgv_cost,
+                                    "savings": raw_sav,
+                                    "net_savings": max(0, raw_sav - tgv_cost),
                                     "airline": best_nb["airlines"],
                                     "flight_numbers": best_nb["flight_numbers"],
                                     "dep_date_fr": best_nb["dep_date_fr"],
                                     "schedule_str": best_nb["schedule_str"],
+                                    "duration_str": best_nb.get("duration_str", ""),
+                                    "total_journey_str": tot_j_str,
                                     "stops_label": "Direct" if best_nb["stops"] == 0 else f"{best_nb['stops']} esc.",
                                     "booking_url": nb_book_url,
                                 }
@@ -621,25 +632,39 @@ def _enrich_alert_row(a: dict) -> dict:
                             carry_on_bags=carry_on_p, checked_bags=checked_p,
                             booking_page=False
                         )
+                        tgv_min = int(nb.get("tgv_min", 120))
+                        tgv_cost = int(nb.get("tgv_cost_eur", 22))
+                        tgv_time_str = nb.get("tgv_time_str", nb["detail"])
+                        tot_j_str = format_minutes_to_hours(int(best_nb.get("duration_min", 220)) + tgv_min)
+                        raw_sav = int(float(a["prix_total"]) - nb_price)
                         nearby_deal = {
                             "code": nb_code,
                             "name": nb["name"],
                             "detail": nb["detail"],
+                            "tgv_time_str": tgv_time_str,
+                            "tgv_cost_eur": tgv_cost,
                             "price": int(nb_price),
+                            "price_with_tgv": int(nb_price) + tgv_cost,
                             "price_base": float(best_nb["price_base_eur"]),
-                            "savings": int(float(a["prix_total"]) - nb_price),
+                            "savings": raw_sav,
+                            "net_savings": max(0, raw_sav - tgv_cost),
                             "airline": best_nb["airlines"],
                             "flight_numbers": best_nb["flight_numbers"],
                             "dep_date_iso": best_nb["dep_date"],
                             "dep_date_fr": best_nb["dep_date_fr"],
                             "schedule_str": best_nb["schedule_str"],
                             "duration_str": best_nb["duration_str"],
+                            "total_journey_str": tot_j_str,
                             "layover_details": best_nb["layover_details"],
                             "stops": best_nb["stops"],
                             "stops_label": "Direct" if best_nb["stops"] == 0 else f"{best_nb['stops']} esc.",
                             "booking_url": nb_book_url,
                             "search_url": nb_search_url,
                         }
+
+    tgv_time_str = ""
+    total_journey_str = duration_str
+    tgv_cost_eur = 0
 
     # Si le vol direct de l'aéroport d'origine dépasse 150 € (ex: CGO->CNX à 229 €) alors que l'aéroport TGV voisin
     # est en alerte prix cassé (ex: XIY->CNX à 78 € Direct), l'alerte pointe directement sur le vol à 78 € !
@@ -653,19 +678,23 @@ def _enrich_alert_row(a: dict) -> dict:
         duration_str = nearby_deal["duration_str"]
         layover_details = nearby_deal["layover_details"]
         stops = nearby_deal["stops"]
+        tgv_time_str = nearby_deal["tgv_time_str"]
+        total_journey_str = nearby_deal["total_journey_str"]
+        tgv_cost_eur = nearby_deal["tgv_cost_eur"]
         google_booking_link = nearby_deal["booking_url"]
         google_link = nearby_deal["search_url"]
         trip_com_link = build_trip_com_url(o_iata, d_iata, dep_date_iso)
         skyscanner_link = build_skyscanner_url(o_iata, d_iata, dep_date_iso)
-        a["origine"] = f"{nearby_deal['name']} (TGV depuis Zhengzhou)"
+        a["origine"] = f"{nearby_deal['name']} (🚅 {tgv_time_str.split('(')[0].strip()} depuis Zhengzhou)"
         a["prix_billet"] = nearby_deal["price_base"]
         a["prix_bagage"] = round(nearby_deal["price"] - nearby_deal["price_base"], 1)
         a["prix_total"] = float(nearby_deal["price"])
         a["message"] = (
-            f"🚅 Bon plan TGV • {nearby_deal['name']} ➔ {a.get('destination', d_iata)} • Vol le {dep_date_fr} ({schedule_str}) "
+            f"🚅 Bon plan TGV (Train estimé : {tgv_time_str} • Durée totale Train + Vol : ~{total_journey_str}) • "
+            f"{nearby_deal['name']} ➔ {a.get('destination', d_iata)} • Vol le {dep_date_fr} ({schedule_str}, vol de {duration_str}) "
             f"sur {airline} ({flight_numbers}, {layover_details}) : "
             f"billet {int(a['prix_billet'])} € + bagage {bagage} {int(a['prix_bagage'])} € = {int(a['prix_total'])} € TTC "
-            f"(économie de -{nearby_deal['savings']} € vs départ CGO)."
+            f"(+{tgv_cost_eur} € TGV = {nearby_deal['price_with_tgv']} € tout compris • économie de -{nearby_deal['savings']} € sur le vol / -{nearby_deal['net_savings']} € net vs départ CGO)."
         )
         nearby_deal = None
 
@@ -677,6 +706,9 @@ def _enrich_alert_row(a: dict) -> dict:
     a["airline"] = airline
     a["flight_numbers"] = flight_numbers
     a["duration_str"] = duration_str
+    a["tgv_time_str"] = tgv_time_str
+    a["total_journey_str"] = total_journey_str
+    a["tgv_cost_eur"] = tgv_cost_eur
     a["layover_details"] = layover_details
     a["stops"] = stops
     a["lien"] = google_booking_link

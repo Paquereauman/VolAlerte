@@ -291,26 +291,54 @@ AIRPORT_CLUSTERS = {
         "name": "Zhengzhou Xinzheng (CGO)",
         "city": "Zhengzhou",
         "nearby": [
-            {"code": "LYA", "name": "Luoyang Beijiao (LYA)", "detail": "120 km • 40 min TGV"},
-            {"code": "XIY", "name": "Xi'an Xianyang (XIY)", "detail": "Grand Hub International • 1h30 TGV"},
-            {"code": "WUH", "name": "Wuhan Tianhe (WUH)", "detail": "Hub Asie du Sud-Est • 1h45 TGV"},
-            {"code": "PKX", "name": "Pékin Daxing (PKX)", "detail": "Hub Low-Cost Direct (VietJet/AirAsia) • 2h15 TGV"},
+            {
+                "code": "LYA",
+                "name": "Luoyang Beijiao (LYA)",
+                "detail": "120 km • 38 min TGV (~8 €)",
+                "tgv_time_str": "38 min de TGV (Zhengzhou ➔ Luoyang, ~8 €) + 25 min navette",
+                "tgv_min": 65,
+                "tgv_cost_eur": 8,
+            },
+            {
+                "code": "XIY",
+                "name": "Xi'an Xianyang (XIY)",
+                "detail": "Grand Hub International • 1h30 TGV (~22 €) + 30 min métro XIY",
+                "tgv_time_str": "1h30 de TGV (Zhengzhou Est ➔ Xi'an Nord, ~22 €) + 30 min métro vers XIY",
+                "tgv_min": 120,
+                "tgv_cost_eur": 22,
+            },
+            {
+                "code": "WUH",
+                "name": "Wuhan Tianhe (WUH)",
+                "detail": "Hub Asie du Sud-Est • 1h45 TGV (~24 €) + 35 min métro WUH",
+                "tgv_time_str": "1h45 de TGV (Zhengzhou Est ➔ Wuhan, ~24 €) + 35 min métro Ligne 2 vers WUH",
+                "tgv_min": 140,
+                "tgv_cost_eur": 24,
+            },
+            {
+                "code": "PKX",
+                "name": "Pékin Daxing (PKX)",
+                "detail": "Hub Low-Cost Direct (VietJet/AirAsia) • 2h15 TGV (~38 €) + 35 min express PKX",
+                "tgv_time_str": "2h15 de TGV (Zhengzhou Est ➔ Pékin Ouest, ~38 €) + 35 min train express vers PKX",
+                "tgv_min": 170,
+                "tgv_cost_eur": 38,
+            },
         ]
     },
     "PKX": {
         "name": "Pékin Daxing (PKX)",
         "city": "Pékin",
         "nearby": [
-            {"code": "PEK", "name": "Pékin Capital (PEK)", "detail": "45 min métro express"},
-            {"code": "CGO", "name": "Zhengzhou (CGO)", "detail": "2h15 TGV"},
+            {"code": "PEK", "name": "Pékin Capital (PEK)", "detail": "45 min métro express", "tgv_time_str": "45 min métro express (~4 €)", "tgv_min": 45, "tgv_cost_eur": 4},
+            {"code": "CGO", "name": "Zhengzhou (CGO)", "detail": "2h15 TGV (~38 €)", "tgv_time_str": "2h15 de TGV (~38 €)", "tgv_min": 135, "tgv_cost_eur": 38},
         ]
     },
     "PVG": {
         "name": "Shanghai Pudong (PVG)",
         "city": "Shanghai",
         "nearby": [
-            {"code": "SHA", "name": "Shanghai Hongqiao (SHA)", "detail": "40 min métro/Maglev"},
-            {"code": "HGH", "name": "Hangzhou (HGH)", "detail": "45 min TGV"},
+            {"code": "SHA", "name": "Shanghai Hongqiao (SHA)", "detail": "40 min métro/Maglev", "tgv_time_str": "40 min métro/Maglev (~6 €)", "tgv_min": 40, "tgv_cost_eur": 6},
+            {"code": "HGH", "name": "Hangzhou (HGH)", "detail": "45 min TGV (~10 €)", "tgv_time_str": "45 min de TGV (~10 €)", "tgv_min": 60, "tgv_cost_eur": 10},
         ]
     },
     "XIY": {
@@ -1123,6 +1151,8 @@ def scan_radar_deals(
             "travel_summary": travel_summary,
             "total_journey_str": total_journey_str,
             "flight_duration_str": flight_dur_str,
+            "tgv_name": tgv_name,
+            "tgv_approach_min": tgv_approach_min,
             "stops": stops,
             "stops_label": "Direct (0 escale)" if stops == 0 else f"{stops} escale(s)",
             "layover_details": layover_details,

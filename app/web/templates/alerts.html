@@ -40,9 +40,14 @@
         <div style="font-size: 0.88rem; color: var(--text-primary); font-weight: 700; margin-top: 0.3rem;">
           📅 Vol le <span style="color: #10b981;">{{ a.dep_date_fr }}</span>
           • 🛫 <b>{{ a.schedule_str }}</b>
-          {% if a.duration_str %}• ⏱️ <b>{{ a.duration_str }}</b>{% endif %}
+          {% if a.duration_str %}• ✈️ Vol : <b>{{ a.duration_str }}</b>{% endif %}
         </div>
-        <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.15rem;">
+        {% if a.tgv_time_str %}
+        <div style="font-size: 0.84rem; color: #f59e0b; font-weight: 700; margin-top: 0.25rem; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.35rem 0.65rem; border-radius: 6px; display: inline-block;">
+          🚅 <b>Temps de train estimé :</b> {{ a.tgv_time_str }} • ⏱️ <b>Total Train + Vol : ~{{ a.total_journey_str }}</b>
+        </div>
+        {% endif %}
+        <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.2rem;">
           🔔 Alerte enregistrée le {{ a.date }}
         </div>
       </div>
@@ -54,6 +59,7 @@
           </div>
           <div style="font-size: 0.75rem; color: var(--text-secondary);">
             Billet {{ a.prix_billet|int }} € + Bagage {{ a.prix_bagage|int }} €
+            {% if a.tgv_cost_eur %}• +~{{ a.tgv_cost_eur }} € TGV{% endif %}
           </div>
         </div>
 
@@ -78,10 +84,13 @@
     <div style="margin-bottom: 0.75rem; background: rgba(245, 158, 11, 0.1); border: 1.5px solid rgba(245, 158, 11, 0.45); padding: 0.6rem 0.85rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
       <div>
         <div style="font-size: 0.78rem; font-weight: 800; color: #f59e0b;">
-          🚅 ALTERNATIVE ENCORE MOINS CHÈRE DEPUIS {{ a.nearby_deal.name }} (-{{ a.nearby_deal.savings }} €)
+          🚅 ALTERNATIVE ENCORE MOINS CHÈRE DEPUIS {{ a.nearby_deal.name }} (-{{ a.nearby_deal.savings }} € sur le vol / -{{ a.nearby_deal.net_savings }} € net TGV déduit)
         </div>
         <div style="font-size: 0.8rem; color: var(--text-primary); margin-top: 0.15rem;">
-          📅 <b>{{ a.nearby_deal.dep_date_fr }}</b> • 🛫 <b>{{ a.nearby_deal.schedule_str }}</b> • {{ a.nearby_deal.airline }} (<code>{{ a.nearby_deal.flight_numbers }}</code>, <b>{{ a.nearby_deal.stops_label }}</b>)
+          📅 <b>{{ a.nearby_deal.dep_date_fr }}</b> • 🛫 <b>{{ a.nearby_deal.schedule_str }}</b> (✈️ Vol {{ a.nearby_deal.duration_str }}) • {{ a.nearby_deal.airline }} (<code>{{ a.nearby_deal.flight_numbers }}</code>, <b>{{ a.nearby_deal.stops_label }}</b>)
+        </div>
+        <div style="font-size: 0.78rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+          🚅 Temps de train estimé : {{ a.nearby_deal.tgv_time_str }} • ⏱️ Total Train + Vol : ~{{ a.nearby_deal.total_journey_str }} ({{ a.nearby_deal.price_with_tgv }} € train inclus)
         </div>
       </div>
       <a href="{{ a.nearby_deal.booking_url }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #f59e0b; border-color: #f59e0b; color: #000; font-weight: 800;">

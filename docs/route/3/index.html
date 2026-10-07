@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zhengzhou (CGO) ➔ Hanoï (HAN) - VolAlerte</title>
+  <link rel="icon" href="/VolAlerte/static/icons/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/VolAlerte/static/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="stylesheet" href="/VolAlerte/static/css/styles.css">
+  <script src="/VolAlerte/static/js/chart.umd.min.js"></script>
+</head>
+<body>
+
+  
+
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="/VolAlerte/static/icons/icon-192.png" alt="Logo VolAlerte">
+      <span>VolAlerte</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/VolAlerte/" class="nav-link active">
+        <span>📊</span> Tableau de bord
+      </a>
+      <a href="/VolAlerte/radar/" class="nav-link ">
+        <span>📡</span> Radar Bons Plans
+      </a>
+      <a href="/VolAlerte/alerts/" class="nav-link ">
+        <span>🔔</span> Alertes
+      </a>
+      <a href="/VolAlerte/settings/" class="nav-link ">
+        <span>⚙️</span> Réglages
+      </a>
+    </nav>
+
+    <div class="nav-actions">
+      <button id="theme-toggle-btn" class="btn btn-secondary btn-sm" title="Changer le thème">☀️</button>
+      <button id="btn-run-now" class="btn btn-primary btn-sm">⚡ Vérifier maintenant</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <a href="/VolAlerte/" style="font-size: 0.85rem; color: var(--text-secondary);">← Retour au tableau de bord</a>
+    <h1 style="font-size: 1.75rem; font-weight: 800; margin-top: 0.25rem;">
+      Zhengzhou (CGO) <span style="color: var(--accent);">➔</span> Hanoï (HAN)
+    </h1>
+    <div style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.2rem;">
+      📅 Vol le <b style="color: #10b981;">Ven. 13 nov. 2026</b>
+      
+        • 🛫 <b>09:00 CGO ➔ 14:45 HAN</b> • ✈️ <b>China Southern (CZ 8685 + CZ 8315)</b> • ⏱️ <b>6h45</b>
+      
+      • Bagage : <span class="badge badge-info" style="font-size: 0.82rem;">cabine</span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIUjVLbUFkRFE4OEFBWjViRGdCRy0tLS0tLS0tLS10bHkyN0FBQUFBR3JGdHY4T1FPTThBEg1DWjg2ODV8Q1o4MzE1GgoI81gQAhoDRVVSOB1w72M=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
+      🎯 Réserver ce vol (114 €)
+    </a>
+    <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm">
+      🔍 Tous les vols (Google EUR)
+    </a>
+    <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=HAN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm">
+      ✈️ Trip.com (EUR)
+    </a>
+    <a href="/route/3/export-csv" class="btn btn-secondary btn-sm" download>
+      📥 CSV
+    </a>
+  </div>
+</div>
+
+<!-- Synthèse Mensuelle & Prix Moyen du Mois -->
+<div class="card" style="border-left: 4px solid var(--accent); margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(16, 185, 129, 0.05));">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+    <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">
+      📊 Statistiques Mensuelles & Comparatif (Novembre 2026)
+    </span>
+    <span class="badge badge-info">
+      Mois visé : Novembre 2026
+    </span>
+  </div>
+  <div class="grid grid-3" style="gap: 1rem; margin-bottom: 0;">
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1.5px solid var(--accent);">
+      <div style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase;">📊 PRIX MOYEN DU MOIS (AVEC BAGAGE)</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">
+        1049 €
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        
+          Billet moyen : 1049 € + bagage 0 €
+        
+      </div>
+    </div>
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1.5px solid rgba(16, 185, 129, 0.4);">
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase;">🏷️ MEILLEUR PRIX CONSTATÉ</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 0.2rem 0;">
+        114 €
+      </div>
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
+        
+          ↘ -935 € (-89.1%) sous la moyenne du mois
+        
+      </div>
+    </div>
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1px solid var(--border);">
+      <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase;">GOOGLE FLIGHTS : FOURCHETTE HABITUELLE</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">
+        
+          114 € - 1985 €
+        
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        Prix habituel constaté sur Google Flights pour ce mois
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Synthèse Meilleure Fenêtre -->
+<div class="card" style="border-left: 4px solid var(--success); margin-bottom: 1.5rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+    <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">
+      Analyse Statistique & Recommandation d'Achat
+    </span>
+    <span class="badge badge-muted">
+      Confiance : Données insuffisantes (0 prix)
+    </span>
+  </div>
+  <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">
+    Pas assez de relevés pour conseiller une fenêtre d&#39;achat.
+  </div>
+  <p style="font-size: 0.85rem; color: var(--text-secondary);">
+    💡 <i>Principe de prudence : ces statistiques sont établies sur l'historique des relevés. Un prix dans la fenêtre optimale reste une indication statistique, vérifiez toujours les conditions exactes sur le site de la compagnie.</i>
+  </p>
+</div>
+
+<!-- SECTION 1 : OPTIONS DE BAGAGES COMPARÉES (CABINE & SOUTE) -->
+<div class="card" style="border-top: 4px solid var(--accent); margin-bottom: 1.5rem;">
+  <div class="card-header">
+    <div>
+      <div class="card-title">🧳 Options de bagages pour ce vol (Tarifs réels comparés)</div>
+      <div style="font-size: 0.8rem; color: var(--text-secondary);">
+        Choisissez l'option que vous souhaitez surveiller pour ce trajet. Les prix sont calculés sur la valeur haute de la compagnie constatée.
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="gap: 1rem;">
+    <!-- Option 1 : Billet Seul (Sans bagage) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">🎒 Billet Seul</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #38bdf8;">
+            114 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: var(--text-secondary); background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid var(--border);">
+            Moy. mois : <b>1049 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Sans bagage supplémentaire (juste petit sac sous siège).
+        </div>
+      </div>
+
+      <form action="/route/3/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="aucun">
+        <button type="submit" class="btn btn-sm btn-secondary" style="width: 100%;">
+          Choisir sans bagage
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 2 : Bagage Cabine (10 kg) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--success); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">🧳 Bagage Cabine</span>
+          
+            <span class="badge badge-success">Actif pour alerte</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #10b981;">
+            114 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: #10b981; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            Moy. mois : <b>1049 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet 114 € + Cabine 0 € (valise 10 kg en cabine).
+        </div>
+      </div>
+
+      <form action="/route/3/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="cabine">
+        <button type="submit" class="btn btn-sm btn-primary" style="width: 100%; background-color: var(--success);">
+          ✓ Option sélectionnée
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 3 : Bagage en Soute (1 bagage 15-20 kg) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">📦 Bagage en Soute</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #f59e0b;">
+            114 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: #f59e0b; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            Moy. mois : <b>1049 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet 114 € + Soute 0 € (valise 15-20 kg enregistrée).
+        </div>
+      </div>
+
+      <form action="/route/3/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="soute_1">
+        <button type="submit" class="btn btn-sm btn-secondary" style="width: 100%; ">
+          Choisir bagage soute
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 4 : 2 Bagages en Soute -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">📦📦 2 Bagages Soute</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #a855f7;">
+            154 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: #a855f7; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.3);">
+            Moy. mois : <b>1089 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet 114 € + 2e soute 40 €.
+        </div>
+      </div>
+
+      <form action="/route/3/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="soute_2">
+        <button type="submit" class="btn btn-sm btn-secondary" style="width: 100%; ">
+          Choisir 2 bagages soute
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Graphique 1 : Historique Chronologique Multi-Options -->
+<div class="card">
+  <div class="card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+    <div>
+      <div class="card-title">📈 Évolution chronologique des prix observés</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">3 relevés au total</div>
+    </div>
+
+    <!-- Boutons de bascule interactifs pour afficher/masquer les options -->
+    <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+      <span style="font-size: 0.8rem; color: var(--text-secondary); margin-right: 0.25rem;">Afficher sur la courbe :</span>
+      <button id="toggle-btn-0" class="btn btn-sm btn-secondary" onclick="toggleDataset(0)" style="border-left: 3px solid #38bdf8;">
+        🟦 Billet seul
+      </button>
+      <button id="toggle-btn-1" class="btn btn-sm btn-secondary" onclick="toggleDataset(1)" style="border-left: 3px solid #10b981; font-weight: 700;">
+        🟩 Bagage Cabine
+      </button>
+      <button id="toggle-btn-2" class="btn btn-sm btn-secondary" onclick="toggleDataset(2)" style="border-left: 3px solid #f59e0b; font-weight: 700;">
+        🟧 Bagage en Soute
+      </button>
+      <button id="toggle-btn-3" class="btn btn-sm btn-secondary" onclick="toggleDataset(3)" style="border-left: 3px solid #a855f7;">
+        🟪 2 Bagages Soute
+      </button>
+    </div>
+  </div>
+
+  <div style="height: 350px;">
+    <canvas id="historyChart"></canvas>
+  </div>
+</div>
+
+<!-- Graphique 2 : Prix médian selon l'anticipation -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🎯 Prix médian selon le délai d'anticipation (date du vol - date du relevé)</div>
+    <span style="font-size: 0.8rem; color: var(--text-muted);">Fenêtre la moins chère surlignée en vert</span>
+  </div>
+  <div style="height: 280px;">
+    <canvas id="anticipationChart"></canvas>
+  </div>
+</div>
+
+<!-- Tableau détaillé des tranches d'anticipation -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">📊 Détail des tranches d'anticipation</div>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Tranche d'anticipation</th>
+          <th>Prix médian (billet seul)</th>
+          <th>Écart avec la meilleure tranche</th>
+          <th>Nombre de relevés</th>
+          <th>Niveau de confiance</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr >
+          <td>
+            
+              &gt; 180 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              120-180 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              90-120 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              60-90 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              30-60 j
+            
+          </td>
+          <td>
+            
+              114.0 €
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>2</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              14-30 j
+            
+          </td>
+          <td>
+            
+              114.0 €
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>1</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              &lt; 14 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tableau des prix bagages par compagnie -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🧳 Grille tarifaire des bagages constatée par compagnie</div>
+  </div>
+  
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Compagnie</th>
+          <th>Type de bagage</th>
+          <th>Fourchette constatée</th>
+          <th>Prix retenu (valeur haute pour l'alerte)</th>
+          <th>Dernier relevé</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td style="font-weight: 600;">China Southern Airlines</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">0 € - 0 €</td>
+          <td style="font-weight: 700; color: var(--accent);">0 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">China Southern Airlines</td>
+          <td>
+            
+              📦 1er bagage en soute (15-20 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">30 € - 40 €</td>
+          <td style="font-weight: 700; color: var(--accent);">40 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">TestAir</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">20 € - 28 €</td>
+          <td style="font-weight: 700; color: var(--accent);">28 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Vietnam Airlines</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">0 € - 0 €</td>
+          <td style="font-weight: 700; color: var(--accent);">0 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Vietnam Airlines</td>
+          <td>
+            
+              📦 1er bagage en soute (15-20 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">28 € - 38 €</td>
+          <td style="font-weight: 700; color: var(--accent);">38 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+<!-- Tableau complet des relevés réels stockés en base avec traçabilité et durées -->
+<div class="card">
+  <div class="card-header" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+    <div>
+      <div class="card-title">🔍 Historique des relevés réels stockés en base (Traçabilité & Durées)</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">Tous les prix ci-dessous proviennent de requêtes réelles enregistrées dans data/vols.db</div>
+    </div>
+    <a href="/route/3/export-csv" class="btn btn-secondary btn-sm">📥 Exporter l'historique en CSV</a>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Date relevé</th>
+          <th>Source</th>
+          <th>Compagnie</th>
+          <th>⏱️ Durée & Escales</th>
+          <th>Billet seul</th>
+          <th>Niveau Google</th>
+          <th>Vérification</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights Live (EUR)</span>
+          </td>
+          <td><b>China Southern</b></td>
+          <td>
+            
+              <b>⏱️ 6h45</b> • <span style="color: var(--text-muted);">1 escale(s) : 2h05 à Canton (CAN)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">114 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights Live (EUR)</span>
+          </td>
+          <td><b>China Southern</b></td>
+          <td>
+            
+              <b>⏱️ 6h45</b> • <span style="color: var(--text-muted);">1 escale(s) : 2h05 à Canton (CAN)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">114 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights Live (EUR)</span>
+          </td>
+          <td><b>China Southern</b></td>
+          <td>
+            
+              <b>⏱️ 7h20</b> • <span style="color: var(--text-muted);">1 escale(s) : 2h35 à Shenzhen (SZX)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">114 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </main>
+
+  <div id="toast-container"></div>
+
+  <footer>
+    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
+  </footer>
+
+  <script src="/VolAlerte/static/js/app.js"></script>
+  
+<script>
+let historyChartInstance = null;
+
+function toggleDataset(index) {
+  if (!historyChartInstance) return;
+  const isVisible = historyChartInstance.isDatasetVisible(index);
+  historyChartInstance.setDatasetVisibility(index, !isVisible);
+  historyChartInstance.update();
+
+  const btn = document.getElementById(`toggle-btn-${index}`);
+  if (btn) {
+    if (!isVisible) {
+      btn.classList.add('active');
+      btn.style.opacity = '1';
+    } else {
+      btn.classList.remove('active');
+      btn.style.opacity = '0.5';
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+  const textColor = isDark ? '#94a3b8' : '#475569';
+
+  // 1. Graphique Historique Chronologique
+  const dates = ["2026-10-07", "2026-10-07", "2026-10-07"];
+  const ticketPrices = [114.0, 114.0, 114.0];
+  const cabinePrices = [114.0, 114.0, 114.0];
+  const soutePrices = [154.0, 154.0, 154.0];
+  const soute2Prices = [199.0, 199.0, 199.0];
+
+  const ctxHistory = document.getElementById('historyChart').getContext('2d');
+  historyChartInstance = new Chart(ctxHistory, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: 'Billet seul',
+          data: ticketPrices,
+          borderColor: '#38bdf8',
+          backgroundColor: 'rgba(56, 189, 248, 0.05)',
+          borderWidth: 2,
+          pointRadius: 2,
+          borderDash: [5, 5],
+          tension: 0.2
+        },
+        {
+          label: 'Avec Bagage Cabine',
+          data: cabinePrices,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.2,
+          fill: true
+        },
+        {
+          label: 'Avec Bagage en Soute (1)',
+          data: soutePrices,
+          borderColor: '#f59e0b',
+          backgroundColor: 'rgba(245, 158, 11, 0.08)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.2,
+          fill: false
+        },
+        {
+          label: 'Avec 2 Bagages Soute',
+          data: soute2Prices,
+          borderColor: '#a855f7',
+          backgroundColor: 'rgba(168, 85, 247, 0.05)',
+          borderWidth: 2,
+          pointRadius: 2,
+          borderDash: [3, 3],
+          tension: 0.2,
+          hidden: true // masqué par défaut pour ne pas surcharger
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        x: {
+          grid: { color: gridColor },
+          ticks: { color: textColor, maxRotation: 45 }
+        },
+        y: {
+          grid: { color: gridColor },
+          ticks: { color: textColor, callback: v => v + ' €' }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return ` ${context.dataset.label} : ${context.raw} €`;
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // 2. Graphique Tranches d'anticipation
+  const bracketLabels = ["\u003e 180 j", "120-180 j", "90-120 j", "60-90 j", "30-60 j", "14-30 j", "\u003c 14 j"];
+  const bracketMedians = [null, null, null, null, 114.0, 114.0, null];
+  const bestWindow = "Donn\u00e9es insuffisantes";
+
+  const barColors = bracketLabels.map(l => l === bestWindow ? '#10b981' : '#3b82f6');
+
+  const ctxAnticipation = document.getElementById('anticipationChart').getContext('2d');
+  new Chart(ctxAnticipation, {
+    type: 'bar',
+    data: {
+      labels: bracketLabels,
+      datasets: [{
+        label: 'Prix médian (€)',
+        data: bracketMedians,
+        backgroundColor: barColors,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: textColor } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor, callback: v => v + ' €' } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `Médiane billet: ${ctx.raw} €` } }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
