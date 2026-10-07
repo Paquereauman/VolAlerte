@@ -1036,8 +1036,6 @@ def scan_radar_deals(
     try:
         if force_refresh:
             warm_radar_cache(pairs_to_warm, flight_date, force_refresh=True)
-        else:
-            warm_radar_cache_async(pairs_to_warm, flight_date)
     except Exception:
         pass
 

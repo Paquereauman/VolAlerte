@@ -13,19 +13,11 @@ DOCS_DIR = Path(__file__).resolve().parent / "docs"
 STATIC_SRC = Path(__file__).resolve().parent / "app" / "web" / "static"
 
 
-import app.sources.google_live as _gl
-_gl.warm_radar_cache_async = lambda *a, **kw: None
-
-from fastapi.testclient import TestClient
-from app.web.main import app as _fastapi_app
-
-_CLIENT = TestClient(_fastapi_app)
-
-
 def fetch_html(path: str) -> str:
-    resp = _CLIENT.get(path)
-    resp.raise_for_status()
-    return resp.text
+    url = f"{BASE_URL}{path}"
+    req = urllib.request.Request(url, headers={"User-Agent": "VolAlerte-StaticBuilder/1.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return resp.read().decode("utf-8")
 
 
 def rewrite_links_for_gh_pages(html: str) -> str:

@@ -62,7 +62,7 @@
       <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
         ⚡ 15 destination(s) • Dim. 15 nov. 2026
       </span>
-      <a href="/VolAlerte/radar/?origin=PKX&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&refresh=1"
+      <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&refresh=1"
          class="btn btn-secondary btn-sm" title="Forcer une actualisation en direct sur Google Flights">
         🔄 Actualiser Live
       </a>
@@ -80,10 +80,10 @@
         <label class="form-label" for="origin" style="font-size: 0.8rem;">🛫 Aéroport de départ</label>
         <select id="origin" name="origin" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="CGO" >Zhengzhou (CGO) - Chine</option>
-          <option value="PKX" selected>Pékin (PKX Daxing / PEK Capital)</option>
+          <option value="PKX" >Pékin (PKX Daxing / PEK Capital)</option>
           <option value="PVG" >Shanghai (PVG Pudong / SHA)</option>
           <option value="XIY" >Xi'an (XIY) - Chine</option>
-          <option value="WUH" >Wuhan (WUH) - Chine</option>
+          <option value="WUH" selected>Wuhan (WUH) - Chine</option>
           <option value="PAR" >Paris (CDG / ORY / BVA)</option>
         </select>
       </div>
@@ -162,15 +162,15 @@
       </label>
 
       <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-        <a href="/VolAlerte/radar/?origin=PKX&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=all" 
+        <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=all" 
            class="btn btn-sm btn-primary" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
           Tous (15)
         </a>
-        <a href="/VolAlerte/radar/?origin=PKX&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=under_100" 
+        <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=under_100" 
            class="btn btn-sm btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
           💰 Moins de 100 €
         </a>
-        <a href="/VolAlerte/radar/?origin=PKX&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=southeast_asia" 
+        <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=southeast_asia" 
            class="btn btn-sm btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
           🌴 Asie du Sud-Est
         </a>
@@ -316,7 +316,7 @@
             data-dest="CJU"
             data-region="Asie de l&#39;Est"
             data-dept="PVG"
-            data-is-nearby="1"
+            data-is-nearby="0"
             data-stops="0"
             data-duration-min="325"
             data-layover-min="0"
@@ -328,8 +328,8 @@
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇰🇷 Île de Jeju (Sans Visa) (CJU)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ PVG (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ PVG
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -397,7 +397,7 @@
             data-dest="CNX"
             data-region="Asie du Sud-Est"
             data-dept="XIY"
-            data-is-nearby="0"
+            data-is-nearby="1"
             data-stops="0"
             data-duration-min="310"
             data-layover-min="0"
@@ -409,8 +409,8 @@
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Chiang Mai (CNX)
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
-              🛫 Départ XIY
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ XIY (TGV)
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -478,7 +478,7 @@
             data-dest="MFM"
             data-region="Asie de l&#39;Est"
             data-dept="PVG"
-            data-is-nearby="1"
+            data-is-nearby="0"
             data-stops="0"
             data-duration-min="405"
             data-layover-min="0"
@@ -490,8 +490,8 @@
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇲🇴 Macao (MFM)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ PVG (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ PVG
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -559,7 +559,7 @@
             data-dest="ICN"
             data-region="Asie de l&#39;Est"
             data-dept="TAO"
-            data-is-nearby="1"
+            data-is-nearby="0"
             data-stops="0"
             data-duration-min="320"
             data-layover-min="0"
@@ -571,8 +571,8 @@
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇰🇷 Séoul (ICN)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ TAO (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ TAO
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -885,7 +885,7 @@
             data-dept="WUH"
             data-is-nearby="0"
             data-stops="0"
-            data-duration-min="245"
+            data-duration-min="140"
             data-layover-min="0"
             data-price-display="84"
             data-price-cabine="84"
@@ -916,10 +916,6 @@
               <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
                 • Direct (sans escale)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45, ~24 €) <span style="color: var(--text-secondary); font-weight: 600;">(Total 4h05)</span>
             </div>
             
           </td>
@@ -962,7 +958,7 @@
             data-dept="WUH"
             data-is-nearby="0"
             data-stops="0"
-            data-duration-min="410"
+            data-duration-min="305"
             data-layover-min="0"
             data-price-display="86"
             data-price-cabine="99"
@@ -993,10 +989,6 @@
               <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
                 • Direct (sans escale)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45, ~24 €) <span style="color: var(--text-secondary); font-weight: 600;">(Total 6h50)</span>
             </div>
             
           </td>
@@ -1043,7 +1035,7 @@
             data-dept="WUH"
             data-is-nearby="0"
             data-stops="0"
-            data-duration-min="415"
+            data-duration-min="310"
             data-layover-min="0"
             data-price-display="90"
             data-price-cabine="103"
@@ -1074,10 +1066,6 @@
               <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
                 • Direct (sans escale)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45, ~24 €) <span style="color: var(--text-secondary); font-weight: 600;">(Total 6h55)</span>
             </div>
             
           </td>
@@ -1203,7 +1191,7 @@
             data-dest="SGN"
             data-region="Asie du Sud-Est"
             data-dept="CGO"
-            data-is-nearby="0"
+            data-is-nearby="1"
             data-stops="1"
             data-duration-min="425"
             data-layover-min="100"
@@ -1215,8 +1203,8 @@
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇻🇳 Hô Chi Minh-Ville (SGN)
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
-              🛫 Départ CGO
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ CGO (TGV)
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -1529,7 +1517,7 @@
        data-dest="CJU"
        data-region="Asie de l&#39;Est"
        data-dept="PVG"
-       data-is-nearby="1"
+       data-is-nearby="0"
        data-stops="0"
        data-duration-min="325"
        data-layover-min="0"
@@ -1595,7 +1583,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Shanghai (4h00, ~55 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h25</b> • Départ PVG : -20 € vs PKX (78 €) • TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Shanghai (4h00, ~55 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h25</b> • Départ PVG • TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)
         </div>
         
       </div>
@@ -1697,7 +1685,7 @@
        data-dest="CNX"
        data-region="Asie du Sud-Est"
        data-dept="XIY"
-       data-is-nearby="0"
+       data-is-nearby="1"
        data-stops="0"
        data-duration-min="310"
        data-layover-min="0"
@@ -1763,7 +1751,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h10</b> • Départ XIY • TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h10</b> • Départ XIY : -118 € vs WUH (183 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €)
         </div>
         
       </div>
@@ -1874,7 +1862,7 @@
        data-dest="MFM"
        data-region="Asie de l&#39;Est"
        data-dept="PVG"
-       data-is-nearby="1"
+       data-is-nearby="0"
        data-stops="0"
        data-duration-min="405"
        data-layover-min="0"
@@ -1940,7 +1928,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Shanghai (4h00, ~55 €) • ⏱️ <b>Trajet total (Train + Vol) : 6h45</b> • Départ PVG : -28 € vs PKX (96 €) • TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Shanghai (4h00, ~55 €) • ⏱️ <b>Trajet total (Train + Vol) : 6h45</b> • Départ PVG • TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)
         </div>
         
       </div>
@@ -2042,7 +2030,7 @@
        data-dest="ICN"
        data-region="Asie de l&#39;Est"
        data-dept="TAO"
-       data-is-nearby="1"
+       data-is-nearby="0"
        data-stops="0"
        data-duration-min="320"
        data-layover-min="0"
@@ -2108,7 +2096,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV direct Zhengzhou ➔ Aéroport Qingdao TAO (3h50, ~46 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h20</b> • Départ TAO : -46 € vs PKX (121 €) • TGV direct Zhengzhou ➔ Aéroport Qingdao TAO (3h50, ~46 €)
+          🚅 <b>Temps de train estimé :</b> TGV direct Zhengzhou ➔ Aéroport Qingdao TAO (3h50, ~46 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h20</b> • Départ TAO • TGV direct Zhengzhou ➔ Aéroport Qingdao TAO (3h50, ~46 €)
         </div>
         
       </div>
@@ -2303,7 +2291,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h50</b> • Départ XIY : -17 € vs PKX (108 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h50</b> • Départ XIY : -5 € vs WUH (96 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30, ~22 €)
         </div>
         
       </div>
@@ -2684,7 +2672,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Shanghai (4h00, ~55 €) • ⏱️ <b>Trajet total (Train + Vol) : 7h55</b> • Départ PVG : -3 € vs PKX (96 €) • TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Shanghai (4h00, ~55 €) • ⏱️ <b>Trajet total (Train + Vol) : 7h55</b> • Départ PVG : -21 € vs WUH (114 €) • TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)
         </div>
         
       </div>
@@ -2748,18 +2736,18 @@
           
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>
-              <b>CGO</b> (Dim. 15 nov. 2026) : 18:00 CGO ➔ 23:15 HAN • China Southern (1 esc.)
+              <b>WUH</b> (Dim. 15 nov. 2026) : 09:30 WUH ➔ 14:45 HAN • China Southern (1 esc.)
             </span>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVGQ1ZmdCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JGc0swTWlFOG1BEgxDWjMzODl8Q1ozNzEaCgjzWBACGgNFVVI4HXDvYw==&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBT1ppR2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JGc0trQWJ0RWtBEg1DWjY1OTB8Q1o4MzE1GgoI81gQAhoDRVVSOB1w72M=&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
               114 € →
             </a>
           </div>
           
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>
-              <b>WUH</b> (Dim. 15 nov. 2026) : 09:30 WUH ➔ 14:45 HAN • China Southern (1 esc.)
+              <b>CGO</b> (Dim. 15 nov. 2026) : 18:00 CGO ➔ 23:15 HAN • China Southern (1 esc.)
             </span>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBT1ppR2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JGc0trQWJ0RWtBEg1DWjY1OTB8Q1o4MzE1GgoI81gQAhoDRVVSOB1w72M=&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVGQ1ZmdCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JGc0swTWlFOG1BEgxDWjMzODl8Q1ozNzEaCgjzWBACGgNFVVI4HXDvYw==&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
               114 € →
             </a>
           </div>
@@ -2824,7 +2812,7 @@
        data-dept="WUH"
        data-is-nearby="0"
        data-stops="0"
-       data-duration-min="245"
+       data-duration-min="140"
        data-layover-min="0"
        data-price-display="84"
        data-price-cabine="84"
@@ -2874,7 +2862,7 @@
             🛫 20:45 WUH ➔ 23:05 HKG
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 2h20 • ⏱️ Total 4h05
+            ✈️ Vol 2h20
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
@@ -2882,10 +2870,6 @@
           
             <span>📊 Fourchette du jour : <b>84 € – 202 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Wuhan (1h45, ~24 €) • ⏱️ <b>Trajet total (Train + Vol) : 4h05</b> • Départ WUH • TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)
         </div>
         
       </div>
@@ -2998,7 +2982,7 @@
        data-dept="WUH"
        data-is-nearby="0"
        data-stops="0"
-       data-duration-min="410"
+       data-duration-min="305"
        data-layover-min="0"
        data-price-display="86"
        data-price-cabine="99"
@@ -3051,7 +3035,7 @@
             🛫 00:15 WUH ➔ 05:20 KUL
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 5h05 • ⏱️ Total 6h50
+            ✈️ Vol 5h05
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
@@ -3059,10 +3043,6 @@
           
             <span>📊 Fourchette du jour : <b>99 € – 245 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Wuhan (1h45, ~24 €) • ⏱️ <b>Trajet total (Train + Vol) : 6h50</b> • Départ WUH • TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)
         </div>
         
       </div>
@@ -3171,7 +3151,7 @@
        data-dept="WUH"
        data-is-nearby="0"
        data-stops="0"
-       data-duration-min="415"
+       data-duration-min="310"
        data-layover-min="0"
        data-price-display="90"
        data-price-cabine="103"
@@ -3224,7 +3204,7 @@
             🛫 00:15 WUH ➔ 05:25 SIN
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 5h10 • ⏱️ Total 6h55
+            ✈️ Vol 5h10
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
@@ -3232,10 +3212,6 @@
           
             <span>📊 Fourchette du jour : <b>103 € – 249 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Wuhan (1h45, ~24 €) • ⏱️ <b>Trajet total (Train + Vol) : 6h55</b> • Départ WUH • TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)
         </div>
         
       </div>
@@ -3483,7 +3459,7 @@
        data-dest="SGN"
        data-region="Asie du Sud-Est"
        data-dept="CGO"
-       data-is-nearby="0"
+       data-is-nearby="1"
        data-stops="1"
        data-duration-min="425"
        data-layover-min="100"
@@ -3546,6 +3522,10 @@
           
             <span>📊 Fourchette du jour : <b>112 € – 209 €</b></span>
           
+        </div>
+        
+        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
+          🚅 <b>Temps de train estimé :</b>  • ⏱️ <b>Trajet total (Train + Vol) : 7h05</b> • Départ CGO : -10 € vs WUH (124 €) • 
         </div>
         
       </div>
