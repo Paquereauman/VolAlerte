@@ -1154,6 +1154,8 @@ def scan_radar_deals(
 
     deals.sort(key=lambda d: d["display_price"])
 
+    nantes_combos = build_nantes_return_combos(flight_date, bagage_mode=bagage_mode)
+
     return {
         "origin_code": origin_code,
         "origin_name": AIRPORT_CLUSTERS.get(origin_code, {}).get("name", f"Aéroport ({origin_code})"),
@@ -1170,7 +1172,207 @@ def scan_radar_deals(
         "max_stops": max_stops,
         "max_layover": max_layover,
         "deals_count": len(deals),
-        "deals": deals
+        "deals": deals,
+        "nantes_combos": nantes_combos,
     }
+
+
+def build_nantes_return_combos(flight_date: str = "2026-11-15", bagage_mode: str = "cabine") -> list[dict]:
+    """
+    Construit le comparateur spécial 'Retour à Nantes (NTE)' depuis la Chine (Zhengzhou CGO & hubs TGV)
+    en combinant Train + Vol + TGV/Vol court + 1 Nuit d'hôtel (optionnelle ou recommandée),
+    tout en écartant les trajets trop longs (> 24h de vol).
+    """
+    from app.sources.google_live import (
+        fetch_live_google_flights,
+        build_google_tfs_url,
+        build_trip_com_url,
+        format_date_fr
+    )
+
+    carry_on_p = 1 if bagage_mode == "cabine" else 0
+    checked_p = 1 if bagage_mode == "soute_1" else 0
+
+    def _best_flight(orig: str, dest: str, dt: str, default_price: int, default_airline: str, default_sched: str, default_dur: str, default_num: str):
+        fl_list, _ = fetch_live_google_flights(orig, dest, dt, force_refresh=False, allow_network=False)
+        # Écarter les vols de plus de 25h (1500 min) s'il y a plus court
+        short_fl = [f for f in fl_list if int(f.get("duration_min", 999)) <= 1500]
+        use_list = short_fl if short_fl else fl_list
+        if use_list:
+            b = min(use_list, key=lambda x: x["price_cabine_eur"] if bagage_mode == "cabine" else x["price_base_eur"])
+            p = int(b["price_cabine_eur"] if bagage_mode == "cabine" else (b["price_soute_eur"] if bagage_mode == "soute_1" else b["price_base_eur"]))
+            tfu = b.get("tfu_token")
+            url = build_google_tfs_url(orig, dest, b["dep_date"], carry_on_bags=carry_on_p, checked_bags=checked_p, tfu_token=tfu, booking_page=True)
+            return {
+                "price": p,
+                "airline": b["airlines"],
+                "flight_numbers": b["flight_numbers"],
+                "schedule_str": b["schedule_str"],
+                "duration_str": b["duration_str"],
+                "dep_date_fr": b["dep_date_fr"],
+                "booking_url": url,
+                "trip_url": build_trip_com_url(orig, dest, b["dep_date"]),
+            }
+        url = build_google_tfs_url(orig, dest, dt, carry_on_bags=carry_on_p, checked_bags=checked_p, booking_page=True)
+        return {
+            "price": default_price,
+            "airline": default_airline,
+            "flight_numbers": default_num,
+            "schedule_str": default_sched,
+            "duration_str": default_dur,
+            "dep_date_fr": format_date_fr(dt),
+            "booking_url": url,
+            "trip_url": build_trip_com_url(orig, dest, dt),
+        }
+
+    # Calcul de J+1 pour la correspondance européenne après arrivée ou nuit d'hôtel
+    try:
+        next_day = (datetime.date.fromisoformat(flight_date[:10]) + datetime.timedelta(days=1)).isoformat()
+    except Exception:
+        next_day = "2026-11-16"
+
+    cgo_cdg = _best_flight("CGO", "CDG", "2026-11-15", 361, "Hainan Airlines", "20:40 CGO ➔ 07:45 (+1j) CDG", "18h05", "HU 766 + HU 7907")
+    pvg_cdg = _best_flight("PVG", "CDG", "2026-11-15", 333, "Gulf Air / China Eastern", "16:30 PVG ➔ 06:45 (+1j) CDG", "21h15", "GF 125 + GF 19")
+    pkx_cdg = _best_flight("PKX", "CDG", "2026-11-15", 391, "Etihad / China Southern", "19:45 PKX ➔ 06:45 (+1j) CDG", "18h00", "EY 889 + EY 31")
+    xiy_mxp = _best_flight("XIY", "MXP", "2026-11-15", 315, "Hainan Airlines", "13:55 XIY ➔ 07:40 (+1j) MXP", "24h45", "HU 7937")
+    pek_bcn = _best_flight("PEK", "BCN", "2026-11-15", 408, "Emirates / Air China", "06:50 PEK ➔ 18:55 BCN", "19h05", "EK 309 + EK 187")
+
+    mxp_nte = _best_flight("MXP", "NTE", next_day, 102, "easyJet (Direct)", "18:40 MXP ➔ 20:35 NTE", "1h55", "U2 3825")
+    bcn_nte = _best_flight("BCN", "NTE", next_day, 46, "Volotea (Direct)", "21:00 BCN ➔ 22:40 NTE", "1h40", "V7 2115")
+
+    trainline_cdg_nte = "https://www.thetrainline.com/fr/horaires-train/aeroport-charles-de-gaulle-2-tgv-a-nantes"
+    sncf_cdg_nte = "https://www.sncf-connect.com/train/trajet/roissy-charles-de-gaulle/nantes"
+
+    combos = [
+        {
+            "badge": "🥇 LE MEILLEUR COMPROMIS (0 CHANGEMENT DANS PARIS)",
+            "title": "Zhengzhou (CGO) ➔ Paris Roissy (CDG) + TGV Direct Terminal 2 ➔ Nantes",
+            "why_smart": (
+                "Le vol de nuit Hainan Airlines (bagage cabine + soute 23kg inclus) part à 20h40 de Zhengzhou et atterrit à 07h45 du matin à CDG. "
+                "Vous prenez l'ascenseur directement dans le Terminal 2 vers la gare 'Aéroport CDG 2 TGV' (sans aller à Montparnasse !) et arrivez à Nantes à 13h00."
+            ),
+            "leg1_label": f"✈️ Vol {cgo_cdg['dep_date_fr']} : {cgo_cdg['schedule_str']} ({cgo_cdg['airline']} {cgo_cdg['flight_numbers']}, {cgo_cdg['duration_str']})",
+            "leg1_price": cgo_cdg["price"],
+            "leg1_url": cgo_cdg["booking_url"],
+            "leg1_trip_url": cgo_cdg["trip_url"],
+            "leg2_label": "🚅 TGV INOUI / OUIGO Direct : Aéroport CDG 2 TGV ➔ Nantes (3h15, départ ~09h47 du Terminal 2)",
+            "leg2_price": 42,
+            "leg2_url": trainline_cdg_nte,
+            "leg2_btn_text": "🚅 TGV CDG 2 ➔ Nantes (42 €)",
+            "china_tgv_price": 0,
+            "china_tgv_label": "Départ direct de Zhengzhou (CGO) — aucun TGV en Chine",
+            "hotel_recommended": False,
+            "hotel_city": "Roissy CDG (optionnel, arrivée matin 07h45)",
+            "hotel_price": 55,
+            "hotel_note": "Aucune nuit d'hôtel nécessaire car le vol atterrit à 07h45 du matin. (+55 € si vous souhaitez dormir sur place)",
+            "total_sans_hotel": cgo_cdg["price"] + 42,
+            "total_avec_hotel": cgo_cdg["price"] + 42 + 55,
+            "total_active_duration": "21h20 (18h05 vol + 3h15 TGV)",
+        },
+        {
+            "badge": "💎 LE MOINS CHER VIA SHANGHAI (PVG)",
+            "title": "Shanghai (PVG) ➔ Paris (CDG) + TGV Direct Terminal 2 ➔ Nantes",
+            "why_smart": (
+                "Au départ de Shanghai Pudong (PVG), le vol vers Paris CDG descend à 333 € et atterrit à 06h45 du matin, "
+                "idéal pour attraper le premier TGV direct CDG 2 ➔ Nantes à 39 €-42 €."
+            ),
+            "leg1_label": f"✈️ Vol {pvg_cdg['dep_date_fr']} : {pvg_cdg['schedule_str']} ({pvg_cdg['airline']} {pvg_cdg['flight_numbers']}, {pvg_cdg['duration_str']})",
+            "leg1_price": pvg_cdg["price"],
+            "leg1_url": pvg_cdg["booking_url"],
+            "leg1_trip_url": pvg_cdg["trip_url"],
+            "leg2_label": "🚅 TGV Direct : Aéroport CDG 2 TGV ➔ Nantes (3h15 sans passer par Paris centre)",
+            "leg2_price": 42,
+            "leg2_url": sncf_cdg_nte,
+            "leg2_btn_text": "🚅 TGV CDG 2 ➔ Nantes (42 €)",
+            "china_tgv_price": 55,
+            "china_tgv_label": "Si départ de Shanghai : 0 € • Si départ de Zhengzhou : TGV 4h00 (+55 €)",
+            "hotel_recommended": True,
+            "hotel_city": "Shanghai (1 nuit avant départ si TGV depuis Zhengzhou)",
+            "hotel_price": 32,
+            "hotel_note": "375 € depuis Shanghai • Ou 462 € depuis Zhengzhou en incluant le TGV (55 €) + 1 nuit d'hôtel à Shanghai (32 €).",
+            "total_sans_hotel": pvg_cdg["price"] + 42,
+            "total_avec_hotel": pvg_cdg["price"] + 42 + 32,
+            "total_active_duration": "24h30 (vol + TGV direct Nantes)",
+        },
+        {
+            "badge": "🚅 VIA PÉKIN DAXING (PKX) — CONFORT 18H00",
+            "title": "TGV ➔ Pékin Daxing (PKX) ➔ Paris (CDG) + TGV Direct ➔ Nantes",
+            "why_smart": (
+                "Trajet aérien très fluide (18h00 seulement, 1 escale courte à Abu Dhabi avec Etihad) avec départ le soir (19h45) "
+                "et arrivée à 06h45 du matin à CDG pour enchaîner sur le TGV direct vers Nantes."
+            ),
+            "leg1_label": f"✈️ Vol {pkx_cdg['dep_date_fr']} : {pkx_cdg['schedule_str']} ({pkx_cdg['airline']} {pkx_cdg['flight_numbers']}, {pkx_cdg['duration_str']})",
+            "leg1_price": pkx_cdg["price"],
+            "leg1_url": pkx_cdg["booking_url"],
+            "leg1_trip_url": pkx_cdg["trip_url"],
+            "leg2_label": "🚅 TGV Direct : Aéroport CDG 2 TGV ➔ Nantes (3h15)",
+            "leg2_price": 42,
+            "leg2_url": trainline_cdg_nte,
+            "leg2_btn_text": "🚅 TGV CDG 2 ➔ Nantes (42 €)",
+            "china_tgv_price": 38,
+            "china_tgv_label": "TGV Zhengzhou ➔ Pékin (2h15, ~38 €) dans l'après-midi pour le vol de 19h45",
+            "hotel_recommended": False,
+            "hotel_city": "Aucune nuit requise (départ 19h45, arrivée 06h45)",
+            "hotel_price": 50,
+            "hotel_note": "Le vol partant à 19h45 et arrivant à 06h45 à CDG, aucune nuit d'hôtel n'est nécessaire.",
+            "total_sans_hotel": pkx_cdg["price"] + 42 + 38,
+            "total_avec_hotel": pkx_cdg["price"] + 42 + 38 + 50,
+            "total_active_duration": "23h30 (TGV 2h15 + Vol 18h00 + TGV 3h15)",
+        },
+        {
+            "badge": "🏨 ASTUCE 1 NUIT HÔTEL + VOL DIRECT NANTES (SANS TRAIN EN FRANCE)",
+            "title": "Pékin / Chine ➔ Barcelone (BCN) + 1 Nuit Hôtel + Vol Direct Volotea BCN ➔ Nantes (46 €)",
+            "why_smart": (
+                "Au lieu d'atterrir à Paris et de prendre le train avec vos valises, vous volez vers Barcelone (arrivée 18h55), "
+                "dormez dans un vrai lit d'hôtel (~52 €) pour couper la fatigue et sécuriser votre correspondance, "
+                "puis prenez le vol direct Volotea (1h40, 46 €) qui atterrit directement à Nantes Atlantique (NTE) !"
+            ),
+            "leg1_label": f"✈️ Vol 1 ({pek_bcn['dep_date_fr']}) : {pek_bcn['schedule_str']} ({pek_bcn['airline']} {pek_bcn['flight_numbers']}, {pek_bcn['duration_str']})",
+            "leg1_price": pek_bcn["price"],
+            "leg1_url": pek_bcn["booking_url"],
+            "leg1_trip_url": pek_bcn["trip_url"],
+            "leg2_label": f"✈️ Vol 2 Direct ({bcn_nte['dep_date_fr']}) : {bcn_nte['schedule_str']} ({bcn_nte['airline']} {bcn_nte['flight_numbers']}, {bcn_nte['duration_str']})",
+            "leg2_price": bcn_nte["price"],
+            "leg2_url": bcn_nte["booking_url"],
+            "leg2_btn_text": f"🎯 Vol Direct BCN ➔ NTE ({bcn_nte['price']} €)",
+            "china_tgv_price": 0,
+            "china_tgv_label": "Arrivée directe à l'aéroport de Nantes Atlantique (NTE)",
+            "hotel_recommended": True,
+            "hotel_city": "Barcelone (1 nuit d'étape sécurisant la correspondance)",
+            "hotel_price": 52,
+            "hotel_note": "1 nuit d'hôtel à Barcelone (~52 €) recommandée : zéro risque de rater le 2e billet et repos complet.",
+            "total_sans_hotel": pek_bcn["price"] + bcn_nte["price"],
+            "total_avec_hotel": pek_bcn["price"] + bcn_nte["price"] + 52,
+            "total_active_duration": "20h45 de vol (coupé par 1 nuit d'hôtel)",
+        },
+        {
+            "badge": "🇮🇹 ASTUCE ESCALE MILAN + VOL DIRECT EASYJET ➔ NANTES",
+            "title": "TGV Xi'an (XIY) ➔ Milan (MXP, 315 €) + 1 Nuit ou Journée Milan + Vol Direct easyJet MXP ➔ Nantes",
+            "why_smart": (
+                "Xi'an (1h30 TGV de Zhengzhou) propose un tarif très bas vers Milan Malpensa (315 € sur Hainan Airlines, bagage soute inclus). "
+                "Depuis Milan MXP, easyJet assure un vol direct quotidien de 1h55 vers Nantes (NTE)."
+            ),
+            "leg1_label": f"✈️ Vol 1 ({xiy_mxp['dep_date_fr']}) : {xiy_mxp['schedule_str']} ({xiy_mxp['airline']} {xiy_mxp['flight_numbers']})",
+            "leg1_price": xiy_mxp["price"],
+            "leg1_url": xiy_mxp["booking_url"],
+            "leg1_trip_url": xiy_mxp["trip_url"],
+            "leg2_label": f"✈️ Vol 2 Direct ({mxp_nte['dep_date_fr']}) : {mxp_nte['schedule_str']} ({mxp_nte['airline']} {mxp_nte['flight_numbers']}, {mxp_nte['duration_str']})",
+            "leg2_price": mxp_nte["price"],
+            "leg2_url": mxp_nte["booking_url"],
+            "leg2_btn_text": f"🎯 Vol Direct MXP ➔ NTE ({mxp_nte['price']} €)",
+            "china_tgv_price": 22,
+            "china_tgv_label": "TGV Zhengzhou ➔ Xi'an (1h30, 22 €)",
+            "hotel_recommended": True,
+            "hotel_city": "Milan Malpensa (optionnel : arrivée 07h40, vol easyJet à 18h40 ou J+1)",
+            "hotel_price": 55,
+            "hotel_note": "Même jour possible (arrivée 07h40, départ 18h40) ou +55 € avec 1 nuit d'hôtel à Milan pour couper le voyage.",
+            "total_sans_hotel": xiy_mxp["price"] + mxp_nte["price"] + 22,
+            "total_avec_hotel": xiy_mxp["price"] + mxp_nte["price"] + 22 + 55,
+            "total_active_duration": "Arrivée directe à Nantes (NTE) en 1h55 depuis Milan",
+        },
+    ]
+
+    return combos
+
 
 

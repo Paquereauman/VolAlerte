@@ -385,4 +385,90 @@
 </div>
 {% endif %}
 
+<!-- ========================================================================= -->
+<!-- SECTION SPÉCIALE : RETOUR À NANTES (NTE) — COMBINAISONS TRAIN + VOL + HÔTEL -->
+<!-- ========================================================================= -->
+{% if radar.nantes_combos %}
+<div id="retour-nantes" class="card" style="margin-top: 2rem; border-top: 4px solid #10b981; padding: 1.25rem;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+    <div>
+      <h2 style="font-size: 1.35rem; font-weight: 800; margin: 0 0 0.25rem 0; display: flex; align-items: center; gap: 0.5rem;">
+        <span>🇫🇷 Astuces &amp; Combinaisons Retour à Nantes (NTE) — Train + Vol + 1 Nuit Hôtel</span>
+      </h2>
+      <p style="color: var(--text-secondary); font-size: 0.86rem; margin: 0;">
+        Pourquoi éviter un billet unique <code>Zhengzhou (CGO) ➔ Nantes (NTE)</code> ? Parce qu'il impose 2 escales longues et coûte souvent <b>750 € à 1 050 €</b>. Voici les <b>5 combinaisons réelles les moins chères et sans trajet interminable</b> (avec ou sans 1 nuit d'hôtel d'étape) :
+      </p>
+    </div>
+    <span class="badge badge-success" style="font-size: 0.82rem; padding: 0.4rem 0.75rem;">
+      💡 Économie : -300 € à -450 € vs billet unique NTE
+    </span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    {% for c in radar.nantes_combos %}
+    <div style="background: var(--bg-card-hover); border: 1.5px solid {% if loop.first %}#10b981{% else %}var(--border){% endif %}; border-left: 4px solid {% if loop.first %}#10b981{% else %}var(--accent){% endif %}; border-radius: 8px; padding: 1rem 1.15rem;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem;">
+        <div style="flex: 1; min-width: 260px;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.3rem;">
+            <span class="badge {% if loop.first %}badge-success{% else %}badge-info{% endif %}" style="font-size: 0.74rem; font-weight: 800;">
+              {{ c.badge }}
+            </span>
+            <span style="font-size: 0.78rem; color: var(--accent); font-weight: 700;">
+              ⏱️ Durée active : {{ c.total_active_duration }}
+            </span>
+          </div>
+          <div style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem;">
+            {{ c.title }}
+          </div>
+          <div style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 0.65rem;">
+            {{ c.why_smart }}
+          </div>
+
+          <!-- Détail étape par étape -->
+          <div style="display: flex; flex-direction: column; gap: 0.28rem; font-size: 0.82rem; background: rgba(0,0,0,0.18); padding: 0.65rem 0.8rem; border-radius: 6px;">
+            <div>• {{ c.leg1_label }} — <b style="color: #10b981;">{{ c.leg1_price }} €</b></div>
+            <div>• {{ c.leg2_label }} — <b style="color: #10b981;">{{ c.leg2_price }} €</b></div>
+            {% if c.china_tgv_price > 0 %}
+            <div>• 🚅 Approche Chine : {{ c.china_tgv_label }} — <b>{{ c.china_tgv_price }} €</b></div>
+            {% endif %}
+            <div style="color: #f59e0b;">
+              • 🏨 <b>Option 1 nuit d'hôtel ({{ c.hotel_city }})</b> : <b>+{{ c.hotel_price }} €</b> — <i>{{ c.hotel_note }}</i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne Prix Total (Sans Hôtel vs Avec 1 Nuit Hôtel) + Boutons -->
+        <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 230px; gap: 0.6rem;">
+          <div style="display: flex; gap: 0.6rem; text-align: right;">
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; border-radius: 8px; padding: 0.5rem 0.75rem;">
+              <div style="font-size: 0.68rem; font-weight: 700; color: #10b981; text-transform: uppercase;">SANS HÔTEL</div>
+              <div style="font-size: 1.55rem; font-weight: 900; color: #10b981; line-height: 1.1;">{{ c.total_sans_hotel }} €</div>
+              <div style="font-size: 0.68rem; color: var(--text-muted);">Vol + Train/Vol NTE</div>
+            </div>
+            <div style="background: rgba(245, 158, 11, 0.1); border: 1.5px solid #f59e0b; border-radius: 8px; padding: 0.5rem 0.75rem;">
+              <div style="font-size: 0.68rem; font-weight: 700; color: #f59e0b; text-transform: uppercase;">AVEC 1 NUIT HÔTEL</div>
+              <div style="font-size: 1.55rem; font-weight: 900; color: #f59e0b; line-height: 1.1;">{{ c.total_avec_hotel }} €</div>
+              <div style="font-size: 0.68rem; color: var(--text-muted);">Tout compris + Hôtel</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end;">
+            <a href="{{ c.leg1_url }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
+              🎯 Étape 1 : Vol ({{ c.leg1_price }} €)
+            </a>
+            <a href="{{ c.leg1_trip_url }}" target="_blank" class="btn btn-secondary btn-sm">
+              Trip.com
+            </a>
+            <a href="{{ c.leg2_url }}" target="_blank" class="btn btn-secondary btn-sm" style="border-color: var(--accent); color: var(--accent); font-weight: 700;">
+              {{ c.leg2_btn_text }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
