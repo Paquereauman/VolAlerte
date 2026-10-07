@@ -157,75 +157,78 @@
     </span>
   </div>
 
-  <div class="table-container">
-    <table style="font-size: 0.84rem;">
+  <div class="table-container" style="overflow-x: auto;">
+    <table style="font-size: 0.84rem; width: 100%; border-collapse: collapse;">
       <thead>
         <tr>
-          <th>Destination</th>
-          <th>📅 Date &amp; Horaires du Vol</th>
-          <th>✈️ Compagnie &amp; N° Vol</th>
-          <th>⏱️ Durée &amp; Escales</th>
-          <th>🎒 Seul / 🧳 Cabine / 📦 Soute</th>
-          <th>🏷️ Prix Retenu</th>
-          <th>Action Directe (Même Prix Garanti)</th>
+          <th style="min-width: 165px;">Destination</th>
+          <th style="min-width: 215px;">📅 Date, Horaires &amp; Vol</th>
+          <th style="min-width: 245px;">⏱️ Durée (Vol + Train) &amp; Escales</th>
+          <th style="min-width: 175px;">🏷️ Prix TTC &amp; Bagages</th>
+          <th style="min-width: 185px; text-align: right;">Action Directe (Même Prix)</th>
         </tr>
       </thead>
       <tbody>
         {% for deal in radar.deals %}
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>{{ deal.flag }} {{ deal.city }} ({{ deal.dest_code }})</span>
-            <div style="font-size: 0.72rem; color: {% if deal.is_nearby_deal %}#f59e0b{% else %}var(--text-muted){% endif %}; font-weight: 600;">
-              Départ {{ deal.departure_code }}{% if deal.is_nearby_deal %} (TGV){% endif %}
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              {{ deal.flag }} {{ deal.city }} ({{ deal.dest_code }})
+            </div>
+            <div style="font-size: 0.75rem; color: {% if deal.is_nearby_deal %}#f59e0b{% else %}var(--text-muted){% endif %}; font-weight: 700; margin-top: 0.15rem;">
+              {% if deal.is_nearby_deal %}🚅 Départ {{ deal.departure_code }} (TGV){% else %}🛫 Départ {{ deal.departure_code }}{% endif %}
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 {{ deal.dep_date_fr }}</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 {{ deal.schedule_str }}</div>
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 {{ deal.dep_date_fr }}
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 {{ deal.schedule_str }}
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>{{ deal.airline }}</b> (<code>{{ deal.flight_numbers }}</code>)
+            </div>
           </td>
-          <td>
-            <div style="font-weight: 700;">{{ deal.airline }}</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>{{ deal.flight_numbers }}</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol {{ deal.flight_duration_str }}</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol {{ deal.flight_duration_str }}</span>
+              <span style="font-size: 0.75rem; color: {% if deal.stops == 0 %}#10b981{% else %}var(--text-secondary){% endif %}; font-weight: 700;">
+                • {{ deal.layover_details }}
+              </span>
+            </div>
             {% if deal.tgv_name %}
-            <div style="font-size: 0.74rem; color: #f59e0b; font-weight: 700;">
-              🚅 + {{ deal.tgv_name }} (Total {{ deal.total_journey_str }})
+            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
+              🚅 + {{ deal.tgv_name }} <span style="color: var(--text-secondary); font-weight: 600;">(Total {{ deal.total_journey_str }})</span>
             </div>
             {% endif %}
-            <div style="font-size: 0.75rem; color: {% if deal.stops == 0 %}#10b981{% else %}var(--text-secondary){% endif %}; font-weight: 600;">
-              {{ deal.layover_details }}
+          </td>
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">{{ deal.display_price }} €</span>
+              {% if deal.cabine_included %}
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              {% endif %}
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">{{ deal.best_price }} €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">{{ deal.cabine_total }} €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="{{ deal.url_avec_soute }}" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">{{ deal.soute_total }} €</a>
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">{{ deal.best_price }} €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">{{ deal.cabine_total }} €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="{{ deal.url_avec_soute }}" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">{{ deal.soute_total }} €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">{{ deal.display_price }} €</span>
-            {% if deal.cabine_included %}
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
-            {% endif %}
-          </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à {{ deal.display_price }} €
               </a>
-              <a href="{{ deal.google_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du {{ deal.dep_date_fr }} sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="{{ deal.google_link }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="{{ deal.trip_com_link }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               {% if deal.skyscanner_link %}
-              <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="{{ deal.skyscanner_link }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               {% endif %}
             </div>
           </td>

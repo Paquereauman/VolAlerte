@@ -197,582 +197,630 @@
     </span>
   </div>
 
-  <div class="table-container">
-    <table style="font-size: 0.84rem;">
+  <div class="table-container" style="overflow-x: auto;">
+    <table style="font-size: 0.84rem; width: 100%; border-collapse: collapse;">
       <thead>
         <tr>
-          <th>Destination</th>
-          <th>📅 Date &amp; Horaires du Vol</th>
-          <th>✈️ Compagnie &amp; N° Vol</th>
-          <th>⏱️ Durée &amp; Escales</th>
-          <th>🎒 Seul / 🧳 Cabine / 📦 Soute</th>
-          <th>🏷️ Prix Retenu</th>
-          <th>Action Directe (Même Prix Garanti)</th>
+          <th style="min-width: 165px;">Destination</th>
+          <th style="min-width: 215px;">📅 Date, Horaires &amp; Vol</th>
+          <th style="min-width: 245px;">⏱️ Durée (Vol + Train) &amp; Escales</th>
+          <th style="min-width: 175px;">🏷️ Prix TTC &amp; Bagages</th>
+          <th style="min-width: 185px; text-align: right;">Action Directe (Même Prix)</th>
         </tr>
       </thead>
       <tbody>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇹🇭 Chiang Mai (CNX)</span>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">
-              Départ XIY
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇹🇭 Chiang Mai (CNX)
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ XIY
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Dim. 15 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 17:55 XIY ➔ 20:35 CNX</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Spring</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>9C 6505</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 3h40</div>
-            
-            <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
-              Direct (sans escale)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Dim. 15 nov. 2026
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 17:55 XIY ➔ 20:35 CNX
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Spring</b> (<code>9C 6505</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">78 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">78 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">116 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">78 €</span>
-            
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 3h40</span>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
+                • Direct (sans escale)
+              </span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINFhoWmtQRkhQU01BQkxxUEFCRy0tLS0tLS0tdGJiam8xMEFBQUFBR3JGc0s0Q0ZBVkVBEgY5QzY1MDUaCgiwPBACGgNFVVI4HXDpQw==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">78 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">78 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">78 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">116 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINFhoWmtQRkhQU01BQkxxUEFCRy0tLS0tLS0tdGJiam8xMEFBQUFBR3JGc0s0Q0ZBVkVBEgY5QzY1MDUaCgiwPBACGgNFVVI4HXDpQw==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 78 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=CNX&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=CNX&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/xiy/cnx/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/xiy/cnx/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇭🇰 Hong Kong (HKG)</span>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">
-              Départ WUH
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇭🇰 Hong Kong (HKG)
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ WUH
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Ven. 13 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 20:45 WUH ➔ 23:05 HKG</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Cathay Pacific</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>CX 931</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 2h20</div>
-            
-            <div style="font-size: 0.74rem; color: #f59e0b; font-weight: 700;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) (Total 4h05)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Ven. 13 nov. 2026
             </div>
-            
-            <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
-              Direct (sans escale)
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 20:45 WUH ➔ 23:05 HKG
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Cathay Pacific</b> (<code>CX 931</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">84 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">84 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">84 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">84 €</span>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 2h20</span>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
+                • Direct (sans escale)
+              </span>
+            </div>
             
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
+              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) <span style="color: var(--text-secondary); font-weight: 600;">(Total 4h05)</span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRISjBCRXp0SWJVcmdBRzY2WEFCRy0tLS0tLS0tLXRiZGVjMkFBQUFBR3JGM0tzQVQ3VkdBEgVDWDkzMRoKCMlBEAIaA0VVUjgdcNNJ&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">84 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">84 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">84 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">84 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRISjBCRXp0SWJVcmdBRzY2WEFCRy0tLS0tLS0tLXRiZGVjMkFBQUFBR3JGM0tzQVQ3VkdBEgVDWDkzMRoKCMlBEAIaA0VVUjgdcNNJ&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 84 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Ven. 13 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=HKG&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA0hLR0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=HKG&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/wuh/hkg/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/wuh/hkg/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇻🇳 Hanoï (HAN)</span>
-            <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600;">
-              Départ PVG (TGV)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇻🇳 Hanoï (HAN)
+            </div>
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ PVG (TGV)
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Ven. 13 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 02:20 PVG ➔ 05:15 HAN</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Vietjet</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>VJ 6011</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 3h55</div>
-            
-            <div style="font-size: 0.74rem; color: #f59e0b; font-weight: 700;">
-              🚅 + TGV / Hub Shanghai Pudong (PVG) (Total 7h55)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Ven. 13 nov. 2026
             </div>
-            
-            <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
-              Direct (sans escale)
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 02:20 PVG ➔ 05:15 HAN
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Vietjet</b> (<code>VJ 6011</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">93 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">93 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">131 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">93 €</span>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 3h55</span>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
+                • Direct (sans escale)
+              </span>
+            </div>
             
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
+              🚅 + TGV / Hub Shanghai Pudong (PVG) <span style="color: var(--text-secondary); font-weight: 600;">(Total 7h55)</span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIT205LVNVUHpib29BUlowTGdCRy0tLS0tLS0tLS10bGsxOEFBQUFBR3JGdHZZQmo1YnNBEgZWSjYwMTEaCgiMSBACGgNFVVI4HXD/UA==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">93 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">93 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">93 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">131 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIT205LVNVUHpib29BUlowTGdCRy0tLS0tLS0tLS10bGsxOEFBQUFBR3JGdHZZQmo1YnNBEgZWSjYwMTEaCgiMSBACGgNFVVI4HXD/UA==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 93 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Ven. 13 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=PVG&amp;acity=HAN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUFZHcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=PVG&amp;acity=HAN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/pvg/han/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/pvg/han/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇹🇭 Bangkok (BKK)</span>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">
-              Départ XIY
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇹🇭 Bangkok (BKK)
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ XIY
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Dim. 15 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 14:55 XIY ➔ 01:55 (+1j) BKK</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Shandong</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>SC 8736 + SC 8075</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 12h00</div>
-            
-            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
-              1 escale(s) : 5h15 à Jinan (TNA)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Dim. 15 nov. 2026
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 14:55 XIY ➔ 01:55 (+1j) BKK
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Shandong</b> (<code>SC 8736 + SC 8075</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">96 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">96 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">96 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">96 €</span>
-            
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 12h00</span>
+              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">
+                • 1 escale(s) : 5h15 à Jinan (TNA)
+              </span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIRlBRYXl6UzNtdUVBVGJ3cVFCRy0tLS0tLS0tLS10bGR1N0FBQUFBR3JGc0tzREhrcE9BEg1TQzg3MzZ8U0M4MDc1GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">96 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">96 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">96 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">96 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIRlBRYXl6UzNtdUVBVGJ3cVFCRy0tLS0tLS0tLS10bGR1N0FBQUFBR3JGc0tzREhrcE9BEg1TQzg3MzZ8U0M4MDc1GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 96 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=BKK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=BKK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/xiy/bkk/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/xiy/bkk/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇲🇾 Kuala Lumpur (KUL)</span>
-            <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600;">
-              Départ WUH (TGV)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇲🇾 Kuala Lumpur (KUL)
+            </div>
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ WUH (TGV)
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Dim. 15 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 00:15 WUH ➔ 05:20 KUL</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">AirAsia</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>AK 151</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 5h05</div>
-            
-            <div style="font-size: 0.74rem; color: #f59e0b; font-weight: 700;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) (Total 6h50)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Dim. 15 nov. 2026
             </div>
-            
-            <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
-              Direct (sans escale)
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 00:15 WUH ➔ 05:20 KUL
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>AirAsia</b> (<code>AK 151</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">99 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">99 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">137 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">99 €</span>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 5h05</span>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
+                • Direct (sans escale)
+              </span>
+            </div>
             
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
+              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) <span style="color: var(--text-secondary); font-weight: 600;">(Total 6h50)</span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINDlSeTJiTFhLeXNBV256bXdCRy0tLS0tLS0tdGJjYWQxNkFBQUFBR3JGc0tzSTlkYW9BEgVBSzE1MRoKCOJMEAIaA0VVUjgdcJ5W&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">99 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">99 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">99 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">137 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINDlSeTJiTFhLeXNBV256bXdCRy0tLS0tLS0tdGJjYWQxNkFBQUFBR3JGc0tzSTlkYW9BEgVBSzE1MRoKCOJMEAIaA0VVUjgdcJ5W&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 99 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=KUL&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0tVTEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=KUL&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/wuh/kul/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/wuh/kul/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇰🇷 Séoul (ICN)</span>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">
-              Départ XIY
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇰🇷 Séoul (ICN)
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ XIY
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Dim. 15 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 14:40 XIY ➔ 22:10 ICN</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">China Southern</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>CZ 8824 + CZ 315</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 6h30</div>
-            
-            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
-              1 escale(s) : 2h30 à Pékin (PKX)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Dim. 15 nov. 2026
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 14:40 XIY ➔ 22:10 ICN
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>China Southern</b> (<code>CZ 8824 + CZ 315</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">101 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">101 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">101 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">101 €</span>
-            
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 6h30</span>
+              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">
+                • 1 escale(s) : 2h30 à Pékin (PKX)
+              </span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINDlSeTJiTFhLeXNBV255NGdCRy0tLS0tLS0tdGJjYWQxNkFBQUFBR3JGc0trQjE4dE1BEgxDWjg4MjR8Q1ozMTUaCgjDThACGgNFVVI4HXCbWA==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">101 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">101 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">101 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">101 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINDlSeTJiTFhLeXNBV255NGdCRy0tLS0tLS0tdGJjYWQxNkFBQUFBR3JGc0trQjE4dE1BEgxDWjg4MjR8Q1ozMTUaCgjDThACGgNFVVI4HXCbWA==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 101 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=ICN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0lDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=ICN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/xiy/icn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/xiy/icn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇸🇬 Singapour (SIN)</span>
-            <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600;">
-              Départ WUH (TGV)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇸🇬 Singapour (SIN)
+            </div>
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ WUH (TGV)
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Ven. 13 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 00:15 WUH ➔ 05:25 SIN</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Scoot</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>TR 121</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 5h10</div>
-            
-            <div style="font-size: 0.74rem; color: #f59e0b; font-weight: 700;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) (Total 6h55)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Ven. 13 nov. 2026
             </div>
-            
-            <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
-              Direct (sans escale)
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 00:15 WUH ➔ 05:25 SIN
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Scoot</b> (<code>TR 121</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">103 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">103 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">141 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">103 €</span>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 5h10</span>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
+                • Direct (sans escale)
+              </span>
+            </div>
             
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
+              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) <span style="color: var(--text-secondary); font-weight: 600;">(Total 6h55)</span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcDFqZWFrMHpoLUVBVkNJZGdCRy0tLS0tLXRsYWQxOC1uMkFBQUFBR3JGM0tzQWpKOEdBEgVUUjEyMRoKCKdQEAIaA0VVUjgdcJla&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">103 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">103 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">103 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">141 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcDFqZWFrMHpoLUVBVkNJZGdCRy0tLS0tLXRsYWQxOC1uMkFBQUFBR3JGM0tzQWpKOEdBEgVUUjEyMRoKCKdQEAIaA0VVUjgdcJla&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 103 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Ven. 13 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=SIN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDV1VIcgUSA1NJTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=SIN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/wuh/sin/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/wuh/sin/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇻🇳 Hô Chi Minh-Ville (SGN)</span>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">
-              Départ CGO
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇻🇳 Hô Chi Minh-Ville (SGN)
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ CGO
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Ven. 13 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 09:00 CGO ➔ 15:05 SGN</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">China Southern</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>CZ 8685 + CZ 373</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 7h05</div>
-            
-            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
-              1 escale(s) : 1h40 à Canton (CAN)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Ven. 13 nov. 2026
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 09:00 CGO ➔ 15:05 SGN
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>China Southern</b> (<code>CZ 8685 + CZ 373</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">114 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">114 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">114 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">114 €</span>
-            
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 7h05</span>
+              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">
+                • 1 escale(s) : 1h40 à Canton (CAN)
+              </span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIZ0o2MHUwbm5LM0VBVGZTNWdCRy0tLS0tLS0tLS10bHczNEFBQUFBR3JGM0tvTmtuRUlBEgxDWjg2ODV8Q1ozNzMaCgj0WBACGgNFVVI4HXDuYw==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">114 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">114 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">114 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">114 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIZ0o2MHUwbm5LM0VBVGZTNWdCRy0tLS0tLS0tLS10bHczNEFBQUFBR3JGM0tvTmtuRUlBEgxDWjg2ODV8Q1ozNzMaCgj0WBACGgNFVVI4HXDuYw==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 114 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Ven. 13 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=SGN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA1NHTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=SGN&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/cgo/sgn/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/cgo/sgn/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇹🇭 Phuket (HKT)</span>
-            <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600;">
-              Départ CGO (TGV)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇹🇭 Phuket (HKT)
+            </div>
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ CGO (TGV)
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Dim. 15 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 16:15 CGO ➔ 11:20 (+1j) HKT</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Cathay Pacific</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>CX 957 + CX 787</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 20h05</div>
-            
-            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
-              1 escale(s) : 13h15 à Hong Kong (HKG)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Dim. 15 nov. 2026
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 16:15 CGO ➔ 11:20 (+1j) HKT
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Cathay Pacific</b> (<code>CX 957 + CX 787</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">161 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">161 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">161 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">161 €</span>
-            
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 20h05</span>
+              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">
+                • 1 escale(s) : 13h15 à Hong Kong (HKG)
+              </span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINDlSeTJiTFhLeXNBV24wTEFCRy0tLS0tLS0tdGJjYWQxNkFBQUFBR3JGc0swRDN0aEFBEgtDWDk1N3xDWDc4NxoKCNx9EAIaA0VVUjgdcJ2NAQ==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">161 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">161 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">161 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">161 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRINDlSeTJiTFhLeXNBV24wTEFCRy0tLS0tLS0tdGJjYWQxNkFBQUFBR3JGc0swRDN0aEFBEgtDWDk1N3xDWDc4NxoKCNx9EAIaA0VVUjgdcJ2NAQ==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 161 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=HKT&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hLVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=HKT&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/cgo/hkt/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/cgo/hkt/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
         <tr>
-          <td style="font-weight: 800; white-space: nowrap;">
-            <span>🇯🇵 Tokyo (Narita) (NRT)</span>
-            <div style="font-size: 0.72rem; color: #f59e0b; font-weight: 600;">
-              Départ CGO (TGV)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
+              🇯🇵 Tokyo (Narita) (NRT)
+            </div>
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ CGO (TGV)
             </div>
           </td>
-          <td style="white-space: nowrap;">
-            <div style="font-weight: 700; color: var(--accent);">📅 Dim. 15 nov. 2026</div>
-            <div style="font-weight: 700; font-size: 0.82rem; color: var(--text-primary);">🛫 16:15 CGO ➔ 06:30 (+1j) NRT</div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">Cathay Pacific</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Vol <code>CX 957 + CX 524</code></div>
-          </td>
-          <td>
-            <div style="font-weight: 700;">✈️ Vol 13h15</div>
-            
-            <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
-              1 escale(s) : 6h15 à Hong Kong (HKG)
+          <td style="vertical-align: middle;">
+            <div style="font-weight: 700; color: var(--accent); white-space: nowrap;">
+              📅 Dim. 15 nov. 2026
+            </div>
+            <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
+              🛫 16:15 CGO ➔ 06:30 (+1j) NRT
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
+              ✈️ <b>Cathay Pacific</b> (<code>CX 957 + CX 524</code>)
             </div>
           </td>
-          <td style="white-space: nowrap; font-size: 0.78rem;">
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Voir sans bagage sur Google Flights">197 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Voir avec bagage cabine sur Google Flights">197 €</a>
-            <span style="color: var(--text-muted);">/</span>
-            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Voir avec bagage soute">197 €</a>
-          </td>
-          <td style="white-space: nowrap;">
-            <span style="font-size: 1.25rem; font-weight: 900; color: #10b981;">197 €</span>
-            
-              <div style="font-size: 0.68rem; color: #10b981; font-weight: 600;">✓ Cabine incluse (0 €)</div>
+          <td style="vertical-align: middle; min-width: 245px;">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 13h15</span>
+              <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">
+                • 1 escale(s) : 6h15 à Hong Kong (HKG)
+              </span>
+            </div>
             
           </td>
-          <td style="white-space: nowrap;">
-            <div style="display: flex; gap: 0.35rem;">
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIMG1LbGVUNV81Q1FBYWdlTEFCRy0tLS0tLS0tdGJibXIxOUFBQUFBR3JGc0trQ1M0NFFBEgtDWDk1N3xDWDUyNBoLCMOZARACGgNFVVI4HXC7rAE=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; font-weight: 700; background-color: #10b981; border-color: #10b981;">
+          <td style="vertical-align: middle; white-space: nowrap;">
+            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
+              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">197 €</span>
+              
+                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              
+            </div>
+            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">197 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">197 €</a>
+              <span style="color: var(--text-muted);">/</span>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">197 €</a>
+            </div>
+          </td>
+          <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
+            <div>
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIMG1LbGVUNV81Q1FBYWdlTEFCRy0tLS0tLS0tdGJibXIxOUFBQUFBR3JGc0trQ1M0NFFBEgtDWDk1N3xDWDUyNBoLCMOZARACGgNFVVI4HXC7rAE=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 🎯 Réserver à 197 €
               </a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
-                🔍 Google
-              </a>
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=NRT&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer et réserver sur Trip.com en EUR (OTA chinoises incluses)">
-                Trip.com
-              </a>
+            </div>
+            <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA05SVEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=NRT&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/cgo/nrt/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;" title="Comparer sur Skyscanner en EUR">
-                Skyscanner
-              </a>
+              <a href="https://www.skyscanner.fr/transport/vols/cgo/nrt/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
