@@ -62,7 +62,7 @@
       <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.4rem 0.75rem;">
         ⚡ 10 destination(s) • Dim. 15 nov. 2026
       </span>
-      <a href="/VolAlerte/radar/?origin=CGO&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&refresh=1"
+      <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&refresh=1"
          class="btn btn-secondary btn-sm" title="Forcer une actualisation en direct sur Google Flights">
         🔄 Actualiser Live
       </a>
@@ -78,12 +78,12 @@
       <!-- Aéroport de départ -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="origin" style="font-size: 0.8rem;">🛫 Aéroport de départ</label>
-        <select id="origin" name="origin" class="form-control" onchange="this.form.submit()">
-          <option value="CGO" selected>Zhengzhou (CGO) - Chine</option>
+        <select id="origin" name="origin" class="form-control" onchange="window.handleRadarFilterChange()">
+          <option value="CGO" >Zhengzhou (CGO) - Chine</option>
           <option value="PKX" >Pékin (PKX Daxing / PEK Capital)</option>
           <option value="PVG" >Shanghai (PVG Pudong / SHA)</option>
           <option value="XIY" >Xi'an (XIY) - Chine</option>
-          <option value="WUH" >Wuhan (WUH) - Chine</option>
+          <option value="WUH" selected>Wuhan (WUH) - Chine</option>
           <option value="PAR" >Paris (CDG / ORY / BVA)</option>
         </select>
       </div>
@@ -91,7 +91,7 @@
       <!-- Mois visé -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="month" style="font-size: 0.8rem;">📅 Mois du départ</label>
-        <select id="month" name="month" class="form-control" onchange="document.getElementById('exact_date').value=''; this.form.submit();">
+        <select id="month" name="month" class="form-control" onchange="document.getElementById('exact_date').value=''; window.handleRadarFilterChange();">
           <option value="2026-10" >Octobre 2026</option>
           <option value="2026-11" selected>Novembre 2026</option>
           <option value="2026-12" >Décembre 2026</option>
@@ -106,13 +106,13 @@
         <label class="form-label" for="exact_date" style="font-size: 0.8rem;">🎯 Date précise du vol</label>
         <input type="date" id="exact_date" name="exact_date" class="form-control"
                value="2026-11-15" min="2026-10-07" max="2027-09-30"
-               onchange="this.form.submit()">
+               onchange="window.handleRadarFilterChange()">
       </div>
 
       <!-- Bagages inclus dans le prix affiché -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="bagage" style="font-size: 0.8rem; color: #10b981; font-weight: 700;">🧳 Bagage inclus dans le prix (€)</label>
-        <select id="bagage" name="bagage" class="form-control" style="border-color: #10b981; font-weight: 700;" onchange="this.form.submit()">
+        <select id="bagage" name="bagage" class="form-control" style="border-color: #10b981; font-weight: 700;" onchange="window.handleRadarFilterChange()">
           <option value="cabine" selected>🧳 Avec Bagage Cabine inclus (Recommandé)</option>
           <option value="soute_1" >📦 Avec Bagage en Soute (20-23 kg)</option>
           <option value="aucun" >🎒 Sans bagage (Billet seul)</option>
@@ -122,7 +122,7 @@
       <!-- Durée max de voyage -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_duration" style="font-size: 0.8rem;">⏱️ Durée max totale</label>
-        <select id="max_duration" name="max_duration" class="form-control" onchange="this.form.submit()">
+        <select id="max_duration" name="max_duration" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="0" selected>Toutes durées</option>
           <option value="6" >Max 6 heures</option>
           <option value="8" >Max 8 heures</option>
@@ -134,7 +134,7 @@
       <!-- Nombre d'escales max -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_stops" style="font-size: 0.8rem;">🛑 Escales max</label>
-        <select id="max_stops" name="max_stops" class="form-control" onchange="this.form.submit()">
+        <select id="max_stops" name="max_stops" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="-1" selected>Direct ou avec escale</option>
           <option value="0" >✈️ Direct uniquement (0 escale)</option>
           <option value="1" >1 escale maximum</option>
@@ -145,7 +145,7 @@
       <!-- Attente max en escale -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_layover" style="font-size: 0.8rem;">⏳ Attente max escale</label>
-        <select id="max_layover" name="max_layover" class="form-control" onchange="this.form.submit()">
+        <select id="max_layover" name="max_layover" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="0" selected>Sans limite</option>
           <option value="2.5" >Max 2h30 d'escale</option>
           <option value="4" >Max 4h00 d'escale</option>
@@ -157,20 +157,20 @@
     <!-- Barre inférieure : TGV aéroports voisins + Filtres rapides -->
     <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
       <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.88rem; font-weight: 600;">
-        <input type="checkbox" name="include_nearby" value="1" checked onchange="this.form.submit()">
+        <input type="checkbox" name="include_nearby" value="1" checked onchange="window.handleRadarFilterChange()">
         <span>🚅 Croiser avec les aéroports voisins en TGV (Wuhan WUH, Xi'an XIY...)</span>
       </label>
 
       <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-        <a href="/VolAlerte/radar/?origin=CGO&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=all" 
+        <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=all" 
            class="btn btn-sm btn-primary" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
           Tous (10)
         </a>
-        <a href="/VolAlerte/radar/?origin=CGO&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=under_100" 
+        <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=under_100" 
            class="btn btn-sm btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
           💰 Moins de 100 €
         </a>
-        <a href="/VolAlerte/radar/?origin=CGO&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=southeast_asia" 
+        <a href="/VolAlerte/radar/?origin=WUH&month=2026-11&exact_date=&bagage=cabine&include_nearby=1&max_duration=0.0&max_stops=-1&max_layover=0.0&filter=southeast_asia" 
            class="btn btn-sm btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
           🌴 Asie du Sud-Est
         </a>
@@ -210,7 +210,18 @@
       </thead>
       <tbody>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="CNX"
+            data-region="Asie du Sud-Est"
+            data-dept="XIY"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="310"
+            data-layover-min="0"
+            data-price-display="78"
+            data-price-cabine="78"
+            data-price-soute="116"
+            data-price-sans="78">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Chiang Mai (CNX)
@@ -280,13 +291,24 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="HKG"
+            data-region="Asie de l&#39;Est"
+            data-dept="WUH"
+            data-is-nearby="0"
+            data-stops="0"
+            data-duration-min="140"
+            data-layover-min="0"
+            data-price-display="84"
+            data-price-cabine="84"
+            data-price-soute="84"
+            data-price-sans="84">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇭🇰 Hong Kong (HKG)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ WUH (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ WUH
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -306,10 +328,6 @@
               <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
                 • Direct (sans escale)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) <span style="color: var(--text-secondary); font-weight: 600;">(Total 4h05)</span>
             </div>
             
           </td>
@@ -346,7 +364,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="HAN"
+            data-region="Asie du Sud-Est"
+            data-dept="PVG"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="475"
+            data-layover-min="0"
+            data-price-display="93"
+            data-price-cabine="93"
+            data-price-soute="131"
+            data-price-sans="93">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇻🇳 Hanoï (HAN)
@@ -416,13 +445,24 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="BKK"
+            data-region="Asie du Sud-Est"
+            data-dept="WUH"
+            data-is-nearby="0"
+            data-stops="1"
+            data-duration-min="760"
+            data-layover-min="315"
+            data-price-display="96"
+            data-price-cabine="96"
+            data-price-soute="96"
+            data-price-sans="96">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Bangkok (BKK)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ XIY (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ WUH
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -430,22 +470,18 @@
               📅 Dim. 15 nov. 2026
             </div>
             <div style="font-weight: 800; font-size: 0.84rem; color: var(--text-primary); white-space: nowrap; margin-top: 0.1rem;">
-              🛫 14:55 XIY ➔ 01:55 (+1j) BKK
+              🛫 13:45 WUH ➔ 01:25 (+1j) BKK
             </div>
             <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.1rem;">
-              ✈️ <b>Shandong</b> (<code>SC 8736 + SC 8075</code>)
+              ✈️ <b>Shandong</b> (<code>SC 4864 + SC 4079</code>)
             </div>
           </td>
           <td style="vertical-align: middle; min-width: 245px;">
             <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 12h00</span>
+              <span style="font-weight: 800; color: var(--text-primary); white-space: nowrap;">✈️ Vol 12h40</span>
               <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">
-                • 1 escale(s) : 5h15 à Jinan (TNA)
+                • 1 escale(s) : 5h15 à Qingdao (TAO)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Xi&#39;an (1h30) <span style="color: var(--text-secondary); font-weight: 600;">(Total 13h30)</span>
             </div>
             
           </td>
@@ -457,38 +493,49 @@
             </div>
             <div style="font-size: 0.73rem; margin-top: 0.15rem;">
               
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">96 €</a>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">96 €</a>
               <span style="color: var(--text-muted);">/</span>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">96 €</a>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">96 €</a>
               <span style="color: var(--text-muted);">/</span>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">96 €</a>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; font-weight: 700; text-decoration: underline;" title="Avec bagage soute">96 €</a>
             </div>
           </td>
           <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
             <div>
-              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIRlBRYXl6UzNtdUVBVGJ3cVFCRy0tLS0tLS0tLS10bGR1N0FBQUFBR3JGc0tzREhrcE9BEg1TQzg3MzZ8U0M4MDc1GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
+              <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIVllfSV9Mcm03aWNBQXZlMVFCRy0tLS0tLS0tLXRsYmRqN0FBQUFBR3JGc0trQlV3Y0VBEg1TQzQ4NjR8U0M0MDc5GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
                 
                   🎯 Réserver à 96 €
                 
               </a>
             </div>
             <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
-              <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=BKK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;">⚡ Trip.com (96 €)</a>
-              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
+              <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=BKK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;">⚡ Trip.com (96 €)</a>
+              <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
               
-              <a href="https://www.skyscanner.fr/transport/vols/xiy/bkk/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
+              <a href="https://www.skyscanner.fr/transport/vols/wuh/bkk/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               
             </div>
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="KUL"
+            data-region="Asie du Sud-Est"
+            data-dept="WUH"
+            data-is-nearby="0"
+            data-stops="0"
+            data-duration-min="305"
+            data-layover-min="0"
+            data-price-display="99"
+            data-price-cabine="99"
+            data-price-soute="137"
+            data-price-sans="99">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇲🇾 Kuala Lumpur (KUL)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ WUH (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ WUH
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -508,10 +555,6 @@
               <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
                 • Direct (sans escale)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) <span style="color: var(--text-secondary); font-weight: 600;">(Total 6h50)</span>
             </div>
             
           </td>
@@ -552,13 +595,24 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="ICN"
+            data-region="Asie de l&#39;Est"
+            data-dept="XIY"
+            data-is-nearby="0"
+            data-stops="1"
+            data-duration-min="480"
+            data-layover-min="150"
+            data-price-display="101"
+            data-price-cabine="101"
+            data-price-soute="101"
+            data-price-sans="101">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇰🇷 Séoul (ICN)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ XIY (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ XIY
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -622,13 +676,24 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="SIN"
+            data-region="Asie du Sud-Est"
+            data-dept="WUH"
+            data-is-nearby="0"
+            data-stops="0"
+            data-duration-min="310"
+            data-layover-min="0"
+            data-price-display="103"
+            data-price-cabine="103"
+            data-price-soute="141"
+            data-price-sans="103">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇸🇬 Singapour (SIN)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ WUH (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ WUH
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -648,10 +713,6 @@
               <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
                 • Direct (sans escale)
               </span>
-            </div>
-            
-            <div style="font-size: 0.76rem; color: #f59e0b; font-weight: 700; margin-top: 0.2rem; line-height: 1.3;">
-              🚅 + TGV Zhengzhou ➔ Wuhan (1h45) <span style="color: var(--text-secondary); font-weight: 600;">(Total 6h55)</span>
             </div>
             
           </td>
@@ -692,13 +753,24 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="SGN"
+            data-region="Asie du Sud-Est"
+            data-dept="CGO"
+            data-is-nearby="1"
+            data-stops="1"
+            data-duration-min="425"
+            data-layover-min="100"
+            data-price-display="114"
+            data-price-cabine="114"
+            data-price-soute="114"
+            data-price-sans="114">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇻🇳 Hô Chi Minh-Ville (SGN)
             </div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
-              🛫 Départ CGO
+            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
+              🚅 Départ CGO (TGV)
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -758,13 +830,24 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="NRT"
+            data-region="Asie de l&#39;Est"
+            data-dept="TSN"
+            data-is-nearby="0"
+            data-stops="0"
+            data-duration-min="345"
+            data-layover-min="0"
+            data-price-display="132"
+            data-price-cabine="132"
+            data-price-soute="170"
+            data-price-sans="132">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇯🇵 Tokyo (Narita) (NRT)
             </div>
-            <div style="font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-              🚅 Départ TSN (TGV)
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 0.15rem;">
+              🛫 Départ TSN
             </div>
           </td>
           <td style="vertical-align: middle;">
@@ -828,7 +911,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="HKT"
+            data-region="Asie du Sud-Est"
+            data-dept="CGO"
+            data-is-nearby="0"
+            data-stops="1"
+            data-duration-min="1205"
+            data-layover-min="795"
+            data-price-display="161"
+            data-price-cabine="161"
+            data-price-soute="161"
+            data-price-sans="161">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Phuket (HKT)
@@ -900,7 +994,19 @@
 <!-- ========================================================================= -->
 <div class="grid grid-2" style="gap: 1.15rem;">
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="CNX"
+       data-region="Asie du Sud-Est"
+       data-dept="XIY"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="310"
+       data-layover-min="0"
+       data-price-display="78"
+       data-price-cabine="78"
+       data-price-soute="116"
+       data-price-sans="78"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -958,7 +1064,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30) • ⏱️ <b>Trajet total (Train + Vol) : 5h10</b> • Départ XIY : -151 € vs CGO (229 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30) • ⏱️ <b>Trajet total (Train + Vol) : 5h10</b> • Départ XIY : -105 € vs WUH (183 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30)
         </div>
         
       </div>
@@ -1061,7 +1167,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="HKG"
+       data-region="Asie de l&#39;Est"
+       data-dept="WUH"
+       data-is-nearby="0"
+       data-stops="0"
+       data-duration-min="140"
+       data-layover-min="0"
+       data-price-display="84"
+       data-price-cabine="84"
+       data-price-soute="84"
+       data-price-sans="84"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1105,7 +1223,7 @@
             🛫 20:45 WUH ➔ 23:05 HKG
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 2h20 • ⏱️ Total 4h05
+            ✈️ Vol 2h20
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
@@ -1113,10 +1231,6 @@
           
             <span>📊 Fourchette du jour : <b>84 € – 137 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Wuhan (1h45) • ⏱️ <b>Trajet total (Train + Vol) : 4h05</b> • Départ WUH : -29 € vs CGO (113 €) • TGV Zhengzhou ➔ Wuhan (1h45)
         </div>
         
       </div>
@@ -1210,7 +1324,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="HAN"
+       data-region="Asie du Sud-Est"
+       data-dept="PVG"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="475"
+       data-layover-min="0"
+       data-price-display="93"
+       data-price-cabine="93"
+       data-price-soute="131"
+       data-price-sans="93"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1268,7 +1394,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV / Hub Shanghai Pudong (PVG) • ⏱️ <b>Trajet total (Train + Vol) : 7h55</b> • Départ PVG : -21 € vs CGO (114 €) • TGV / Hub Shanghai Pudong (PVG)
+          🚅 <b>Temps de train estimé :</b> TGV / Hub Shanghai Pudong (PVG) • ⏱️ <b>Trajet total (Train + Vol) : 7h55</b> • Départ PVG : -21 € vs WUH (114 €) • TGV / Hub Shanghai Pudong (PVG)
         </div>
         
       </div>
@@ -1332,18 +1458,18 @@
           
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>
-              <b>CGO</b> (Dim. 15 nov. 2026) : 18:00 CGO ➔ 23:15 HAN • China Southern (1 esc.)
+              <b>WUH</b> (Dim. 15 nov. 2026) : 09:30 WUH ➔ 14:45 HAN • China Southern (1 esc.)
             </span>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVGQ1ZmdCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JGc0swTWlFOG1BEgxDWjMzODl8Q1ozNzEaCgjzWBACGgNFVVI4HXDvYw==&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBT1ppR2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JGc0trQWJ0RWtBEg1DWjY1OTB8Q1o4MzE1GgoI81gQAhoDRVVSOB1w72M=&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
               114 € →
             </a>
           </div>
           
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>
-              <b>WUH</b> (Dim. 15 nov. 2026) : 09:30 WUH ➔ 14:45 HAN • China Southern (1 esc.)
+              <b>CGO</b> (Dim. 15 nov. 2026) : 18:00 CGO ➔ 23:15 HAN • China Southern (1 esc.)
             </span>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBT1ppR2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JGc0trQWJ0RWtBEg1DWjY1OTB8Q1o4MzE1GgoI81gQAhoDRVVSOB1w72M=&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDQ0dPcgUSA0hBTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVGQ1ZmdCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JGc0swTWlFOG1BEgxDWjMzODl8Q1ozNzEaCgjzWBACGgNFVVI4HXDvYw==&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
               114 € →
             </a>
           </div>
@@ -1402,7 +1528,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="BKK"
+       data-region="Asie du Sud-Est"
+       data-dept="WUH"
+       data-is-nearby="0"
+       data-stops="1"
+       data-duration-min="760"
+       data-layover-min="315"
+       data-price-display="96"
+       data-price-cabine="96"
+       data-price-soute="96"
+       data-price-sans="96"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1419,7 +1557,7 @@
             </span>
           </div>
           <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.15rem;">
-            Thaïlande • Compagnie : <b style="color: var(--text-primary);">Shandong</b> (Vol <code>SC 8736 + SC 8075</code>)
+            Thaïlande • Compagnie : <b style="color: var(--text-primary);">Shandong</b> (Vol <code>SC 4864 + SC 4079</code>)
           </div>
         </div>
         <div style="text-align: right;">
@@ -1443,39 +1581,35 @@
             📅 Dim. 15 nov. 2026
           </div>
           <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-primary);">
-            🛫 14:55 XIY ➔ 01:55 (+1j) BKK
+            🛫 13:45 WUH ➔ 01:25 (+1j) BKK
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 12h00 • ⏱️ Total 13h30
+            ✈️ Vol 12h40
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
-          <span>✈️ <b>Vol SC 8736 + SC 8075</b> (1 escale(s) : 5h15 à Jinan (TNA))</span>
+          <span>✈️ <b>Vol SC 4864 + SC 4079</b> (1 escale(s) : 5h15 à Qingdao (TAO))</span>
           
             <span>📊 Fourchette du jour : <b>96 € – 229 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30) • ⏱️ <b>Trajet total (Train + Vol) : 13h30</b> • Départ XIY : -12 € vs CGO (108 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30)
         </div>
         
       </div>
 
       <!-- BOUTONS DE PRIX PAR BAGAGE (CHAQUE CLIC OUVRE LE FILTRE EXACT SUR GOOGLE FLIGHTS) -->
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; margin-bottom: 0.75rem;">
-        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid var(--border); border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid var(--border); border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
           <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 600;">🎒 SANS BAGAGE</div>
           <div style="font-size: 1rem; font-weight: 800; color: var(--text-primary);">96 €</div>
         </a>
-        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid #10b981; border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid #10b981; border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
           <div style="font-size: 0.68rem; color: #10b981; font-weight: 700;">🧳 AVEC CABINE</div>
           <div style="font-size: 1rem; font-weight: 800; color: #10b981;">
             96 €
             <span style="font-size: 0.65rem; font-weight: 600;">(Inclus)</span>
           </div>
         </a>
-        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid var(--border); border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
+        <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="text-decoration: none; background: var(--bg-card-hover); border: 1.5px solid var(--border); border-radius: 6px; padding: 0.4rem 0.5rem; text-align: center;">
           <div style="font-size: 0.68rem; color: #f59e0b; font-weight: 700;">📦 AVEC SOUTE</div>
           <div style="font-size: 1rem; font-weight: 800; color: #f59e0b;">
             96 €
@@ -1494,18 +1628,18 @@
           
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>
-              <b>XIY</b> (Dim. 15 nov. 2026) : 14:55 XIY ➔ 01:55 (+1j) BKK • Shandong (1 esc.)
+              <b>WUH</b> (Dim. 15 nov. 2026) : 13:45 WUH ➔ 01:25 (+1j) BKK • Shandong (1 esc.)
             </span>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIRlBRYXl6UzNtdUVBVGJ3cVFCRy0tLS0tLS0tLS10bGR1N0FBQUFBR3JGc0tzREhrcE9BEg1TQzg3MzZ8U0M4MDc1GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" style="font-weight: 800; color: #10b981; text-decoration: underline;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIVllfSV9Mcm03aWNBQXZlMVFCRy0tLS0tLS0tLXRsYmRqN0FBQUFBR3JGc0trQlV3Y0VBEg1TQzQ4NjR8U0M0MDc5GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" style="font-weight: 800; color: #10b981; text-decoration: underline;">
               96 € →
             </a>
           </div>
           
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>
-              <b>WUH</b> (Dim. 15 nov. 2026) : 13:45 WUH ➔ 01:25 (+1j) BKK • Shandong (1 esc.)
+              <b>XIY</b> (Dim. 15 nov. 2026) : 14:55 XIY ➔ 01:55 (+1j) BKK • Shandong (1 esc.)
             </span>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIVllfSV9Mcm03aWNBQXZlMVFCRy0tLS0tLS0tLXRsYmRqN0FBQUFBR3JGc0trQlV3Y0VBEg1TQzQ4NjR8U0M0MDc5GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIRlBRYXl6UzNtdUVBVGJ3cVFCRy0tLS0tLS0tLS10bGR1N0FBQUFBR3JGc0tzREhrcE9BEg1TQzg3MzZ8U0M4MDc1GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" style="font-weight: 800; color: var(--accent); text-decoration: underline;">
               96 € →
             </a>
           </div>
@@ -1533,22 +1667,22 @@
 
     <!-- Actions directes : Réservation exacte Google Flights + Trip.com + Skyscanner + Surveillance -->
     <div style="display: flex; gap: 0.4rem; align-items: center; border-top: 1px solid var(--border); padding-top: 0.65rem; flex-wrap: wrap;">
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIRlBRYXl6UzNtdUVBVGJ3cVFCRy0tLS0tLS0tLS10bGR1N0FBQUFBR3JGc0tzREhrcE9BEg1TQzg3MzZ8U0M4MDc1GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.4; text-align: center; background-color: #10b981; border-color: #10b981; font-weight: 700;" title="Ouvre directement ce vol précis (SC 8736 + SC 8075) à 96 € en EUR sur Google Flights">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIVllfSV9Mcm03aWNBQXZlMVFCRy0tLS0tLS0tLXRsYmRqN0FBQUFBR3JGc0trQlV3Y0VBEg1TQzQ4NjR8U0M0MDc5GgoIy0oQAhoDRVVSOB1w5VM=&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.4; text-align: center; background-color: #10b981; border-color: #10b981; font-weight: 700;" title="Ouvre directement ce vol précis (SC 4864 + SC 4079) à 96 € en EUR sur Google Flights">
         🎯 Réserver (96 €)
       </a>
-      <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDWElZcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.8; text-align: center;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
+      <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDV1VIcgUSA0JLS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.8; text-align: center;" title="Voir tous les vols du Dim. 15 nov. 2026 sur Google Flights en EUR">
         🔍 Google
       </a>
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=XIY&amp;acity=BKK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.75; text-align: center;" title="Comparer en EUR sur Trip.com (inclut les OTA chinoises)">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=WUH&amp;acity=BKK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.75; text-align: center;" title="Comparer en EUR sur Trip.com (inclut les OTA chinoises)">
         ✈️ Trip.com
       </a>
       
-      <a href="https://www.skyscanner.fr/transport/vols/xiy/bkk/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.75; text-align: center;" title="Comparer en EUR sur Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/wuh/bkk/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="flex: 0.75; text-align: center;" title="Comparer en EUR sur Skyscanner">
         Skyscanner
       </a>
       
       <form action="/radar/add-to-watchlist" method="POST" style="flex: 0.65;">
-        <input type="hidden" name="origine" value="Xi&#39;an Xianyang (XIY)">
+        <input type="hidden" name="origine" value="Wuhan Tianhe (WUH)">
         <input type="hidden" name="destination" value="Bangkok (BKK)">
         <input type="hidden" name="dates_ou_mois" value="2026-11-15">
         <input type="hidden" name="seuil_eur" value="96">
@@ -1560,7 +1694,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="KUL"
+       data-region="Asie du Sud-Est"
+       data-dept="WUH"
+       data-is-nearby="0"
+       data-stops="0"
+       data-duration-min="305"
+       data-layover-min="0"
+       data-price-display="99"
+       data-price-cabine="99"
+       data-price-soute="137"
+       data-price-sans="99"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1607,7 +1753,7 @@
             🛫 00:15 WUH ➔ 05:20 KUL
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 5h05 • ⏱️ Total 6h50
+            ✈️ Vol 5h05
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
@@ -1615,10 +1761,6 @@
           
             <span>📊 Fourchette du jour : <b>99 € – 245 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Wuhan (1h45) • ⏱️ <b>Trajet total (Train + Vol) : 6h50</b> • Départ WUH : -30 € vs CGO (129 €) • TGV Zhengzhou ➔ Wuhan (1h45)
         </div>
         
       </div>
@@ -1721,7 +1863,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="ICN"
+       data-region="Asie de l&#39;Est"
+       data-dept="XIY"
+       data-is-nearby="0"
+       data-stops="1"
+       data-duration-min="480"
+       data-layover-min="150"
+       data-price-display="101"
+       data-price-cabine="101"
+       data-price-soute="101"
+       data-price-sans="101"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1779,7 +1933,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30) • ⏱️ <b>Trajet total (Train + Vol) : 8h00</b> • Départ XIY : -3 € vs CGO (104 €) • TGV Zhengzhou ➔ Xi&#39;an (1h30)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Xi&#39;an (1h30) • ⏱️ <b>Trajet total (Train + Vol) : 8h00</b> • Départ XIY • TGV Zhengzhou ➔ Xi&#39;an (1h30)
         </div>
         
       </div>
@@ -1873,7 +2027,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="SIN"
+       data-region="Asie du Sud-Est"
+       data-dept="WUH"
+       data-is-nearby="0"
+       data-stops="0"
+       data-duration-min="310"
+       data-layover-min="0"
+       data-price-display="103"
+       data-price-cabine="103"
+       data-price-soute="141"
+       data-price-sans="103"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1920,7 +2086,7 @@
             🛫 00:15 WUH ➔ 05:25 SIN
           </div>
           <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent);">
-            ✈️ Vol 5h10 • ⏱️ Total 6h55
+            ✈️ Vol 5h10
           </div>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
@@ -1928,10 +2094,6 @@
           
             <span>📊 Fourchette du jour : <b>103 € – 249 €</b></span>
           
-        </div>
-        
-        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Wuhan (1h45) • ⏱️ <b>Trajet total (Train + Vol) : 6h55</b> • Départ WUH : -21 € vs CGO (124 €) • TGV Zhengzhou ➔ Wuhan (1h45)
         </div>
         
       </div>
@@ -2034,7 +2196,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="SGN"
+       data-region="Asie du Sud-Est"
+       data-dept="CGO"
+       data-is-nearby="1"
+       data-stops="1"
+       data-duration-min="425"
+       data-layover-min="100"
+       data-price-display="114"
+       data-price-cabine="114"
+       data-price-soute="114"
+       data-price-sans="114"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2089,6 +2263,10 @@
           
             <span>📊 Fourchette du jour : <b>112 € – 209 €</b></span>
           
+        </div>
+        
+        <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
+          🚅 <b>Temps de train estimé :</b>  • ⏱️ <b>Trajet total (Train + Vol) : 7h05</b> • Départ CGO : -10 € vs WUH (124 €) • 
         </div>
         
       </div>
@@ -2182,7 +2360,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="NRT"
+       data-region="Asie de l&#39;Est"
+       data-dept="TSN"
+       data-is-nearby="0"
+       data-stops="0"
+       data-duration-min="345"
+       data-layover-min="0"
+       data-price-display="132"
+       data-price-cabine="132"
+       data-price-soute="170"
+       data-price-sans="132"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2240,7 +2430,7 @@
         </div>
         
         <div style="margin-top: 0.35rem; padding-top: 0.3rem; border-top: 1px dashed rgba(245, 158, 11, 0.4); font-size: 0.79rem; color: #f59e0b; font-weight: 700;">
-          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Tianjin (2h30, ~39 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h45</b> • Départ TSN : -65 € vs CGO (197 €) • TGV Zhengzhou ➔ Tianjin (2h30, ~39 €)
+          🚅 <b>Temps de train estimé :</b> TGV Zhengzhou ➔ Tianjin (2h30, ~39 €) • ⏱️ <b>Trajet total (Train + Vol) : 5h45</b> • Départ TSN • TGV Zhengzhou ➔ Tianjin (2h30, ~39 €)
         </div>
         
       </div>
@@ -2365,7 +2555,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="HKT"
+       data-region="Asie du Sud-Est"
+       data-dept="CGO"
+       data-is-nearby="0"
+       data-stops="1"
+       data-duration-min="1205"
+       data-layover-min="795"
+       data-price-display="161"
+       data-price-cabine="161"
+       data-price-soute="161"
+       data-price-sans="161"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2892,41 +3094,190 @@
   
 
 <script>
-// Filtrage interactif côté client pour GitHub Pages (https://paquereauman.github.io/VolAlerte/radar/)
-document.addEventListener("DOMContentLoaded", function() {
-  const form = document.querySelector('form[action*="/radar"]');
-  if (!form) return;
+// Moteur de filtrage interactif instantané pour GitHub Pages (https://paquereauman.github.io/VolAlerte/radar/)
+(function() {
+  function getTargetPath(origin, bagage) {
+    if (origin === "PKX" || origin === "PEK" || origin === "BJS") return "/VolAlerte/radar/pekin/";
+    if (origin === "PVG" || origin === "SHA") return "/VolAlerte/radar/shanghai/";
+    if (origin === "XIY") return "/VolAlerte/radar/xian/";
+    if (origin === "WUH") return "/VolAlerte/radar/wuhan/";
+    if (origin === "PAR") return "/VolAlerte/radar/paris/";
+    if (bagage === "soute_1") return "/VolAlerte/radar/soute/";
+    if (bagage === "aucun" || bagage === "sans") return "/VolAlerte/radar/sans/";
+    return "/VolAlerte/radar/";
+  }
 
-  const params = new URLSearchParams(window.location.search);
-  const bagageMode = params.get("bagage_mode") || "cabine";
-  const tripType = params.get("trip_type") || "oneway";
+  function formatDateFrClient(isoDate) {
+    if (!isoDate || isoDate.length < 10) return "";
+    const parts = isoDate.slice(0, 10).split("-");
+    const y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
+    const dt = new Date(y, m, d);
+    if (isNaN(dt.getTime())) return isoDate;
+    const days = ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."];
+    const months = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    return days[dt.getDay()] + " " + d + " " + months[m] + " " + y;
+  }
 
-  // Rediriger vers la variante pré-calculée si bagage_mode ou trip_type change
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const bm = fd.get("bagage_mode") || "cabine";
-    const tt = fd.get("trip_type") || "oneway";
-    const orig = fd.get("origin") || "CGO";
-    const q = new URLSearchParams({origin: orig, trip_type: tt, bagage_mode: bm});
+  window.handleRadarFilterChange = function(overrideFilterTag) {
+    const form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
 
-    let targetPage = "/VolAlerte/radar/";
-    if (tt === "roundtrip") {
-      targetPage = "/VolAlerte/radar/roundtrip/";
-    } else if (bm === "soute_1") {
-      targetPage = "/VolAlerte/radar/soute/";
-    } else if (bm === "aucun" || bm === "sans") {
-      targetPage = "/VolAlerte/radar/sans/";
-    } else if (orig === "PKX" || orig === "PEK") {
-      targetPage = "/VolAlerte/radar/pekin/";
-    } else if (orig === "PVG" || orig === "SHA") {
-      targetPage = "/VolAlerte/radar/shanghai/";
-    } else if (orig === "XIY") {
-      targetPage = "/VolAlerte/radar/xian/";
+    const originEl = form.querySelector('#origin');
+    const monthEl = form.querySelector('#month');
+    const dateEl = form.querySelector('#exact_date');
+    const bagageEl = form.querySelector('#bagage');
+    const durEl = form.querySelector('#max_duration');
+    const stopsEl = form.querySelector('#max_stops');
+    const layEl = form.querySelector('#max_layover');
+    const nearEl = form.querySelector('input[name="include_nearby"]');
+
+    const currentParams = new URLSearchParams(window.location.search);
+    const filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
+
+    const origin = originEl ? originEl.value : "CGO";
+    const month = monthEl ? monthEl.value : "2026-11";
+    let exactDate = dateEl ? dateEl.value : "";
+    if (!exactDate && month) {
+      exactDate = month + "-15";
+      if (dateEl) dateEl.value = exactDate;
     }
-    window.location.href = targetPage + "?" + q.toString();
+    const bagage = bagageEl ? bagageEl.value : "cabine";
+    const maxDur = durEl ? durEl.value : "0";
+    const maxStops = stopsEl ? stopsEl.value : "-1";
+    const maxLay = layEl ? layEl.value : "0";
+    const incNear = (nearEl && nearEl.checked) ? "1" : "0";
+
+    const q = new URLSearchParams({
+      origin: origin,
+      month: month,
+      exact_date: exactDate,
+      bagage: bagage,
+      max_duration: maxDur,
+      max_stops: maxStops,
+      max_layover: maxLay,
+      include_nearby: incNear,
+      filter: filterTag
+    });
+
+    const targetPath = getTargetPath(origin, bagage);
+    const normCurrent = window.location.pathname.endsWith("/") ? window.location.pathname : (window.location.pathname + "/");
+
+    if (normCurrent !== targetPath) {
+      window.location.href = targetPath + "?" + q.toString();
+      return;
+    }
+
+    // Mettre à jour l'URL sans recharger et filtrer instantanément le DOM
+    window.history.replaceState({}, "", targetPath + "?" + q.toString());
+    applyDomFilters(q);
+  };
+
+  function applyDomFilters(q) {
+    const form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    const origin = q.get("origin") || "";
+    const month = q.get("month") || "";
+    const exactDate = q.get("exact_date") || "";
+    const bagage = q.get("bagage") || "";
+    const maxDur = parseFloat(q.get("max_duration") || "0");
+    const maxStops = parseInt(q.get("max_stops") || "-1", 10);
+    const maxLay = parseFloat(q.get("max_layover") || "0");
+    const incNear = q.get("include_nearby") !== "0";
+    const filterTag = q.get("filter") || "all";
+
+    if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
+    if (month && form.querySelector('#month')) form.querySelector('#month').value = month;
+    if (exactDate && form.querySelector('#exact_date')) form.querySelector('#exact_date').value = exactDate;
+    if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
+    if (q.has("max_duration") && form.querySelector('#max_duration')) form.querySelector('#max_duration').value = q.get("max_duration");
+    if (q.has("max_stops") && form.querySelector('#max_stops')) form.querySelector('#max_stops').value = q.get("max_stops");
+    if (q.has("max_layover") && form.querySelector('#max_layover')) form.querySelector('#max_layover').value = q.get("max_layover");
+    if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
+      form.querySelector('input[name="include_nearby"]').checked = incNear;
+    }
+
+    function matchesDeal(el) {
+      const durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
+      const stops = parseInt(el.getAttribute("data-stops") || "0", 10);
+      const layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
+      const isNearby = el.getAttribute("data-is-nearby") === "1";
+      const region = el.getAttribute("data-region") || "";
+      const priceCab = parseInt(el.getAttribute("data-price-cabine") || "0", 10);
+      const priceSou = parseInt(el.getAttribute("data-price-soute") || "0", 10);
+      const priceSans = parseInt(el.getAttribute("data-price-sans") || "0", 10);
+      const activePrice = bagage === "soute_1" ? priceSou : (bagage === "aucun" ? priceSans : priceCab);
+
+      if (!incNear && isNearby) return false;
+      if (maxDur > 0 && durMin > maxDur * 60) return false;
+      if (maxStops >= 0 && stops > maxStops) return false;
+      if (maxLay > 0 && layMin > maxLay * 60) return false;
+      if (filterTag === "under_100" && activePrice >= 100) return false;
+      if (filterTag === "southeast_asia" && region !== "Asie du Sud-Est") return false;
+      return true;
+    }
+
+    const rows = document.querySelectorAll("tr.radar-deal-row");
+    let visibleCount = 0;
+    rows.forEach(function(row) {
+      const show = matchesDeal(row);
+      row.style.display = show ? "" : "none";
+      if (show) visibleCount++;
+    });
+
+    const cards = document.querySelectorAll("div.radar-deal-card");
+    cards.forEach(function(card) {
+      const show = matchesDeal(card);
+      card.style.display = show ? "flex" : "none";
+    });
+
+    // Mettre à jour le badge de compteur en haut de page
+    const dateFr = exactDate ? formatDateFrClient(exactDate) : "";
+    const topBadges = document.querySelectorAll(".badge.badge-success");
+    if (topBadges.length > 0 && topBadges[0].textContent.includes("destination")) {
+      topBadges[0].textContent = "⚡ " + visibleCount + " destination(s)" + (dateFr ? (" • " + dateFr) : "");
+    }
+
+    // Mettre à jour l'état visuel des boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
+    const filterLinks = form.querySelectorAll('a[href*="filter="]');
+    filterLinks.forEach(function(a) {
+      const href = a.getAttribute("href") || "";
+      const isMatch = href.includes("filter=" + filterTag);
+      a.classList.toggle("btn-primary", isMatch);
+      a.classList.toggle("btn-secondary", !isMatch);
+      if (href.includes("filter=all")) {
+        a.textContent = "Tous (" + visibleCount + ")";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      window.handleRadarFilterChange();
+    });
+
+    // Intercepter les clics sur les boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
+    const filterLinks = form.querySelectorAll('a[href*="filter="]');
+    filterLinks.forEach(function(a) {
+      a.addEventListener("click", function(e) {
+        e.preventDefault();
+        const href = a.getAttribute("href") || "";
+        const m = href.match(/filter=([a-z0-9_]+)/i);
+        window.handleRadarFilterChange(m ? m[1] : "all");
+      });
+    });
+
+    // Appliquer les filtres présents dans l'URL au chargement
+    const q = new URLSearchParams(window.location.search);
+    if (Array.from(q.keys()).length > 0) {
+      applyDomFilters(q);
+    }
   });
-});
+})();
 </script>
 
 </body>

@@ -78,7 +78,7 @@
       <!-- Aéroport de départ -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="origin" style="font-size: 0.8rem;">🛫 Aéroport de départ</label>
-        <select id="origin" name="origin" class="form-control" onchange="this.form.submit()">
+        <select id="origin" name="origin" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="CGO" selected>Zhengzhou (CGO) - Chine</option>
           <option value="PKX" >Pékin (PKX Daxing / PEK Capital)</option>
           <option value="PVG" >Shanghai (PVG Pudong / SHA)</option>
@@ -91,7 +91,7 @@
       <!-- Mois visé -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="month" style="font-size: 0.8rem;">📅 Mois du départ</label>
-        <select id="month" name="month" class="form-control" onchange="document.getElementById('exact_date').value=''; this.form.submit();">
+        <select id="month" name="month" class="form-control" onchange="document.getElementById('exact_date').value=''; window.handleRadarFilterChange();">
           <option value="2026-10" >Octobre 2026</option>
           <option value="2026-11" selected>Novembre 2026</option>
           <option value="2026-12" >Décembre 2026</option>
@@ -106,13 +106,13 @@
         <label class="form-label" for="exact_date" style="font-size: 0.8rem;">🎯 Date précise du vol</label>
         <input type="date" id="exact_date" name="exact_date" class="form-control"
                value="2026-11-15" min="2026-10-07" max="2027-09-30"
-               onchange="this.form.submit()">
+               onchange="window.handleRadarFilterChange()">
       </div>
 
       <!-- Bagages inclus dans le prix affiché -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="bagage" style="font-size: 0.8rem; color: #10b981; font-weight: 700;">🧳 Bagage inclus dans le prix (€)</label>
-        <select id="bagage" name="bagage" class="form-control" style="border-color: #10b981; font-weight: 700;" onchange="this.form.submit()">
+        <select id="bagage" name="bagage" class="form-control" style="border-color: #10b981; font-weight: 700;" onchange="window.handleRadarFilterChange()">
           <option value="cabine" selected>🧳 Avec Bagage Cabine inclus (Recommandé)</option>
           <option value="soute_1" >📦 Avec Bagage en Soute (20-23 kg)</option>
           <option value="aucun" >🎒 Sans bagage (Billet seul)</option>
@@ -122,7 +122,7 @@
       <!-- Durée max de voyage -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_duration" style="font-size: 0.8rem;">⏱️ Durée max totale</label>
-        <select id="max_duration" name="max_duration" class="form-control" onchange="this.form.submit()">
+        <select id="max_duration" name="max_duration" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="0" selected>Toutes durées</option>
           <option value="6" >Max 6 heures</option>
           <option value="8" >Max 8 heures</option>
@@ -134,7 +134,7 @@
       <!-- Nombre d'escales max -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_stops" style="font-size: 0.8rem;">🛑 Escales max</label>
-        <select id="max_stops" name="max_stops" class="form-control" onchange="this.form.submit()">
+        <select id="max_stops" name="max_stops" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="-1" selected>Direct ou avec escale</option>
           <option value="0" >✈️ Direct uniquement (0 escale)</option>
           <option value="1" >1 escale maximum</option>
@@ -145,7 +145,7 @@
       <!-- Attente max en escale -->
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_layover" style="font-size: 0.8rem;">⏳ Attente max escale</label>
-        <select id="max_layover" name="max_layover" class="form-control" onchange="this.form.submit()">
+        <select id="max_layover" name="max_layover" class="form-control" onchange="window.handleRadarFilterChange()">
           <option value="0" selected>Sans limite</option>
           <option value="2.5" >Max 2h30 d'escale</option>
           <option value="4" >Max 4h00 d'escale</option>
@@ -157,7 +157,7 @@
     <!-- Barre inférieure : TGV aéroports voisins + Filtres rapides -->
     <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
       <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.88rem; font-weight: 600;">
-        <input type="checkbox" name="include_nearby" value="1" checked onchange="this.form.submit()">
+        <input type="checkbox" name="include_nearby" value="1" checked onchange="window.handleRadarFilterChange()">
         <span>🚅 Croiser avec les aéroports voisins en TGV (Wuhan WUH, Xi'an XIY...)</span>
       </label>
 
@@ -210,7 +210,18 @@
       </thead>
       <tbody>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="CNX"
+            data-region="Asie du Sud-Est"
+            data-dept="XIY"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="310"
+            data-layover-min="0"
+            data-price-display="78"
+            data-price-cabine="78"
+            data-price-soute="116"
+            data-price-sans="78">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Chiang Mai (CNX)
@@ -280,7 +291,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="HKG"
+            data-region="Asie de l&#39;Est"
+            data-dept="WUH"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="245"
+            data-layover-min="0"
+            data-price-display="84"
+            data-price-cabine="84"
+            data-price-soute="84"
+            data-price-sans="84">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇭🇰 Hong Kong (HKG)
@@ -346,7 +368,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="HAN"
+            data-region="Asie du Sud-Est"
+            data-dept="PVG"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="475"
+            data-layover-min="0"
+            data-price-display="93"
+            data-price-cabine="93"
+            data-price-soute="131"
+            data-price-sans="93">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇻🇳 Hanoï (HAN)
@@ -416,7 +449,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="BKK"
+            data-region="Asie du Sud-Est"
+            data-dept="XIY"
+            data-is-nearby="1"
+            data-stops="1"
+            data-duration-min="810"
+            data-layover-min="315"
+            data-price-display="96"
+            data-price-cabine="96"
+            data-price-soute="96"
+            data-price-sans="96">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Bangkok (BKK)
@@ -482,7 +526,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="KUL"
+            data-region="Asie du Sud-Est"
+            data-dept="WUH"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="410"
+            data-layover-min="0"
+            data-price-display="99"
+            data-price-cabine="99"
+            data-price-soute="137"
+            data-price-sans="99">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇲🇾 Kuala Lumpur (KUL)
@@ -552,7 +607,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="ICN"
+            data-region="Asie de l&#39;Est"
+            data-dept="XIY"
+            data-is-nearby="1"
+            data-stops="1"
+            data-duration-min="480"
+            data-layover-min="150"
+            data-price-display="101"
+            data-price-cabine="101"
+            data-price-soute="101"
+            data-price-sans="101">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇰🇷 Séoul (ICN)
@@ -622,7 +688,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="SIN"
+            data-region="Asie du Sud-Est"
+            data-dept="WUH"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="415"
+            data-layover-min="0"
+            data-price-display="103"
+            data-price-cabine="103"
+            data-price-soute="141"
+            data-price-sans="103">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇸🇬 Singapour (SIN)
@@ -692,7 +769,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="SGN"
+            data-region="Asie du Sud-Est"
+            data-dept="CGO"
+            data-is-nearby="0"
+            data-stops="1"
+            data-duration-min="425"
+            data-layover-min="100"
+            data-price-display="114"
+            data-price-cabine="114"
+            data-price-soute="114"
+            data-price-sans="114">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇻🇳 Hô Chi Minh-Ville (SGN)
@@ -758,7 +846,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="NRT"
+            data-region="Asie de l&#39;Est"
+            data-dept="TSN"
+            data-is-nearby="1"
+            data-stops="0"
+            data-duration-min="345"
+            data-layover-min="0"
+            data-price-display="132"
+            data-price-cabine="132"
+            data-price-soute="170"
+            data-price-sans="132">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇯🇵 Tokyo (Narita) (NRT)
@@ -828,7 +927,18 @@
           </td>
         </tr>
         
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="HKT"
+            data-region="Asie du Sud-Est"
+            data-dept="CGO"
+            data-is-nearby="0"
+            data-stops="1"
+            data-duration-min="1205"
+            data-layover-min="795"
+            data-price-display="161"
+            data-price-cabine="161"
+            data-price-soute="161"
+            data-price-sans="161">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               🇹🇭 Phuket (HKT)
@@ -900,7 +1010,19 @@
 <!-- ========================================================================= -->
 <div class="grid grid-2" style="gap: 1.15rem;">
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="CNX"
+       data-region="Asie du Sud-Est"
+       data-dept="XIY"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="310"
+       data-layover-min="0"
+       data-price-display="78"
+       data-price-cabine="78"
+       data-price-soute="116"
+       data-price-sans="78"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1061,7 +1183,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="HKG"
+       data-region="Asie de l&#39;Est"
+       data-dept="WUH"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="245"
+       data-layover-min="0"
+       data-price-display="84"
+       data-price-cabine="84"
+       data-price-soute="84"
+       data-price-sans="84"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1210,7 +1344,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="HAN"
+       data-region="Asie du Sud-Est"
+       data-dept="PVG"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="475"
+       data-layover-min="0"
+       data-price-display="93"
+       data-price-cabine="93"
+       data-price-soute="131"
+       data-price-sans="93"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1402,7 +1548,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="BKK"
+       data-region="Asie du Sud-Est"
+       data-dept="XIY"
+       data-is-nearby="1"
+       data-stops="1"
+       data-duration-min="810"
+       data-layover-min="315"
+       data-price-display="96"
+       data-price-cabine="96"
+       data-price-soute="96"
+       data-price-sans="96"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1560,7 +1718,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="KUL"
+       data-region="Asie du Sud-Est"
+       data-dept="WUH"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="410"
+       data-layover-min="0"
+       data-price-display="99"
+       data-price-cabine="99"
+       data-price-soute="137"
+       data-price-sans="99"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1721,7 +1891,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="ICN"
+       data-region="Asie de l&#39;Est"
+       data-dept="XIY"
+       data-is-nearby="1"
+       data-stops="1"
+       data-duration-min="480"
+       data-layover-min="150"
+       data-price-display="101"
+       data-price-cabine="101"
+       data-price-soute="101"
+       data-price-sans="101"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -1873,7 +2055,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="SIN"
+       data-region="Asie du Sud-Est"
+       data-dept="WUH"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="415"
+       data-layover-min="0"
+       data-price-display="103"
+       data-price-cabine="103"
+       data-price-soute="141"
+       data-price-sans="103"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2034,7 +2228,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="SGN"
+       data-region="Asie du Sud-Est"
+       data-dept="CGO"
+       data-is-nearby="0"
+       data-stops="1"
+       data-duration-min="425"
+       data-layover-min="100"
+       data-price-display="114"
+       data-price-cabine="114"
+       data-price-soute="114"
+       data-price-sans="114"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2182,7 +2388,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
+  <div class="card radar-deal-card"
+       data-dest="NRT"
+       data-region="Asie de l&#39;Est"
+       data-dept="TSN"
+       data-is-nearby="1"
+       data-stops="0"
+       data-duration-min="345"
+       data-layover-min="0"
+       data-price-display="132"
+       data-price-cabine="132"
+       data-price-soute="170"
+       data-price-sans="132"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid #10b981;">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2365,7 +2583,19 @@
 
   </div>
   
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
+  <div class="card radar-deal-card"
+       data-dest="HKT"
+       data-region="Asie du Sud-Est"
+       data-dept="CGO"
+       data-is-nearby="0"
+       data-stops="1"
+       data-duration-min="1205"
+       data-layover-min="795"
+       data-price-display="161"
+       data-price-cabine="161"
+       data-price-soute="161"
+       data-price-sans="161"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--accent);">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
@@ -2892,41 +3122,190 @@
   
 
 <script>
-// Filtrage interactif côté client pour GitHub Pages (https://paquereauman.github.io/VolAlerte/radar/)
-document.addEventListener("DOMContentLoaded", function() {
-  const form = document.querySelector('form[action*="/radar"]');
-  if (!form) return;
+// Moteur de filtrage interactif instantané pour GitHub Pages (https://paquereauman.github.io/VolAlerte/radar/)
+(function() {
+  function getTargetPath(origin, bagage) {
+    if (origin === "PKX" || origin === "PEK" || origin === "BJS") return "/VolAlerte/radar/pekin/";
+    if (origin === "PVG" || origin === "SHA") return "/VolAlerte/radar/shanghai/";
+    if (origin === "XIY") return "/VolAlerte/radar/xian/";
+    if (origin === "WUH") return "/VolAlerte/radar/wuhan/";
+    if (origin === "PAR") return "/VolAlerte/radar/paris/";
+    if (bagage === "soute_1") return "/VolAlerte/radar/soute/";
+    if (bagage === "aucun" || bagage === "sans") return "/VolAlerte/radar/sans/";
+    return "/VolAlerte/radar/";
+  }
 
-  const params = new URLSearchParams(window.location.search);
-  const bagageMode = params.get("bagage_mode") || "cabine";
-  const tripType = params.get("trip_type") || "oneway";
+  function formatDateFrClient(isoDate) {
+    if (!isoDate || isoDate.length < 10) return "";
+    const parts = isoDate.slice(0, 10).split("-");
+    const y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
+    const dt = new Date(y, m, d);
+    if (isNaN(dt.getTime())) return isoDate;
+    const days = ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."];
+    const months = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    return days[dt.getDay()] + " " + d + " " + months[m] + " " + y;
+  }
 
-  // Rediriger vers la variante pré-calculée si bagage_mode ou trip_type change
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const bm = fd.get("bagage_mode") || "cabine";
-    const tt = fd.get("trip_type") || "oneway";
-    const orig = fd.get("origin") || "CGO";
-    const q = new URLSearchParams({origin: orig, trip_type: tt, bagage_mode: bm});
+  window.handleRadarFilterChange = function(overrideFilterTag) {
+    const form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
 
-    let targetPage = "/VolAlerte/radar/";
-    if (tt === "roundtrip") {
-      targetPage = "/VolAlerte/radar/roundtrip/";
-    } else if (bm === "soute_1") {
-      targetPage = "/VolAlerte/radar/soute/";
-    } else if (bm === "aucun" || bm === "sans") {
-      targetPage = "/VolAlerte/radar/sans/";
-    } else if (orig === "PKX" || orig === "PEK") {
-      targetPage = "/VolAlerte/radar/pekin/";
-    } else if (orig === "PVG" || orig === "SHA") {
-      targetPage = "/VolAlerte/radar/shanghai/";
-    } else if (orig === "XIY") {
-      targetPage = "/VolAlerte/radar/xian/";
+    const originEl = form.querySelector('#origin');
+    const monthEl = form.querySelector('#month');
+    const dateEl = form.querySelector('#exact_date');
+    const bagageEl = form.querySelector('#bagage');
+    const durEl = form.querySelector('#max_duration');
+    const stopsEl = form.querySelector('#max_stops');
+    const layEl = form.querySelector('#max_layover');
+    const nearEl = form.querySelector('input[name="include_nearby"]');
+
+    const currentParams = new URLSearchParams(window.location.search);
+    const filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
+
+    const origin = originEl ? originEl.value : "CGO";
+    const month = monthEl ? monthEl.value : "2026-11";
+    let exactDate = dateEl ? dateEl.value : "";
+    if (!exactDate && month) {
+      exactDate = month + "-15";
+      if (dateEl) dateEl.value = exactDate;
     }
-    window.location.href = targetPage + "?" + q.toString();
+    const bagage = bagageEl ? bagageEl.value : "cabine";
+    const maxDur = durEl ? durEl.value : "0";
+    const maxStops = stopsEl ? stopsEl.value : "-1";
+    const maxLay = layEl ? layEl.value : "0";
+    const incNear = (nearEl && nearEl.checked) ? "1" : "0";
+
+    const q = new URLSearchParams({
+      origin: origin,
+      month: month,
+      exact_date: exactDate,
+      bagage: bagage,
+      max_duration: maxDur,
+      max_stops: maxStops,
+      max_layover: maxLay,
+      include_nearby: incNear,
+      filter: filterTag
+    });
+
+    const targetPath = getTargetPath(origin, bagage);
+    const normCurrent = window.location.pathname.endsWith("/") ? window.location.pathname : (window.location.pathname + "/");
+
+    if (normCurrent !== targetPath) {
+      window.location.href = targetPath + "?" + q.toString();
+      return;
+    }
+
+    // Mettre à jour l'URL sans recharger et filtrer instantanément le DOM
+    window.history.replaceState({}, "", targetPath + "?" + q.toString());
+    applyDomFilters(q);
+  };
+
+  function applyDomFilters(q) {
+    const form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    const origin = q.get("origin") || "";
+    const month = q.get("month") || "";
+    const exactDate = q.get("exact_date") || "";
+    const bagage = q.get("bagage") || "";
+    const maxDur = parseFloat(q.get("max_duration") || "0");
+    const maxStops = parseInt(q.get("max_stops") || "-1", 10);
+    const maxLay = parseFloat(q.get("max_layover") || "0");
+    const incNear = q.get("include_nearby") !== "0";
+    const filterTag = q.get("filter") || "all";
+
+    if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
+    if (month && form.querySelector('#month')) form.querySelector('#month').value = month;
+    if (exactDate && form.querySelector('#exact_date')) form.querySelector('#exact_date').value = exactDate;
+    if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
+    if (q.has("max_duration") && form.querySelector('#max_duration')) form.querySelector('#max_duration').value = q.get("max_duration");
+    if (q.has("max_stops") && form.querySelector('#max_stops')) form.querySelector('#max_stops').value = q.get("max_stops");
+    if (q.has("max_layover") && form.querySelector('#max_layover')) form.querySelector('#max_layover').value = q.get("max_layover");
+    if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
+      form.querySelector('input[name="include_nearby"]').checked = incNear;
+    }
+
+    function matchesDeal(el) {
+      const durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
+      const stops = parseInt(el.getAttribute("data-stops") || "0", 10);
+      const layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
+      const isNearby = el.getAttribute("data-is-nearby") === "1";
+      const region = el.getAttribute("data-region") || "";
+      const priceCab = parseInt(el.getAttribute("data-price-cabine") || "0", 10);
+      const priceSou = parseInt(el.getAttribute("data-price-soute") || "0", 10);
+      const priceSans = parseInt(el.getAttribute("data-price-sans") || "0", 10);
+      const activePrice = bagage === "soute_1" ? priceSou : (bagage === "aucun" ? priceSans : priceCab);
+
+      if (!incNear && isNearby) return false;
+      if (maxDur > 0 && durMin > maxDur * 60) return false;
+      if (maxStops >= 0 && stops > maxStops) return false;
+      if (maxLay > 0 && layMin > maxLay * 60) return false;
+      if (filterTag === "under_100" && activePrice >= 100) return false;
+      if (filterTag === "southeast_asia" && region !== "Asie du Sud-Est") return false;
+      return true;
+    }
+
+    const rows = document.querySelectorAll("tr.radar-deal-row");
+    let visibleCount = 0;
+    rows.forEach(function(row) {
+      const show = matchesDeal(row);
+      row.style.display = show ? "" : "none";
+      if (show) visibleCount++;
+    });
+
+    const cards = document.querySelectorAll("div.radar-deal-card");
+    cards.forEach(function(card) {
+      const show = matchesDeal(card);
+      card.style.display = show ? "flex" : "none";
+    });
+
+    // Mettre à jour le badge de compteur en haut de page
+    const dateFr = exactDate ? formatDateFrClient(exactDate) : "";
+    const topBadges = document.querySelectorAll(".badge.badge-success");
+    if (topBadges.length > 0 && topBadges[0].textContent.includes("destination")) {
+      topBadges[0].textContent = "⚡ " + visibleCount + " destination(s)" + (dateFr ? (" • " + dateFr) : "");
+    }
+
+    // Mettre à jour l'état visuel des boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
+    const filterLinks = form.querySelectorAll('a[href*="filter="]');
+    filterLinks.forEach(function(a) {
+      const href = a.getAttribute("href") || "";
+      const isMatch = href.includes("filter=" + filterTag);
+      a.classList.toggle("btn-primary", isMatch);
+      a.classList.toggle("btn-secondary", !isMatch);
+      if (href.includes("filter=all")) {
+        a.textContent = "Tous (" + visibleCount + ")";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      window.handleRadarFilterChange();
+    });
+
+    // Intercepter les clics sur les boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
+    const filterLinks = form.querySelectorAll('a[href*="filter="]');
+    filterLinks.forEach(function(a) {
+      a.addEventListener("click", function(e) {
+        e.preventDefault();
+        const href = a.getAttribute("href") || "";
+        const m = href.match(/filter=([a-z0-9_]+)/i);
+        window.handleRadarFilterChange(m ? m[1] : "all");
+      });
+    });
+
+    // Appliquer les filtres présents dans l'URL au chargement
+    const q = new URLSearchParams(window.location.search);
+    if (Array.from(q.keys()).length > 0) {
+      applyDomFilters(q);
+    }
   });
-});
+})();
 </script>
 
 </body>

@@ -170,7 +170,18 @@
       </thead>
       <tbody>
         {% for deal in radar.deals %}
-        <tr>
+        <tr class="radar-deal-row"
+            data-dest="{{ deal.dest_code }}"
+            data-region="{{ deal.region }}"
+            data-dept="{{ deal.departure_code }}"
+            data-is-nearby="{{ 1 if deal.is_nearby_deal else 0 }}"
+            data-stops="{{ deal.stops }}"
+            data-duration-min="{{ deal.total_journey_min }}"
+            data-layover-min="{{ deal.max_layover_min }}"
+            data-price-display="{{ deal.display_price }}"
+            data-price-cabine="{{ deal.cabine_total }}"
+            data-price-soute="{{ deal.soute_total }}"
+            data-price-sans="{{ deal.best_price }}">
           <td style="vertical-align: middle;">
             <div style="font-weight: 800; font-size: 0.92rem; color: var(--text-primary);">
               {{ deal.flag }} {{ deal.city }} ({{ deal.dest_code }})
@@ -254,7 +265,19 @@
 <!-- ========================================================================= -->
 <div class="grid grid-2" style="gap: 1.15rem;">
   {% for deal in radar.deals %}
-  <div class="card" style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid {% if deal.stops == 0 %}#10b981{% else %}var(--accent){% endif %};">
+  <div class="card radar-deal-card"
+       data-dest="{{ deal.dest_code }}"
+       data-region="{{ deal.region }}"
+       data-dept="{{ deal.departure_code }}"
+       data-is-nearby="{{ 1 if deal.is_nearby_deal else 0 }}"
+       data-stops="{{ deal.stops }}"
+       data-duration-min="{{ deal.total_journey_min }}"
+       data-layover-min="{{ deal.max_layover_min }}"
+       data-price-display="{{ deal.display_price }}"
+       data-price-cabine="{{ deal.cabine_total }}"
+       data-price-soute="{{ deal.soute_total }}"
+       data-price-sans="{{ deal.best_price }}"
+       style="margin-bottom: 0; padding: 1.15rem; display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid {% if deal.stops == 0 %}#10b981{% else %}var(--accent){% endif %};">
     <div>
       
       <!-- En-tête de la destination + Prix en EUR -->
