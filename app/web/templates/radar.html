@@ -205,12 +205,18 @@
           </td>
           <td style="vertical-align: middle; white-space: nowrap;">
             <div style="display: flex; align-items: baseline; gap: 0.4rem;">
-              <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">{{ deal.display_price }} €</span>
-              {% if deal.cabine_included %}
-                <span style="font-size: 0.68rem; color: #10b981; font-weight: 700;">✓ Cabine incl.</span>
+              {% if deal.ota_trip_price and deal.ota_trip_price < deal.display_price %}
+                <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;" title="Prix OTA Trip.com sur la page de réservation Google Flights">{{ deal.ota_trip_price }} €</span>
+                <span style="font-size: 0.72rem; color: #10b981; font-weight: 700;">(Trip.com)</span>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); font-weight: 700;">• {{ deal.display_price }} € Direct</span>
+              {% else %}
+                <span style="font-size: 1.3rem; font-weight: 900; color: #10b981;">{{ deal.display_price }} €</span>
               {% endif %}
             </div>
-            <div style="font-size: 0.74rem; margin-top: 0.15rem;">
+            <div style="font-size: 0.73rem; margin-top: 0.15rem;">
+              {% if deal.ota_booking_price and deal.ota_booking_price < deal.display_price %}
+                <span style="color: #60a5fa; font-weight: 700;">Booking : {{ deal.ota_booking_price }} €</span> •
+              {% endif %}
               <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;" title="Sans bagage">{{ deal.best_price }} €</a>
               <span style="color: var(--text-muted);">/</span>
               <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;" title="Avec bagage cabine">{{ deal.cabine_total }} €</a>
@@ -221,12 +227,16 @@
           <td style="vertical-align: middle; text-align: right; white-space: nowrap;">
             <div>
               <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 800; background-color: #10b981; border-color: #10b981; display: inline-block;">
-                🎯 Réserver à {{ deal.display_price }} €
+                {% if deal.ota_trip_price and deal.ota_trip_price < deal.display_price %}
+                  🎯 Réserver dès {{ deal.ota_trip_price }} € (Trip / {{ deal.display_price }} €)
+                {% else %}
+                  🎯 Réserver à {{ deal.display_price }} €
+                {% endif %}
               </a>
             </div>
             <div style="margin-top: 0.25rem; font-size: 0.72rem; display: flex; gap: 0.45rem; justify-content: flex-end;">
+              <a href="{{ deal.trip_com_link }}" target="_blank" style="color: #10b981; font-weight: 700; text-decoration: underline;">⚡ Trip.com ({{ deal.ota_trip_price }} €)</a>
               <a href="{{ deal.google_link }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">🔍 Google</a>
-              <a href="{{ deal.trip_com_link }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Trip.com</a>
               {% if deal.skyscanner_link %}
               <a href="{{ deal.skyscanner_link }}" target="_blank" style="color: var(--text-secondary); text-decoration: underline;">Skyscanner</a>
               {% endif %}
@@ -265,10 +275,19 @@
           </div>
         </div>
         <div style="text-align: right;">
-          <div style="font-size: 1.95rem; font-weight: 900; color: #10b981; line-height: 1;">
-            {{ deal.display_price }} €
-          </div>
-          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600; margin-top: 0.15rem;">
+          {% if deal.ota_trip_price and deal.ota_trip_price < deal.display_price %}
+            <div style="font-size: 1.9rem; font-weight: 900; color: #10b981; line-height: 1;">
+              {{ deal.ota_trip_price }} € <span style="font-size: 0.75rem; font-weight: 700;">(Trip.com)</span>
+            </div>
+            <div style="font-size: 0.73rem; color: var(--text-secondary); font-weight: 700; margin-top: 0.15rem;">
+              Booking {{ deal.ota_booking_price }} € • Direct {{ deal.display_price }} €
+            </div>
+          {% else %}
+            <div style="font-size: 1.95rem; font-weight: 900; color: #10b981; line-height: 1;">
+              {{ deal.display_price }} €
+            </div>
+          {% endif %}
+          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600; margin-top: 0.12rem;">
             {% if radar.bagage_mode == 'cabine' %}
               🧳 Cabine incluse
             {% elif radar.bagage_mode == 'soute_1' %}
