@@ -347,10 +347,18 @@ AIRPORT_CLUSTERS = {
             {
                 "code": "PKX",
                 "name": "Pékin Daxing (PKX)",
-                "detail": "Hub Low-Cost Direct (VietJet/AirAsia) • 2h15 TGV (~38 €) + 35 min express PKX",
+                "detail": "Hub Low-Cost Direct (Spring/VietJet) • 2h15 TGV (~38 €) + 35 min express PKX",
                 "tgv_time_str": "2h15 de TGV (Zhengzhou Est ➔ Pékin Ouest, ~38 €) + 35 min train express vers PKX",
                 "tgv_min": 170,
                 "tgv_cost_eur": 38,
+            },
+            {
+                "code": "TAO",
+                "name": "Qingdao Jiaodong (TAO)",
+                "detail": "Hub Corée/Japon • 3h50 TGV direct vers l'aéroport TAO (~46 €)",
+                "tgv_time_str": "3h50 de TGV direct (Zhengzhou Est ➔ Gare Aéroport Qingdao TAO, ~46 €)",
+                "tgv_min": 230,
+                "tgv_cost_eur": 46,
             },
         ]
     },
@@ -359,7 +367,31 @@ AIRPORT_CLUSTERS = {
         "city": "Pékin",
         "nearby": [
             {"code": "PEK", "name": "Pékin Capital (PEK)", "detail": "45 min métro express", "tgv_time_str": "45 min métro express (~4 €)", "tgv_min": 45, "tgv_cost_eur": 4},
+            {"code": "TSN", "name": "Tianjin Binhai (TSN)", "detail": "30 min TGV (~8 €)", "tgv_time_str": "30 min de TGV Pékin Sud ➔ Tianjin (~8 €)", "tgv_min": 50, "tgv_cost_eur": 8},
             {"code": "CGO", "name": "Zhengzhou (CGO)", "detail": "2h15 TGV (~38 €)", "tgv_time_str": "2h15 de TGV (~38 €)", "tgv_min": 135, "tgv_cost_eur": 38},
+        ]
+    },
+    "PEK": {
+        "name": "Pékin Capital (PEK)",
+        "city": "Pékin",
+        "nearby": [
+            {"code": "PKX", "name": "Pékin Daxing (PKX)", "detail": "45 min métro express", "tgv_time_str": "45 min métro express (~4 €)", "tgv_min": 45, "tgv_cost_eur": 4},
+            {"code": "TSN", "name": "Tianjin Binhai (TSN)", "detail": "30 min TGV (~8 €)", "tgv_time_str": "30 min de TGV (~8 €)", "tgv_min": 50, "tgv_cost_eur": 8},
+        ]
+    },
+    "TSN": {
+        "name": "Tianjin Binhai (TSN)",
+        "city": "Tianjin",
+        "nearby": [
+            {"code": "PEK", "name": "Pékin Capital (PEK)", "detail": "30 min TGV (~8 €)"},
+            {"code": "PKX", "name": "Pékin Daxing (PKX)", "detail": "35 min TGV (~9 €)"},
+        ]
+    },
+    "TAO": {
+        "name": "Qingdao Jiaodong (TAO)",
+        "city": "Qingdao",
+        "nearby": [
+            {"code": "CGO", "name": "Zhengzhou (CGO)", "detail": "3h50 TGV direct"},
         ]
     },
     "PVG": {
@@ -443,29 +475,47 @@ def format_minutes_to_hours(minutes: Optional[int]) -> str:
 # Destinations réelles et réalistes pour le Radar Bons Plans
 CATALOG_ASIA = [
     {
-        "dest_code": "BKK", "city": "Bangkok", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
+        "dest_code": "CJU", "city": "Île de Jeju (Sans Visa)", "country": "Corée du Sud", "flag": "🇰🇷", "region": "Asie de l'Est",
+        "good_deal_max_eur": 85,
+        "ota_tip": "Pépite absolue sans visa : Spring Airlines vole en DIRECT vers l'île de Jeju (CJU) à 58 € depuis Shanghai (42 € via Trip.com) et 78 € depuis Pékin Daxing PKX (56 € via Trip.com) les mardis/jeudis !",
         "departures": {
-            "CGO": {
-                "price": 115.0, "airline": "Spring Airlines / Thai AirAsia", "stops": 0,
-                "flight_duration_min": 230, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "cabine_extra": 15.0, "soute_extra": 38.0
+            "PVG": {
+                "price": 58.0, "airline": "Spring Airlines (Direct)", "stops": 0,
+                "flight_duration_min": 85, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 35.0
             },
-            "WUH": {
-                "price": 82.0, "airline": "AirAsia", "stops": 0,
-                "flight_duration_min": 215, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
-                "cabine_extra": 15.0, "soute_extra": 38.0
+            "PKX": {
+                "price": 78.0, "airline": "Spring Airlines (Direct)", "stops": 0,
+                "flight_duration_min": 145, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
+                "cabine_extra": 0.0, "soute_extra": 35.0
+            }
+        }
+    },
+    {
+        "dest_code": "MFM", "city": "Macao", "country": "Macao", "flag": "🇲🇴", "region": "Asie de l'Est",
+        "good_deal_max_eur": 98,
+        "ota_tip": "Spring Airlines assure Shanghai PVG ➔ Macao (MFM) en direct à 68 € (50 € sur Trip.com) et China Southern assure Pékin Daxing PKX ➔ Macao en direct à 96 € (bagage soute 23kg inclus) !",
+        "departures": {
+            "PVG": {
+                "price": 68.0, "airline": "Spring Airlines (Direct)", "stops": 0,
+                "flight_duration_min": 165, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 35.0
             },
-            "XIY": {
-                "price": 95.0, "airline": "Spring Airlines", "stops": 0,
-                "flight_duration_min": 235, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
-                "cabine_extra": 15.0, "soute_extra": 38.0
+            "PKX": {
+                "price": 96.0, "airline": "China Southern (Direct)", "stops": 0,
+                "flight_duration_min": 210, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
     },
     {
         "dest_code": "CNX", "city": "Chiang Mai", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
+        "good_deal_max_eur": 95,
+        "ota_tip": "Sur Xi'an (XIY) ➔ Chiang Mai (CNX), le vol direct Spring Airlines 9C 6505 (78 € tarif direct) descend à 54 € sur Trip.com et 74 € sur Booking.com via la page de réservation Google Flights !",
         "departures": {
             "CGO": {
                 "price": 128.0, "airline": "Thai AirAsia", "stops": 0,
@@ -475,44 +525,74 @@ CATALOG_ASIA = [
             "XIY": {
                 "price": 78.0, "airline": "Spring Airlines", "stops": 0,
                 "flight_duration_min": 220, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
                 "cabine_extra": 0.0, "soute_extra": 38.0
             },
             "WUH": {
                 "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
                 "flight_duration_min": 360, "max_layover_min": 110, "layover_details": "1 escale de 1h50 à Canton CAN",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
+            }
+        }
+    },
+    {
+        "dest_code": "BKK", "city": "Bangkok", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
+        "good_deal_max_eur": 105,
+        "ota_tip": "En décalant au mercredi (ex: 18 nov.), le vol direct Xi'an XIY ➔ Bangkok (BKK) sur Spring Airlines descend à 91 € (67 € via Trip.com), et Zhengzhou CGO ➔ BKK sur China Southern passe à 108 € (bagage soute 23kg inclus) !",
+        "departures": {
+            "CGO": {
+                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 420, "max_layover_min": 115, "layover_details": "1 escale à Canton CAN",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "XIY": {
+                "price": 91.0, "airline": "Spring Airlines (Direct)", "stops": 0,
+                "flight_duration_min": 265, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 38.0
+            },
+            "WUH": {
+                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 420, "max_layover_min": 110, "layover_details": "1 escale à Canton CAN",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "PKX": {
+                "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 505, "max_layover_min": 120, "layover_details": "1 escale",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
     },
     {
         "dest_code": "HAN", "city": "Hanoï", "country": "Vietnam", "flag": "🇻🇳", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 100,
-        "ota_tip": "Sur Chine ➔ Vietnam (Hanoï), VietJet vole en direct depuis Pékin Daxing (PKX, 96 €) et Shanghai (PVG, 86 €) les mardis/vendredis, et Trip.com / Skyscanner référencent des tarifs agences chinoises non listés sur Google Flights.",
+        "ota_tip": "Sur Chine ➔ Vietnam (Hanoï), VietJet vole en direct depuis Pékin Daxing (PKX, 96 € / 84 € Trip.com) et Shanghai (PVG, 86 € / 75 € Trip.com) les mardis/vendredis.",
         "departures": {
             "PVG": {
                 "price": 86.0, "airline": "VietJet Air (Direct)", "stops": 0,
                 "flight_duration_min": 235, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 240, "tgv_name": "TGV / Hub Shanghai Pudong (PVG)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
             "PKX": {
                 "price": 96.0, "airline": "VietJet Air (Direct)", "stops": 0,
                 "flight_duration_min": 230, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15)",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
             "XIY": {
                 "price": 98.0, "airline": "Shandong / China Eastern", "stops": 1,
                 "flight_duration_min": 340, "max_layover_min": 115, "layover_details": "1 escale",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
             "WUH": {
                 "price": 108.0, "airline": "China Southern Airlines", "stops": 1,
                 "flight_duration_min": 280, "max_layover_min": 95, "layover_details": "1 escale à Canton CAN",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             },
             "CGO": {
@@ -523,84 +603,81 @@ CATALOG_ASIA = [
             "PEK": {
                 "price": 128.0, "airline": "Shenzhen Airlines", "stops": 1,
                 "flight_duration_min": 420, "max_layover_min": 140, "layover_details": "1 escale à Shenzhen SZX",
-                "tgv_approach_min": 150, "tgv_name": "TGV ➔ Pékin Capital (PEK)",
+                "tgv_approach_min": 150, "tgv_name": "TGV ➔ Pékin Capital (PEK, ~38 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
-            }
-        }
-    },
-    {
-        "dest_code": "HKG", "city": "Hong Kong", "country": "Hong Kong", "flag": "🇭🇰", "region": "Asie de l'Est",
-        "departures": {
-            "CGO": {
-                "price": 95.0, "airline": "Cathay Pacific / Greater Bay", "stops": 0,
-                "flight_duration_min": 165, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "cabine_extra": 0.0, "soute_extra": 30.0
-            },
-            "WUH": {
-                "price": 85.0, "airline": "China Southern Airlines", "stops": 0,
-                "flight_duration_min": 135, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
-                "cabine_extra": 0.0, "soute_extra": 30.0
-            }
-        }
-    },
-    {
-        "dest_code": "SIN", "city": "Singapour", "country": "Singapour", "flag": "🇸🇬", "region": "Asie du Sud-Est",
-        "departures": {
-            "CGO": {
-                "price": 118.0, "airline": "Scoot", "stops": 0,
-                "flight_duration_min": 310, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "cabine_extra": 0.0, "soute_extra": 45.0
-            },
-            "WUH": {
-                "price": 102.0, "airline": "Scoot", "stops": 0,
-                "flight_duration_min": 295, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
-                "cabine_extra": 0.0, "soute_extra": 45.0
-            },
-            "XIY": {
-                "price": 115.0, "airline": "Scoot", "stops": 0,
-                "flight_duration_min": 325, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
-                "cabine_extra": 0.0, "soute_extra": 45.0
             }
         }
     },
     {
         "dest_code": "ICN", "city": "Séoul", "country": "Corée du Sud", "flag": "🇰🇷", "region": "Asie de l'Est",
+        "good_deal_max_eur": 95,
+        "ota_tip": "Depuis Qingdao (TAO, gare TGV intégrée à l'aéroport), Jeju Air vole en direct vers Séoul (ICN) en 1h30 pour 75 € (64 € via Trip.com) ! Depuis Shanghai PVG, Shandong Airlines est à 80 € (bagage soute 23kg inclus).",
         "departures": {
-            "CGO": {
-                "price": 92.0, "airline": "China Southern / Korean Air", "stops": 0,
-                "flight_duration_min": 155, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+            "TAO": {
+                "price": 75.0, "airline": "Jeju Air (Direct)", "stops": 0,
+                "flight_duration_min": 90, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 230, "tgv_name": "TGV direct Zhengzhou ➔ Aéroport Qingdao TAO (3h50, ~46 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
+            },
+            "PVG": {
+                "price": 80.0, "airline": "Shandong Airlines", "stops": 1,
+                "flight_duration_min": 330, "max_layover_min": 110, "layover_details": "1 escale courte à Jinan/Qingdao",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "CGO": {
+                "price": 104.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 360, "max_layover_min": 95, "layover_details": "1 escale",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "PKX": {
+                "price": 121.0, "airline": "China Southern (Direct)", "stops": 0,
+                "flight_duration_min": 115, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin Daxing (2h15, ~38 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             },
             "XIY": {
                 "price": 105.0, "airline": "Korean Air / Asiana", "stops": 0,
                 "flight_duration_min": 190, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
-                "cabine_extra": 0.0, "soute_extra": 35.0
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
     },
     {
-        "dest_code": "KUL", "city": "Kuala Lumpur", "country": "Malaisie", "flag": "🇲🇾", "region": "Asie du Sud-Est",
+        "dest_code": "HKG", "city": "Hong Kong", "country": "Hong Kong", "flag": "🇭🇰", "region": "Asie de l'Est",
+        "good_deal_max_eur": 95,
+        "ota_tip": "Depuis Wuhan (WUH, 1h45 de TGV de Zhengzhou), Cathay Pacific assure un vol DIRECT vers Hong Kong à 85 € TTC incluant bagage cabine + bagage en soute 23kg !",
         "departures": {
-            "CGO": {
-                "price": 135.0, "airline": "China Southern Airlines", "stops": 1,
-                "flight_duration_min": 450, "max_layover_min": 130, "layover_details": "1 escale de 2h10 à Canton CAN",
-                "cabine_extra": 0.0, "soute_extra": 35.0
-            },
             "WUH": {
-                "price": 88.0, "airline": "AirAsia (Direct)", "stops": 0,
-                "flight_duration_min": 280, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
-                "cabine_extra": 16.0, "soute_extra": 40.0
+                "price": 85.0, "airline": "Cathay Pacific (Direct)", "stops": 0,
+                "flight_duration_min": 140, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "CGO": {
+                "price": 95.0, "airline": "Cathay Pacific / Greater Bay", "stops": 0,
+                "flight_duration_min": 165, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "cabine_extra": 0.0, "soute_extra": 30.0
             },
             "XIY": {
-                "price": 118.0, "airline": "AirAsia X (Direct)", "stops": 0,
-                "flight_duration_min": 315, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
-                "cabine_extra": 16.0, "soute_extra": 40.0
+                "price": 98.0, "airline": "Shandong Airlines", "stops": 1,
+                "flight_duration_min": 440, "max_layover_min": 120, "layover_details": "1 escale",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            }
+        }
+    },
+    {
+        "dest_code": "FUK", "city": "Fukuoka (Japon Sud)", "country": "Japon", "flag": "🇯🇵", "region": "Asie de l'Est",
+        "good_deal_max_eur": 125,
+        "ota_tip": "Le vol le moins cher vers le Japon : Spring Airlines relie Shanghai (PVG) à Fukuoka (FUK) en seulement 1h55 de vol direct à 121 € (89 € via Trip.com) !",
+        "departures": {
+            "PVG": {
+                "price": 121.0, "airline": "Spring Airlines (Direct)", "stops": 0,
+                "flight_duration_min": 115, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 38.0
             }
         }
     },
@@ -622,8 +699,8 @@ CATALOG_ASIA = [
                 "cabine_extra": 0.0, "soute_extra": 38.0
             },
             "PVG": {
-                "price": 159.0, "airline": "Spring Japan (Direct)", "stops": 0,
-                "flight_duration_min": 185, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "price": 146.0, "airline": "Spring Japan (Direct)", "stops": 0,
+                "flight_duration_min": 180, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
                 "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
                 "cabine_extra": 0.0, "soute_extra": 38.0
             },
@@ -641,6 +718,69 @@ CATALOG_ASIA = [
         }
     },
     {
+        "dest_code": "KIX", "city": "Osaka (Kansai)", "country": "Japon", "flag": "🇯🇵", "region": "Asie de l'Est",
+        "good_deal_max_eur": 145,
+        "ota_tip": "Depuis Shanghai (PVG), Peach Aviation et Spring Airlines volent en direct vers Osaka Kansai (KIX) en 2h05 à 141 € (~109 € via Trip.com) !",
+        "departures": {
+            "PVG": {
+                "price": 141.0, "airline": "Peach Aviation / Spring (Direct)", "stops": 0,
+                "flight_duration_min": 125, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 38.0
+            },
+            "XIY": {
+                "price": 198.0, "airline": "Cathay Pacific", "stops": 1,
+                "flight_duration_min": 490, "max_layover_min": 130, "layover_details": "1 escale à Hong Kong",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            }
+        }
+    },
+    {
+        "dest_code": "SIN", "city": "Singapour", "country": "Singapour", "flag": "🇸🇬", "region": "Asie du Sud-Est",
+        "departures": {
+            "CGO": {
+                "price": 118.0, "airline": "Scoot", "stops": 0,
+                "flight_duration_min": 310, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "cabine_extra": 0.0, "soute_extra": 45.0
+            },
+            "WUH": {
+                "price": 102.0, "airline": "Scoot", "stops": 0,
+                "flight_duration_min": 295, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 45.0
+            },
+            "XIY": {
+                "price": 115.0, "airline": "Scoot", "stops": 0,
+                "flight_duration_min": 325, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 45.0
+            }
+        }
+    },
+    {
+        "dest_code": "KUL", "city": "Kuala Lumpur", "country": "Malaisie", "flag": "🇲🇾", "region": "Asie du Sud-Est",
+        "departures": {
+            "CGO": {
+                "price": 135.0, "airline": "China Southern Airlines", "stops": 1,
+                "flight_duration_min": 450, "max_layover_min": 130, "layover_details": "1 escale de 2h10 à Canton CAN",
+                "cabine_extra": 0.0, "soute_extra": 35.0
+            },
+            "WUH": {
+                "price": 88.0, "airline": "AirAsia (Direct)", "stops": 0,
+                "flight_duration_min": 280, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 16.0, "soute_extra": 40.0
+            },
+            "XIY": {
+                "price": 118.0, "airline": "AirAsia X (Direct)", "stops": 0,
+                "flight_duration_min": 315, "max_layover_min": 0, "layover_details": "Direct (sans escale)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 16.0, "soute_extra": 40.0
+            }
+        }
+    },
+    {
         "dest_code": "SGN", "city": "Hô Chi Minh-Ville", "country": "Vietnam", "flag": "🇻🇳", "region": "Asie du Sud-Est",
         "departures": {
             "CGO": {
@@ -651,7 +791,7 @@ CATALOG_ASIA = [
             "WUH": {
                 "price": 115.0, "airline": "China Southern Airlines", "stops": 1,
                 "flight_duration_min": 350, "max_layover_min": 100, "layover_details": "1 escale de 1h40 à Canton CAN",
-                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
                 "cabine_extra": 0.0, "soute_extra": 35.0
             }
         }
@@ -659,6 +799,12 @@ CATALOG_ASIA = [
     {
         "dest_code": "HKT", "city": "Phuket", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
         "departures": {
+            "PVG": {
+                "price": 119.0, "airline": "AirAsia X / AirAsia", "stops": 1,
+                "flight_duration_min": 440, "max_layover_min": 135, "layover_details": "1 escale à Kuala Lumpur / Bangkok",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 40.0
+            },
             "CGO": {
                 "price": 149.0, "airline": "Thai Lion Air / Spring", "stops": 1,
                 "flight_duration_min": 435, "max_layover_min": 120, "layover_details": "1 escale de 2h00 à Bangkok DMK",
@@ -667,8 +813,20 @@ CATALOG_ASIA = [
             "XIY": {
                 "price": 135.0, "airline": "Spring Airlines", "stops": 1,
                 "flight_duration_min": 410, "max_layover_min": 110, "layover_details": "1 escale de 1h50 à Bangkok",
-                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
                 "cabine_extra": 18.0, "soute_extra": 45.0
+            }
+        }
+    },
+    {
+        "dest_code": "MNL", "city": "Manille", "country": "Philippines", "flag": "🇵🇭", "region": "Asie du Sud-Est",
+        "good_deal_max_eur": 130,
+        "departures": {
+            "PVG": {
+                "price": 128.0, "airline": "Cathay Pacific", "stops": 1,
+                "flight_duration_min": 425, "max_layover_min": 110, "layover_details": "1 escale courte à Hong Kong HKG",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
     }
@@ -841,20 +999,22 @@ def scan_radar_deals(
     flight_date_fr = format_date_fr(flight_date)
     nearby_airports = get_nearby_airports(origin_code)
 
-    is_asia = any(c in origin_code for c in ["CGO", "XIY", "WUH", "LYA", "BJS", "PEK", "PKX", "SHA", "PVG", "CAN"])
+    is_asia = any(c in origin_code for c in ["CGO", "XIY", "WUH", "LYA", "BJS", "PEK", "PKX", "SHA", "PVG", "CAN", "TAO", "TSN"])
     catalog = CATALOG_ASIA if is_asia else CATALOG_EUROPE
 
-    # Si l'utilisateur scanne tout un mois (sans date précise verrouillée), on croise le dimanche 15
-    # ET le vendredi 13 (car les low-cost asiatiques comme VietJet PKX->HAN volent les mardis/vendredis !)
+    # Scan multi-jours intelligent (Mardi 17, Mercredi 18, Vendredi 13, Dimanche 15) :
+    # Les low-cost asiatiques (Spring 9C, Spring Japan IJ, VietJet VJ, Jeju Air 7C, Peach MM)
+    # cassent leurs prix de -25% à -40% les mardis et mercredis !
     candidate_dates = [flight_date]
     if not exact_date:
-        alt_date = f"{m_id}-13"
-        if alt_date != flight_date:
-            try:
-                if datetime.date.fromisoformat(alt_date) > datetime.date.today():
-                    candidate_dates.append(alt_date)
-            except Exception:
-                pass
+        for day_num in ("17", "18", "13", "15"):
+            alt_date = f"{m_id}-{day_num}"
+            if alt_date not in candidate_dates:
+                try:
+                    if datetime.date.fromisoformat(alt_date) > datetime.date.today():
+                        candidate_dates.append(alt_date)
+                except Exception:
+                    pass
 
     pairs_to_warm = []
     for item in catalog:
@@ -862,7 +1022,7 @@ def scan_radar_deals(
         departures_map = item.get("departures", {})
         dept_keys = [origin_code]
         if origin_code in ("PEK", "PKX"):
-            for bjs_k in ("PKX", "PEK"):
+            for bjs_k in ("PKX", "PEK", "TSN"):
                 if bjs_k not in dept_keys:
                     dept_keys.append(bjs_k)
         if include_nearby:
@@ -897,7 +1057,7 @@ def scan_radar_deals(
 
         candidate_dept_keys = [origin_code]
         if origin_code in ("PEK", "PKX"):
-            for bjs_k in ("PKX", "PEK"):
+            for bjs_k in ("PKX", "PEK", "TSN"):
                 if bjs_k not in candidate_dept_keys:
                     candidate_dept_keys.append(bjs_k)
         if include_nearby:
@@ -1180,20 +1340,22 @@ def scan_radar_deals(
         skyscanner_link = build_skyscanner_url(best_dept_code, dest_code, best_dep_date)
 
         # Calcul du tarif OTA (Trip.com / Booking.com affichés sur la page de réservation Google Flights)
-        # Sur Spring Airlines (9C) et Spring Japan (IJ), Trip.com applique ~-30% et Booking.com ~-5% vs tarif direct CNY
+        # Sur Spring Airlines (9C) et Spring Japan (IJ), Trip.com applique ~-26% à -30% et Booking.com ~-5% vs tarif direct CNY
         al_up = (airline or "").upper()
         if best_dept_code == "XIY" and dest_code == "CNX" and display_price == 78:
             ota_trip_price = 54
             ota_booking_price = 74
-        elif "SPRING" in al_up or "9C" in flight_numbers or "IJ" in flight_numbers:
+        elif "SPRING" in al_up or "9C" in flight_numbers or "IJ" in flight_numbers or "PEACH" in al_up or "MM" in flight_numbers:
             ota_trip_price = max(39, int(round(display_price * 0.74)))
             ota_booking_price = max(45, int(round(display_price * 0.95)))
-        elif any(k in al_up for k in ("VIETJET", "AIRASIA", "SCOOT", "CHINA SOUTHERN", "CHINA EASTERN", "SHENZHEN", "HAINAN", "JUNEYAO")):
-            ota_trip_price = max(45, int(round(display_price * 0.88)))
+        elif any(k in al_up for k in ("VIETJET", "AIRASIA", "SCOOT", "JEJU AIR", "CHINA SOUTHERN", "CHINA EASTERN", "SHENZHEN", "HAINAN", "JUNEYAO", "SHANDONG")):
+            ota_trip_price = max(45, int(round(display_price * 0.87)))
             ota_booking_price = max(49, int(round(display_price * 0.96)))
         else:
             ota_trip_price = display_price
             ota_booking_price = display_price
+
+        effective_best_price = min(display_price, ota_trip_price)
 
         deals.append({
             "dest_code": dest_code,
@@ -1202,6 +1364,7 @@ def scan_radar_deals(
             "flag": flag,
             "region": region,
             "display_price": display_price,
+            "effective_best_price": effective_best_price,
             "ota_trip_price": ota_trip_price,
             "ota_booking_price": ota_booking_price,
             "best_price": price_base,
@@ -1255,7 +1418,7 @@ def scan_radar_deals(
             "airport_comparisons": candidate_options,
         })
 
-    deals.sort(key=lambda d: d["display_price"])
+    deals.sort(key=lambda d: (d["effective_best_price"], d["display_price"]))
 
     nantes_combos = build_nantes_return_combos(flight_date, bagage_mode=bagage_mode)
 

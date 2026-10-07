@@ -142,18 +142,52 @@
 {% else %}
 
 <!-- ========================================================================= -->
+<!-- BANNIÈRE TOP PÉPITES ULTRA-CASSÉES (SCAN MULTI-JOURS + OTA TRIP.COM)       -->
+<!-- ========================================================================= -->
+<div class="card" style="margin-bottom: 1.25rem; padding: 0.9rem 1.15rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(59, 130, 246, 0.08)); border: 1px solid rgba(16, 185, 129, 0.45); border-left: 5px solid #10b981;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.65rem;">
+    <div style="font-size: 0.95rem; font-weight: 800; color: #10b981; display: flex; align-items: center; gap: 0.45rem;">
+      <span>🔥 Top Pépites Ultra-Cassées Détectées (Scan Mardi/Mercredi/Vendredi/Dimanche + Tarif OTA Trip.com)</span>
+    </div>
+    <span style="font-size: 0.76rem; color: var(--text-secondary);">
+      Les low-cost (Spring 9C, Spring Japan IJ, Jeju Air, VietJet) cassent les prix de <b>-25% à -35%</b> les mardis/mercredis + remise OTA Trip.com
+    </span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.65rem;">
+    {% for gem in radar.deals[:5] %}
+    <a href="{{ gem.trip_com_link }}" target="_blank" style="text-decoration: none; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 0.6rem 0.75rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+      <div>
+        <div style="font-weight: 800; font-size: 0.86rem; color: var(--text-primary);">
+          {{ gem.flag }} {{ gem.city }} ({{ gem.dest_code }})
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.1rem;">
+          {{ gem.departure_code }} • {{ gem.dep_date_fr }} • {{ gem.flight_duration_str }}
+        </div>
+      </div>
+      <div style="text-align: right; white-space: nowrap;">
+        <div style="font-size: 1.15rem; font-weight: 900; color: #10b981;">{{ gem.effective_best_price }} €</div>
+        <div style="font-size: 0.68rem; color: var(--text-muted);">
+          {% if gem.ota_trip_price < gem.display_price %}Trip ({{ gem.display_price }}€ Dir.){% else %}Direct EUR{% endif %}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ========================================================================= -->
 <!-- VUE COMPACTE ULTRA-RAPIDE : TABLEAU SYNTHÉTIQUE DE TOUS LES VOLS EN EUROS -->
 <!-- ========================================================================= -->
 <div class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; border-left: 4px solid #10b981;">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
     <div style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-      <span>⚡ Vue Compacte Rapide — Classement par Prix en Euros (€)</span>
+      <span>⚡ Vue Compacte Rapide — Classement par Meilleur Prix Réel (OTA / Direct €)</span>
       <span class="badge badge-success" style="font-size: 0.75rem;">
         {% if radar.bagage_mode == 'cabine' %}🧳 Bagage Cabine Inclus{% elif radar.bagage_mode == 'soute_1' %}📦 Bagage Soute Inclus{% else %}🎒 Billet Seul{% endif %}
       </span>
     </div>
     <span style="font-size: 0.78rem; color: var(--text-muted);">
-      Cliquez sur <b>« Réserver à XX € »</b> pour ouvrir directement le vol exact en Euros sur Google Flights
+      Cliquez sur <b>« Réserver dès XX € »</b> ou <b>« ⚡ Trip.com »</b> pour ouvrir directement le tarif le plus bas
     </span>
   </div>
 
@@ -178,7 +212,7 @@
             data-stops="{{ deal.stops }}"
             data-duration-min="{{ deal.total_journey_min }}"
             data-layover-min="{{ deal.max_layover_min }}"
-            data-price-display="{{ deal.display_price }}"
+            data-price-display="{{ deal.effective_best_price }}"
             data-price-cabine="{{ deal.cabine_total }}"
             data-price-soute="{{ deal.soute_total }}"
             data-price-sans="{{ deal.best_price }}">
@@ -273,7 +307,7 @@
        data-stops="{{ deal.stops }}"
        data-duration-min="{{ deal.total_journey_min }}"
        data-layover-min="{{ deal.max_layover_min }}"
-       data-price-display="{{ deal.display_price }}"
+       data-price-display="{{ deal.effective_best_price }}"
        data-price-cabine="{{ deal.cabine_total }}"
        data-price-soute="{{ deal.soute_total }}"
        data-price-sans="{{ deal.best_price }}"
