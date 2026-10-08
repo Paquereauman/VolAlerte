@@ -47,7 +47,7 @@ async def _asgi_get(app, path: str) -> str:
 
 
 def fetch_html(path: str) -> str:
-    from app.main import app
+    from app.web.app import app
     return asyncio.run(_asgi_get(app, path))
 
 

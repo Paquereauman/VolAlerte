@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zhengzhou (CGO) ➔ Chiang Mai (CNX) - VolAlerte</title>
+  <link rel="icon" href="/VolAlerte/static/icons/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/VolAlerte/static/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="stylesheet" href="/VolAlerte/static/css/styles.css">
+  <script src="/VolAlerte/static/js/chart.umd.min.js"></script>
+</head>
+<body>
+
+  
+
+  <header class="navbar">
+    <div class="nav-brand">
+      <img src="/VolAlerte/static/icons/icon-192.png" alt="Logo VolAlerte">
+      <span>VolAlerte</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/VolAlerte/" class="nav-link active">
+        <span>📊</span> Tableau de bord
+      </a>
+      <a href="/VolAlerte/radar/" class="nav-link ">
+        <span>📡</span> Radar Bons Plans
+      </a>
+      <a href="/VolAlerte/alerts/" class="nav-link ">
+        <span>🔔</span> Alertes
+      </a>
+      <a href="/VolAlerte/settings/" class="nav-link ">
+        <span>⚙️</span> Réglages
+      </a>
+    </nav>
+
+    <div class="nav-actions">
+      <button id="theme-toggle-btn" class="btn btn-secondary btn-sm" title="Changer le thème">☀️</button>
+      <button id="btn-run-now" class="btn btn-primary btn-sm">⚡ Vérifier maintenant</button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+  <div>
+    <a href="/VolAlerte/" style="font-size: 0.85rem; color: var(--text-secondary);">← Retour au tableau de bord</a>
+    <h1 style="font-size: 1.75rem; font-weight: 800; margin-top: 0.25rem;">
+      Zhengzhou (CGO) <span style="color: var(--accent);">➔</span> Chiang Mai (CNX)
+    </h1>
+    <div style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.2rem;">
+      📅 Vol le <b style="color: #10b981;">Ven. 13 nov. 2026</b>
+      
+        • 🛫 <b>09:00 CGO ➔ 17:50 CNX</b> • ✈️ <b>China Southern (CZ 8685 + CZ 3033)</b> • ⏱️ <b>9h50</b>
+      
+      • Bagage : <span class="badge badge-info" style="font-size: 0.82rem;">cabine</span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVVUtWHdCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JGdWs0REpJTVVBEg1DWjg2ODV8Q1ozMDMzGgsInLIBEAIaA0VVUjgdcKjIAQ==&amp;gl=fr" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
+      🎯 Réserver ce vol (229 €)
+    </a>
+    <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm">
+      🔍 Tous les vols (Google EUR)
+    </a>
+    <a href="https://fr.trip.com/flights/showfarefirst?dcity=CGO&amp;acity=CNX&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-secondary btn-sm">
+      ✈️ Trip.com (EUR)
+    </a>
+    <a href="/route/4/export-csv" class="btn btn-secondary btn-sm" download>
+      📥 CSV
+    </a>
+  </div>
+</div>
+
+<!-- Synthèse Mensuelle & Prix Moyen du Mois -->
+<div class="card" style="border-left: 4px solid var(--accent); margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(16, 185, 129, 0.05));">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+    <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">
+      📊 Statistiques Mensuelles & Comparatif (Novembre 2026)
+    </span>
+    <span class="badge badge-info">
+      Mois visé : Novembre 2026
+    </span>
+  </div>
+  <div class="grid grid-3" style="gap: 1rem; margin-bottom: 0;">
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1.5px solid var(--accent);">
+      <div style="font-size: 0.75rem; color: var(--accent); font-weight: 700; text-transform: uppercase;">📊 PRIX MOYEN DU MOIS (AVEC BAGAGE)</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">
+        160 €
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        
+          Billet moyen : 160 € + bagage 0 €
+        
+      </div>
+    </div>
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1.5px solid rgba(16, 185, 129, 0.4);">
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 700; text-transform: uppercase;">🏷️ MEILLEUR PRIX CONSTATÉ</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 0.2rem 0;">
+        229 €
+      </div>
+      <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
+        
+          ✓ Prix le plus bas constaté
+        
+      </div>
+    </div>
+    <div style="background: var(--bg-card); padding: 0.85rem; border-radius: 8px; border: 1px solid var(--border);">
+      <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase;">GOOGLE FLIGHTS : FOURCHETTE HABITUELLE</div>
+      <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin: 0.2rem 0;">
+        
+          109 € - 229 €
+        
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">
+        Prix habituel constaté sur Google Flights pour ce mois
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Synthèse Meilleure Fenêtre -->
+<div class="card" style="border-left: 4px solid var(--success); margin-bottom: 1.5rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+    <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">
+      Analyse Statistique & Recommandation d'Achat
+    </span>
+    <span class="badge badge-info">
+      Confiance : Indicatif (31 prix)
+    </span>
+  </div>
+  <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">
+    Fenêtre optimale : 120-180 j (médiane 162.2 €, basé sur 31 prix - niveau indicatif)
+  </div>
+  <p style="font-size: 0.85rem; color: var(--text-secondary);">
+    💡 <i>Principe de prudence : ces statistiques sont établies sur l'historique des relevés. Un prix dans la fenêtre optimale reste une indication statistique, vérifiez toujours les conditions exactes sur le site de la compagnie.</i>
+  </p>
+</div>
+
+<!-- SECTION 1 : OPTIONS DE BAGAGES COMPARÉES (CABINE & SOUTE) -->
+<div class="card" style="border-top: 4px solid var(--accent); margin-bottom: 1.5rem;">
+  <div class="card-header">
+    <div>
+      <div class="card-title">🧳 Options de bagages pour ce vol (Tarifs réels comparés)</div>
+      <div style="font-size: 0.8rem; color: var(--text-secondary);">
+        Choisissez l'option que vous souhaitez surveiller pour ce trajet. Les prix sont calculés sur la valeur haute de la compagnie constatée.
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="gap: 1rem;">
+    <!-- Option 1 : Billet Seul (Sans bagage) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">🎒 Billet Seul</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #38bdf8;">
+            229 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: var(--text-secondary); background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid var(--border);">
+            Moy. mois : <b>160 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Sans bagage supplémentaire (juste petit sac sous siège).
+        </div>
+      </div>
+
+      <form action="/route/4/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="aucun">
+        <button type="submit" class="btn btn-sm btn-secondary" style="width: 100%;">
+          Choisir sans bagage
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 2 : Bagage Cabine (10 kg) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--success); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">🧳 Bagage Cabine</span>
+          
+            <span class="badge badge-success">Actif pour alerte</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #10b981;">
+            229 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: #10b981; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">
+            Moy. mois : <b>160 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet 229 € + Cabine 0 € (valise 10 kg en cabine).
+        </div>
+      </div>
+
+      <form action="/route/4/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="cabine">
+        <button type="submit" class="btn btn-sm btn-primary" style="width: 100%; background-color: var(--success);">
+          ✓ Option sélectionnée
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 3 : Bagage en Soute (1 bagage 15-20 kg) -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">📦 Bagage en Soute</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #f59e0b;">
+            229 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: #f59e0b; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            Moy. mois : <b>160 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet 229 € + Soute 0 € (valise 15-20 kg enregistrée).
+        </div>
+      </div>
+
+      <form action="/route/4/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="soute_1">
+        <button type="submit" class="btn btn-sm btn-secondary" style="width: 100%; ">
+          Choisir bagage soute
+        </button>
+      </form>
+    </div>
+
+    <!-- Option 4 : 2 Bagages en Soute -->
+    <div style="background-color: var(--bg-card-hover); padding: 1rem; border-radius: 8px; border: 2px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; font-size: 0.95rem;">📦📦 2 Bagages Soute</span>
+          
+        </div>
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <div style="font-size: 1.6rem; font-weight: 800; color: #a855f7;">
+            269 €
+          </div>
+          
+          <div style="font-size: 0.75rem; color: #a855f7; background: var(--bg-card); padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid rgba(168, 85, 247, 0.3);">
+            Moy. mois : <b>200 €</b>
+          </div>
+          
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Billet 229 € + 2e soute 40 €.
+        </div>
+      </div>
+
+      <form action="/route/4/update-baggage" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="bagage" value="soute_2">
+        <button type="submit" class="btn btn-sm btn-secondary" style="width: 100%; ">
+          Choisir 2 bagages soute
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Graphique 1 : Historique Chronologique Multi-Options -->
+<div class="card">
+  <div class="card-header" style="flex-wrap: wrap; gap: 0.75rem;">
+    <div>
+      <div class="card-title">📈 Évolution chronologique des prix observés</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">85 relevés au total</div>
+    </div>
+
+    <!-- Boutons de bascule interactifs pour afficher/masquer les options -->
+    <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+      <span style="font-size: 0.8rem; color: var(--text-secondary); margin-right: 0.25rem;">Afficher sur la courbe :</span>
+      <button id="toggle-btn-0" class="btn btn-sm btn-secondary" onclick="toggleDataset(0)" style="border-left: 3px solid #38bdf8;">
+        🟦 Billet seul
+      </button>
+      <button id="toggle-btn-1" class="btn btn-sm btn-secondary" onclick="toggleDataset(1)" style="border-left: 3px solid #10b981; font-weight: 700;">
+        🟩 Bagage Cabine
+      </button>
+      <button id="toggle-btn-2" class="btn btn-sm btn-secondary" onclick="toggleDataset(2)" style="border-left: 3px solid #f59e0b; font-weight: 700;">
+        🟧 Bagage en Soute
+      </button>
+      <button id="toggle-btn-3" class="btn btn-sm btn-secondary" onclick="toggleDataset(3)" style="border-left: 3px solid #a855f7;">
+        🟪 2 Bagages Soute
+      </button>
+    </div>
+  </div>
+
+  <div style="height: 350px;">
+    <canvas id="historyChart"></canvas>
+  </div>
+</div>
+
+<!-- Graphique 2 : Prix médian selon l'anticipation -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🎯 Prix médian selon le délai d'anticipation (date du vol - date du relevé)</div>
+    <span style="font-size: 0.8rem; color: var(--text-muted);">Fenêtre la moins chère surlignée en vert</span>
+  </div>
+  <div style="height: 280px;">
+    <canvas id="anticipationChart"></canvas>
+  </div>
+</div>
+
+<!-- Tableau détaillé des tranches d'anticipation -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">📊 Détail des tranches d'anticipation</div>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Tranche d'anticipation</th>
+          <th>Prix médian (billet seul)</th>
+          <th>Écart avec la meilleure tranche</th>
+          <th>Nombre de relevés</th>
+          <th>Niveau de confiance</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr >
+          <td>
+            
+              &gt; 180 j
+            
+          </td>
+          <td>
+            
+              184.4 €
+            
+          </td>
+          <td>
+            
+              
+                <span style="color: var(--danger);">+22.2 €</span>
+              
+            
+          </td>
+          <td>7</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr style="background-color: var(--success-bg); font-weight: 700;">
+          <td>
+            
+              ⭐ <b>120-180 j (Optimale)</b>
+            
+          </td>
+          <td>
+            
+              162.2 €
+            
+          </td>
+          <td>
+            
+              
+                <span class="badge badge-success">0 € (Moins cher)</span>
+              
+            
+          </td>
+          <td>31</td>
+          <td>
+            
+              <span class="badge badge-info">Indicatif</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              90-120 j
+            
+          </td>
+          <td>
+            
+              143.7 €
+            
+          </td>
+          <td>
+            
+              
+                <span style="color: var(--danger);">+-18.5 €</span>
+              
+            
+          </td>
+          <td>15</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              60-90 j
+            
+          </td>
+          <td>
+            
+              119.2 €
+            
+          </td>
+          <td>
+            
+              
+                <span style="color: var(--danger);">+-43.0 €</span>
+              
+            
+          </td>
+          <td>15</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              30-60 j
+            
+          </td>
+          <td>
+            
+              131.0 €
+            
+          </td>
+          <td>
+            
+              
+                <span style="color: var(--danger);">+-31.2 €</span>
+              
+            
+          </td>
+          <td>17</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              14-30 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+        <tr >
+          <td>
+            
+              &lt; 14 j
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>
+            
+              --
+            
+          </td>
+          <td>0</td>
+          <td>
+            
+              <span class="badge badge-muted">Données insuffisantes</span>
+            
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tableau des prix bagages par compagnie -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">🧳 Grille tarifaire des bagages constatée par compagnie</div>
+  </div>
+  
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Compagnie</th>
+          <th>Type de bagage</th>
+          <th>Fourchette constatée</th>
+          <th>Prix retenu (valeur haute pour l'alerte)</th>
+          <th>Dernier relevé</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td style="font-weight: 600;">Ryanair</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">20 € - 25 €</td>
+          <td style="font-weight: 700; color: var(--accent);">25 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-10-08</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Ryanair</td>
+          <td>
+            
+              📦 1er bagage en soute (15-20 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">35 € - 45 €</td>
+          <td style="font-weight: 700; color: var(--accent);">45 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-10-08</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Ryanair</td>
+          <td>
+            
+              📦📦 2e bagage en soute
+            
+          </td>
+          <td style="color: var(--text-secondary);">70 € - 85 €</td>
+          <td style="font-weight: 700; color: var(--accent);">85 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-10-08</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Spring Airlines</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">12 € - 16 €</td>
+          <td style="font-weight: 700; color: var(--accent);">16 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Spring Airlines</td>
+          <td>
+            
+              📦 1er bagage en soute (15-20 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">30 € - 40 €</td>
+          <td style="font-weight: 700; color: var(--accent);">40 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">TestAir</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">20 € - 28 €</td>
+          <td style="font-weight: 700; color: var(--accent);">28 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Thai AirAsia</td>
+          <td>
+            
+              🧳 Bagage cabine (10 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">14 € - 18 €</td>
+          <td style="font-weight: 700; color: var(--accent);">18 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight: 600;">Thai AirAsia</td>
+          <td>
+            
+              📦 1er bagage en soute (15-20 kg)
+            
+          </td>
+          <td style="color: var(--text-secondary);">32 € - 42 €</td>
+          <td style="font-weight: 700; color: var(--accent);">42 €</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">2026-09-30</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+<!-- Tableau complet des relevés réels stockés en base avec traçabilité et durées -->
+<div class="card">
+  <div class="card-header" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+    <div>
+      <div class="card-title">🔍 Historique des relevés réels stockés en base (Traçabilité & Durées)</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">Tous les prix ci-dessous proviennent de requêtes réelles enregistrées dans data/vols.db</div>
+    </div>
+    <a href="/route/4/export-csv" class="btn btn-secondary btn-sm">📥 Exporter l'historique en CSV</a>
+  </div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Date relevé</th>
+          <th>Source</th>
+          <th>Compagnie</th>
+          <th>⏱️ Durée & Escales</th>
+          <th>Billet seul</th>
+          <th>Niveau Google</th>
+          <th>Vérification</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-08</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">127 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-08</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">124 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights Live (EUR)</span>
+          </td>
+          <td><b>China Southern</b></td>
+          <td>
+            
+              <b>⏱️ 9h50</b> • <span style="color: var(--text-muted);">1 escale(s) : 4h15 à Canton (CAN)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">229 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-06</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-05</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-04</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-03</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-02</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <span style="color: var(--text-muted);">Direct (0 escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-10-01</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span style="color: var(--text-muted);">--</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-30</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">132 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-28</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">122 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-26</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">130 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-24</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">124 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-22</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">133 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-20</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">134 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-18</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">131 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-16</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">119 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-14</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">116 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-12</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">118 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-10</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">120 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-08</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">109 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-06</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">119 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-04</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">122 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-09-02</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">121 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-31</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">117 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-29</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">110 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-27</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">114 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-25</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">120 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-23</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">120 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-21</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">123 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-19</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">118 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-17</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">156 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-15</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">143 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-13</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">144 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-11</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">156 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-09</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">142 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">141 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-05</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">145 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-03</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">134 €</td>
+          <td>
+            
+              <span class="badge badge-success">Bas</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-08-01</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">155 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-30</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">140 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-28</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">146 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-26</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">137 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-24</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">142 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-22</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">151 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-20</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">143 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-18</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">166 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-16</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">162 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-14</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">167 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-12</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">170 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-10</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">153 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-08</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">155 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-06</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">162 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-04</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">157 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-07-02</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">154 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-30</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">163 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-28</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">162 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-26</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">167 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-24</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">158 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-22</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">156 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-20</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">165 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-18</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">162 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-16</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">163 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-14</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">161 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-12</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">167 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-10</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">153 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-08</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">163 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-06</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">153 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-04</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">159 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-06-02</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">159 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-31</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">153 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-29</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">149 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-27</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">165 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-25</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">164 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-23</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">159 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-21</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">156 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-19</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">174 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-17</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">185 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-15</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">181 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-13</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">186 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-11</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">182 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-09</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">182 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-07</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Travelpayouts</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">184 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="white-space: nowrap; font-weight: 600;">2026-05-05</td>
+          <td>
+            <span class="badge badge-info" style="font-size: 0.75rem;">Google Flights (SerpApi)</span>
+          </td>
+          <td><b>Thai AirAsia</b></td>
+          <td>
+            
+              <b>⏱️ 3h55</b> • <span style="color: var(--text-muted);">Direct (sans escale)</span>
+            
+          </td>
+          <td style="font-weight: 800; color: #10b981; font-size: 1.05rem;">185 €</td>
+          <td>
+            
+              <span class="badge badge-info">Habituel</span>
+            
+          </td>
+          <td>
+            <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDQ0dPcgUSA0NOWEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Ouvre Google Flights avec date et départ exacts de Chine en EUR">
+              🌐 Google Flights
+            </a>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  </main>
+
+  <div id="toast-container"></div>
+
+  <footer>
+    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
+  </footer>
+
+  <script src="/VolAlerte/static/js/app.js"></script>
+  
+<script>
+let historyChartInstance = null;
+
+function toggleDataset(index) {
+  if (!historyChartInstance) return;
+  const isVisible = historyChartInstance.isDatasetVisible(index);
+  historyChartInstance.setDatasetVisibility(index, !isVisible);
+  historyChartInstance.update();
+
+  const btn = document.getElementById(`toggle-btn-${index}`);
+  if (btn) {
+    if (!isVisible) {
+      btn.classList.add('active');
+      btn.style.opacity = '1';
+    } else {
+      btn.classList.remove('active');
+      btn.style.opacity = '0.5';
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+  const textColor = isDark ? '#94a3b8' : '#475569';
+
+  // 1. Graphique Historique Chronologique
+  const dates = ["2026-05-05", "2026-05-07", "2026-05-09", "2026-05-11", "2026-05-13", "2026-05-15", "2026-05-17", "2026-05-19", "2026-05-21", "2026-05-23", "2026-05-25", "2026-05-27", "2026-05-29", "2026-05-31", "2026-06-02", "2026-06-04", "2026-06-06", "2026-06-08", "2026-06-10", "2026-06-12", "2026-06-14", "2026-06-16", "2026-06-18", "2026-06-20", "2026-06-22", "2026-06-24", "2026-06-26", "2026-06-28", "2026-06-30", "2026-07-02", "2026-07-04", "2026-07-06", "2026-07-08", "2026-07-10", "2026-07-12", "2026-07-14", "2026-07-16", "2026-07-18", "2026-07-20", "2026-07-22", "2026-07-24", "2026-07-26", "2026-07-28", "2026-07-30", "2026-08-01", "2026-08-03", "2026-08-05", "2026-08-07", "2026-08-09", "2026-08-11", "2026-08-13", "2026-08-15", "2026-08-17", "2026-08-19", "2026-08-21", "2026-08-23", "2026-08-25", "2026-08-27", "2026-08-29", "2026-08-31", "2026-09-02", "2026-09-04", "2026-09-06", "2026-09-08", "2026-09-10", "2026-09-12", "2026-09-14", "2026-09-16", "2026-09-18", "2026-09-20", "2026-09-22", "2026-09-24", "2026-09-26", "2026-09-28", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-07", "2026-10-08", "2026-10-08"];
+  const ticketPrices = [185.3, 184.4, 182.0, 182.5, 186.9, 181.4, 185.8, 174.2, 156.7, 159.3, 164.0, 165.0, 149.9, 153.9, 159.5, 159.6, 153.3, 163.9, 153.0, 167.5, 161.5, 163.1, 162.4, 165.0, 156.3, 158.0, 167.6, 162.2, 163.2, 154.2, 157.6, 162.9, 155.8, 153.8, 170.6, 167.0, 162.3, 166.2, 143.7, 151.5, 142.3, 137.5, 146.5, 140.0, 155.0, 134.5, 145.3, 141.5, 142.8, 156.2, 144.5, 143.5, 156.3, 118.0, 123.1, 120.0, 120.6, 114.3, 110.6, 117.0, 121.0, 122.4, 119.5, 109.4, 120.6, 118.6, 116.5, 119.2, 131.0, 134.4, 133.7, 124.5, 130.3, 122.4, 132.1, 131.0, 131.0, 131.0, 131.0, 131.0, 131.0, 229.0, 131.0, 124.0, 127.0];
+  const cabinePrices = [203.3, 202.4, 200.0, 200.5, 204.9, 199.4, 203.8, 192.2, 174.7, 177.3, 182.0, 183.0, 167.9, 171.9, 177.5, 177.6, 171.3, 181.9, 171.0, 185.5, 179.5, 181.1, 180.4, 183.0, 174.3, 176.0, 185.6, 180.2, 181.2, 172.2, 175.6, 180.9, 173.8, 171.8, 188.6, 185.0, 180.3, 184.2, 161.7, 169.5, 160.3, 155.5, 164.5, 158.0, 173.0, 152.5, 163.3, 159.5, 160.8, 174.2, 162.5, 161.5, 174.3, 136.0, 141.1, 138.0, 138.6, 132.3, 128.6, 135.0, 139.0, 140.4, 137.5, 127.4, 138.6, 136.6, 134.5, 137.2, 149.0, 152.4, 151.7, 142.5, 148.3, 140.4, 150.1, 149.0, 149.0, 149.0, 149.0, 149.0, 149.0, 254.0, 149.0, 142.0, 145.0];
+  const soutePrices = [227.3, 226.4, 224.0, 224.5, 228.9, 223.4, 227.8, 216.2, 198.7, 201.3, 206.0, 207.0, 191.9, 195.9, 201.5, 201.6, 195.3, 205.9, 195.0, 209.5, 203.5, 205.1, 204.4, 207.0, 198.3, 200.0, 209.6, 204.2, 205.2, 196.2, 199.6, 204.9, 197.8, 195.8, 212.6, 209.0, 204.3, 208.2, 185.7, 193.5, 184.3, 179.5, 188.5, 182.0, 197.0, 176.5, 187.3, 183.5, 184.8, 198.2, 186.5, 185.5, 198.3, 160.0, 165.1, 162.0, 162.6, 156.3, 152.6, 159.0, 163.0, 164.4, 161.5, 151.4, 162.6, 160.6, 158.5, 161.2, 173.0, 176.4, 175.7, 166.5, 172.3, 164.4, 174.1, 173.0, 173.0, 173.0, 173.0, 173.0, 173.0, 274.0, 173.0, 166.0, 169.0];
+  const soute2Prices = [270.3, 269.4, 267.0, 267.5, 271.9, 266.4, 270.8, 259.2, 241.7, 244.3, 249.0, 250.0, 234.9, 238.9, 244.5, 244.6, 238.3, 248.9, 238.0, 252.5, 246.5, 248.1, 247.4, 250.0, 241.3, 243.0, 252.6, 247.2, 248.2, 239.2, 242.6, 247.9, 240.8, 238.8, 255.6, 252.0, 247.3, 251.2, 228.7, 236.5, 227.3, 222.5, 231.5, 225.0, 240.0, 219.5, 230.3, 226.5, 227.8, 241.2, 229.5, 228.5, 241.3, 203.0, 208.1, 205.0, 205.6, 199.3, 195.6, 202.0, 206.0, 207.4, 204.5, 194.4, 205.6, 203.6, 201.5, 204.2, 216.0, 219.4, 218.7, 209.5, 215.3, 207.4, 217.1, 216.0, 216.0, 216.0, 216.0, 216.0, 216.0, 314.0, 216.0, 209.0, 212.0];
+
+  const ctxHistory = document.getElementById('historyChart').getContext('2d');
+  historyChartInstance = new Chart(ctxHistory, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: 'Billet seul',
+          data: ticketPrices,
+          borderColor: '#38bdf8',
+          backgroundColor: 'rgba(56, 189, 248, 0.05)',
+          borderWidth: 2,
+          pointRadius: 2,
+          borderDash: [5, 5],
+          tension: 0.2
+        },
+        {
+          label: 'Avec Bagage Cabine',
+          data: cabinePrices,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.2,
+          fill: true
+        },
+        {
+          label: 'Avec Bagage en Soute (1)',
+          data: soutePrices,
+          borderColor: '#f59e0b',
+          backgroundColor: 'rgba(245, 158, 11, 0.08)',
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.2,
+          fill: false
+        },
+        {
+          label: 'Avec 2 Bagages Soute',
+          data: soute2Prices,
+          borderColor: '#a855f7',
+          backgroundColor: 'rgba(168, 85, 247, 0.05)',
+          borderWidth: 2,
+          pointRadius: 2,
+          borderDash: [3, 3],
+          tension: 0.2,
+          hidden: true // masqué par défaut pour ne pas surcharger
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        x: {
+          grid: { color: gridColor },
+          ticks: { color: textColor, maxRotation: 45 }
+        },
+        y: {
+          grid: { color: gridColor },
+          ticks: { color: textColor, callback: v => v + ' €' }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return ` ${context.dataset.label} : ${context.raw} €`;
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // 2. Graphique Tranches d'anticipation
+  const bracketLabels = ["\u003e 180 j", "120-180 j", "90-120 j", "60-90 j", "30-60 j", "14-30 j", "\u003c 14 j"];
+  const bracketMedians = [184.4, 162.2, 143.7, 119.2, 131.0, null, null];
+  const bestWindow = "120-180 j";
+
+  const barColors = bracketLabels.map(l => l === bestWindow ? '#10b981' : '#3b82f6');
+
+  const ctxAnticipation = document.getElementById('anticipationChart').getContext('2d');
+  new Chart(ctxAnticipation, {
+    type: 'bar',
+    data: {
+      labels: bracketLabels,
+      datasets: [{
+        label: 'Prix médian (€)',
+        data: bracketMedians,
+        backgroundColor: barColors,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: textColor } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor, callback: v => v + ' €' } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `Médiane billet: ${ctx.raw} €` } }
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
