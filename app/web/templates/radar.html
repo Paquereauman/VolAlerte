@@ -187,7 +187,7 @@
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
             <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">{{ deal.effective_best_price }} €</span>
-            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">{% if deal.ota_trip_price < deal.display_price %}Trip ({{ deal.display_price }}€ Dir.){% else %}Direct{% endif %}</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">{% if deal.ota_trip_price < deal.display_price %}OTA ({{ deal.display_price }}€ Cie){% else %}Direct{% endif %}</span>
             {% if deal.tgv_cost_eur > 0 %}
             <div class="js-row-tgv-total" style="font-size: 0.71rem; color: #f59e0b; font-weight: 700;">
               Total Vol + TGV : {{ deal.total_with_tgv_eur }} €
@@ -195,11 +195,11 @@
             {% endif %}
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="{{ deal.google_booking_link }}" data-orig-href="{{ deal.google_booking_link }}" data-orig-dept="{{ deal.departure_code }}" target="_blank" class="btn btn-primary btn-sm js-row-google-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ {{ deal.effective_best_price }} €
             </a>
-            <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
-              Google
+            <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+              Trip
             </a>
           </td>
         </tr>
@@ -246,7 +246,7 @@
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            <span class="js-card-eff-price">{{ deal.effective_best_price }} €</span> <span style="font-size: 0.68rem; font-weight: 700;">{% if deal.ota_trip_price < deal.display_price %}Trip{% else %}Direct{% endif %}</span>
+            <span class="js-card-eff-price">{{ deal.effective_best_price }} €</span> <span class="js-card-dir-sub" style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted);">{% if deal.ota_trip_price < deal.display_price %}OTA ({{ deal.display_price }}€ Cie){% else %}Direct{% endif %}</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             {% if deal.tgv_cost_eur > 0 %}
@@ -356,11 +356,11 @@
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com
+      <a href="{{ deal.google_booking_link }}" data-orig-href="{{ deal.google_booking_link }}" data-orig-dept="{{ deal.departure_code }}" target="_blank" class="btn btn-primary btn-sm js-card-google-btn" style="flex: 1.25; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+        🎯 Google Flights ({{ deal.effective_best_price }} €)
       </a>
-      <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google Flights
+      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm js-card-trip-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+        ⚡ Trip.com
       </a>
       <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -462,11 +462,21 @@
     return Math.max(22, adjusted);
   }
 
-  function rewriteGoogleFlightsUrl(url, exactDate, newDeptCode) {
-    if (!url || url.indexOf("google.com/travel/flights") === -1) return url;
+  function rewriteGoogleFlightsUrl(el, exactDate, newDeptCode) {
+    if (!el) return "";
+    var origHref = el.getAttribute("data-orig-href") || el.getAttribute("href") || "";
+    if (!el.getAttribute("data-orig-href") && origHref) {
+      el.setAttribute("data-orig-href", origHref);
+    }
+    var origDept = el.getAttribute("data-orig-dept") || "";
+    if (!origHref || origHref.indexOf("google.com/travel/flights") === -1) return origHref;
+    // Conserver le lien /booking?tfs=...&tfu=... exact lorsque la date est 2026-11-15 et même aéroport
+    if (exactDate === "2026-11-15" && (!origDept || origDept === newDeptCode)) {
+      return origHref;
+    }
     try {
-      var m = url.match(/[?&]tfs=([^&]+)/);
-      if (!m) return url;
+      var m = origHref.match(/[?&]tfs=([^&]+)/);
+      if (!m) return origHref;
       var tfsB64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
       while (tfsB64.length % 4 !== 0) tfsB64 += "=";
       var bin = atob(tfsB64);
@@ -479,7 +489,7 @@
       var newTfs = btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
       return "https://www.google.com/travel/flights/search?tfs=" + newTfs + "&hl=fr&curr=EUR&gl=fr";
     } catch (e) {
-      return url;
+      return origHref;
     }
   }
 
@@ -668,7 +678,8 @@
           a.setAttribute("href", rewriteTripUrl(a.getAttribute("href"), exactDate, cDept));
         });
         cr.querySelectorAll('a[href*="google.com/travel/flights"]').forEach(function(a) {
-          a.setAttribute("href", rewriteGoogleFlightsUrl(a.getAttribute("href"), exactDate, cDept));
+          if (!a.getAttribute("data-orig-dept")) a.setAttribute("data-orig-dept", cDept);
+          a.setAttribute("href", rewriteGoogleFlightsUrl(a, exactDate, cDept));
         });
       });
 
@@ -709,6 +720,14 @@
 
       var effEl = card.querySelector(".js-card-eff-price");
       if (effEl) effEl.textContent = cardOta + " €";
+      var dirSubEl = card.querySelector(".js-card-dir-sub");
+      if (dirSubEl) {
+        dirSubEl.textContent = (cardOta < cardDir) ? ("OTA (" + cardDir + "€ Cie)") : "Direct";
+      }
+      var cardGoogleBtn = card.querySelector(".js-card-google-btn");
+      if (cardGoogleBtn) {
+        cardGoogleBtn.textContent = "🎯 Google Flights (" + cardOta + " €)";
+      }
       var tgvTotEl = card.querySelector(".js-card-tgv-total");
       if (tgvTotEl) tgvTotEl.textContent = cardTotalTgv + " €";
       var deptEl = card.querySelector(".js-card-dept-code");
@@ -734,7 +753,7 @@
         a.setAttribute("href", rewriteTripUrl(a.getAttribute("href"), exactDate, cardDept));
       });
       card.querySelectorAll('a[href*="google.com/travel/flights"]').forEach(function(a) {
-        a.setAttribute("href", rewriteGoogleFlightsUrl(a.getAttribute("href"), exactDate, cardDept));
+        a.setAttribute("href", rewriteGoogleFlightsUrl(a, exactDate, cardDept));
       });
       card.querySelectorAll('a[href*="skyscanner"]').forEach(function(a) {
         a.setAttribute("href", rewriteSkyUrl(a.getAttribute("href"), exactDate, cardDept));
@@ -762,7 +781,7 @@
         if (effSpan) effSpan.textContent = info.ota + " €";
         var dirSpan = row.querySelector(".js-row-dir-label");
         if (dirSpan) {
-          dirSpan.textContent = (info.ota < info.dir) ? ("Trip (" + info.dir + "€ Dir.)") : "Direct";
+          dirSpan.textContent = (info.ota < info.dir) ? ("OTA (" + info.dir + "€ Cie)") : "Direct";
         }
         var tgvDiv = row.querySelector(".js-row-tgv-total");
         if (tgvDiv) {
@@ -776,14 +795,14 @@
         var airSpan = row.querySelector(".js-row-airline");
         if (airSpan && info.airline) airSpan.textContent = info.airline;
 
-        var tripBtn = row.querySelector(".js-row-trip-btn");
-        if (tripBtn) {
-          tripBtn.textContent = "⚡ " + info.ota + " €";
-          tripBtn.setAttribute("href", rewriteTripUrl(tripBtn.getAttribute("href"), exactDate, info.dept));
-        }
         var gBtn = row.querySelector(".js-row-google-btn");
         if (gBtn) {
-          gBtn.setAttribute("href", rewriteGoogleFlightsUrl(gBtn.getAttribute("href"), exactDate, info.dept));
+          gBtn.textContent = "⚡ " + info.ota + " €";
+          gBtn.setAttribute("href", rewriteGoogleFlightsUrl(gBtn, exactDate, info.dept));
+        }
+        var tripBtn = row.querySelector(".js-row-trip-btn");
+        if (tripBtn) {
+          tripBtn.setAttribute("href", rewriteTripUrl(tripBtn.getAttribute("href"), exactDate, info.dept));
         }
       }
     });

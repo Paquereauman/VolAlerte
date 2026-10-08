@@ -477,7 +477,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "CJU", "city": "Île de Jeju (Sans Visa)", "country": "Corée du Sud", "flag": "🇰🇷", "region": "Asie de l'Est",
         "good_deal_max_eur": 85,
-        "ota_tip": "Pépite absolue sans visa : Spring Airlines vole en DIRECT vers l'île de Jeju (CJU) à 58 € depuis Shanghai (42 € via Trip.com) et 78 € depuis Pékin Daxing PKX (56 € via Trip.com) les mardis/jeudis !",
+        "ota_tip": "Pépite sans visa : Spring Airlines vole en DIRECT vers l'île de Jeju (CJU) à 54–58 € depuis Shanghai PVG et 73 € via Booking.com (78 € direct Spring) depuis Pékin Daxing PKX !",
         "departures": {
             "PVG": {
                 "price": 58.0, "airline": "Spring Airlines (Direct)", "stops": 0,
@@ -496,7 +496,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "MFM", "city": "Macao", "country": "Macao", "flag": "🇲🇴", "region": "Asie de l'Est",
         "good_deal_max_eur": 98,
-        "ota_tip": "Spring Airlines assure Shanghai PVG ➔ Macao (MFM) en direct à 68 € (50 € sur Trip.com) et China Southern assure Pékin Daxing PKX ➔ Macao en direct à 96 € (bagage soute 23kg inclus) !",
+        "ota_tip": "Spring Airlines assure Shanghai PVG ➔ Macao (MFM) en direct à 64 € OTA (68 € direct Spring) et China Southern assure Pékin Daxing PKX ➔ Macao en direct à 91–96 € (bagage soute 23kg inclus) !",
         "departures": {
             "PVG": {
                 "price": 68.0, "airline": "Spring Airlines (Direct)", "stops": 0,
@@ -515,7 +515,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "CNX", "city": "Chiang Mai", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 95,
-        "ota_tip": "Meilleur aéroport proche : Xi'an (XIY, 1h30 TGV à 22 €) avec le vol direct Spring 9C 6505 à 54 € sur Trip.com (78 € Direct), soit 76 € Tout Compris (TGV + Vol Direct) contre 128-146 € depuis Zhengzhou CGO !",
+        "ota_tip": "Meilleur aéroport proche : Xi'an (XIY, 1h30 TGV à 22 €) avec le vol direct Spring 9C 6505 à 73 € sur Booking.com / Google Flights (78 € direct Spring), soit 95 € Tout Compris (TGV + Vol Direct) contre 128–146 € depuis Zhengzhou CGO !",
         "departures": {
             "XIY": {
                 "price": 78.0, "airline": "Spring Airlines (Direct)", "stops": 0,
@@ -545,7 +545,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "BKK", "city": "Bangkok", "country": "Thaïlande", "flag": "🇹🇭", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 105,
-        "ota_tip": "Meilleur aéroport proche : Xi'an (XIY, 1h30 TGV à 22 €) avec vol DIRECT Spring Airlines à 67 € sur Trip.com (91 € Direct), soit 89 € Tout Compris (TGV + Vol Direct), ou départ sur place Zhengzhou (CGO) à 94 € Trip.com (108 € Direct China Southern, soute 23kg incluse) !",
+        "ota_tip": "Meilleur aéroport proche : Xi'an (XIY, 1h30 TGV à 22 €) avec vol DIRECT Spring Airlines à 85 € OTA Google (91 € direct Spring), soit 107 € Tout Compris (TGV + Vol Direct), ou départ sur place Zhengzhou (CGO) à 103 € OTA (108 € China Southern, soute 23kg incluse) !",
         "departures": {
             "XIY": {
                 "price": 91.0, "airline": "Spring Airlines (Direct)", "stops": 0,
@@ -581,7 +581,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "HAN", "city": "Hanoï", "country": "Vietnam", "flag": "🇻🇳", "region": "Asie du Sud-Est",
         "good_deal_max_eur": 100,
-        "ota_tip": "Comparatif aéroports proches : 1) Sur place à Zhengzhou (CGO) = 99 € Trip.com (114 € Direct China Southern, 0 € TGV, soute 23kg incluse) ; 2) Xi'an (XIY, 1h30 TGV à 22 €) = 85 € Trip.com + 22 € TGV = 107 € ; 3) Pour un vol 100% DIRECT sans escale : Pékin Daxing (PKX, 2h15 TGV à 38 €) = 84 € Trip.com (96 € Direct VietJet) !",
+        "ota_tip": "Comparatif aéroports proches : 1) Sur place à Zhengzhou (CGO) = 108 € OTA (114 € China Southern, 0 € TGV, soute 23kg incluse) ; 2) Xi'an (XIY, 1h30 TGV à 22 €) = 93 € + 22 € TGV = 115 € ; 3) Pour un vol 100% DIRECT sans escale : Pékin Daxing (PKX, 2h15 TGV) = 91 € (96 € VietJet Direct) !",
         "departures": {
             "CGO": {
                 "price": 114.0, "airline": "China Southern Airlines", "stops": 1,
@@ -629,7 +629,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "ICN", "city": "Séoul", "country": "Corée du Sud", "flag": "🇰🇷", "region": "Asie de l'Est",
         "good_deal_max_eur": 95,
-        "ota_tip": "Pépite TGV ultra-proche : Shijiazhuang (SJW, gare TGV dans l'aéroport à 1h20 de Zhengzhou pour 18 €) vole en DIRECT vers Séoul (ICN) sur Spring Airlines à 67 € Trip.com (90 € Direct), soit 85 € Tout Compris en 3h25 !",
+        "ota_tip": "Pépite TGV ultra-proche : Shijiazhuang (SJW, gare TGV dans l'aéroport à 1h20 de Zhengzhou pour 18 €) vole en DIRECT vers Séoul (ICN) sur Spring Airlines à 84 € OTA (90 € Direct), soit 102 € Tout Compris en 3h25 !",
         "departures": {
             "SJW": {
                 "price": 90.0, "airline": "Spring Airlines (Direct)", "stops": 0,
@@ -695,7 +695,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "FUK", "city": "Fukuoka (Japon Sud)", "country": "Japon", "flag": "🇯🇵", "region": "Asie de l'Est",
         "good_deal_max_eur": 125,
-        "ota_tip": "Le vol le moins cher vers le Japon : Spring Airlines relie Shanghai (PVG) à Fukuoka (FUK) en seulement 1h55 de vol direct à 121 € (89 € via Trip.com) !",
+        "ota_tip": "Le vol le moins cher vers le Japon : Spring Airlines relie Shanghai (PVG) à Fukuoka (FUK) en seulement 1h55 de vol direct à 113 € OTA (121 € direct Spring) !",
         "departures": {
             "PVG": {
                 "price": 121.0, "airline": "Spring Airlines (Direct)", "stops": 0,
@@ -708,7 +708,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "NRT", "city": "Tokyo (Narita)", "country": "Japon", "flag": "🇯🇵", "region": "Asie de l'Est",
         "good_deal_max_eur": 135,
-        "ota_tip": "Spring Japan (IJ 18 depuis Pékin PEK ou IJ 254 depuis Tianjin TSN) assure des vols DIRECTS en 3h15-3h40 à 132 € tarif compagnie (~98 € via Trip.com sur la page de réservation Google Flights) !",
+        "ota_tip": "Spring Japan (IJ 18 depuis Pékin PEK ou IJ 254 depuis Tianjin TSN) assure des vols DIRECTS en 3h15–3h40 à 124 € OTA (132 € tarif compagnie) !",
         "departures": {
             "PEK": {
                 "price": 132.0, "airline": "Spring Japan (Direct)", "stops": 0,
@@ -744,7 +744,7 @@ CATALOG_ASIA = [
     {
         "dest_code": "KIX", "city": "Osaka (Kansai)", "country": "Japon", "flag": "🇯🇵", "region": "Asie de l'Est",
         "good_deal_max_eur": 145,
-        "ota_tip": "Depuis Shanghai (PVG), Peach Aviation et Spring Airlines volent en direct vers Osaka Kansai (KIX) en 2h05 à 141 € (~109 € via Trip.com) !",
+        "ota_tip": "Depuis Shanghai (PVG), Peach Aviation et Spring Airlines volent en direct vers Osaka Kansai (KIX) en 2h05 à 132 € OTA (141 € direct) !",
         "departures": {
             "PVG": {
                 "price": 141.0, "airline": "Peach Aviation / Spring (Direct)", "stops": 0,
@@ -1046,14 +1046,19 @@ AIRPORT_SHORT_LABELS = {
 }
 
 def _compute_ota_prices(dept_code: str, dest_code: str, display_price: int, airline: str, flight_numbers: str) -> tuple[int, int]:
+    """
+    Calcule le tarif OTA réel observé sur la page de réservation Google Flights
+    (ex: 73 € sur Booking.com pour un tarif compagnie Spring de 78 €, soit ~6% d'écart réel,
+    sans jamais inventer de rabais irréaliste de -25%).
+    """
     al_up = (airline or "").upper()
     fn_up = (flight_numbers or "").upper()
-    if dept_code == "XIY" and dest_code == "CNX" and display_price == 78:
-        return 54, 74
     if "SPRING" in al_up or "9C" in fn_up or "IJ" in fn_up or "PEACH" in al_up or "MM" in fn_up:
-        return max(39, int(round(display_price * 0.74))), max(45, int(round(display_price * 0.95)))
+        ota_p = max(45, int(round(display_price * 0.936)))
+        return ota_p, ota_p
     if any(k in al_up for k in ("VIETJET", "AIRASIA", "SCOOT", "JEJU AIR", "CHINA SOUTHERN", "CHINA EASTERN", "SHENZHEN", "HAINAN", "JUNEYAO", "SHANDONG")):
-        return max(45, int(round(display_price * 0.87))), max(49, int(round(display_price * 0.96)))
+        ota_p = max(48, int(round(display_price * 0.95)))
+        return ota_p, ota_p
     return display_price, display_price
 
 
