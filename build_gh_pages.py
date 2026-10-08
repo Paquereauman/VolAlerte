@@ -46,7 +46,7 @@ def rewrite_links_for_gh_pages(html: str) -> str:
     return html
 
 
-RADAR_CLIENT_FILTER_JS = """
+RADAR_CLIENT_FILTER_JS = r"""
 <script>
 // Moteur de filtrage interactif instantané pour GitHub Pages (https://paquereauman.github.io/VolAlerte/radar/)
 (function() {
