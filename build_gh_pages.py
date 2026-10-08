@@ -349,7 +349,7 @@ def _ensure_france_tracked_routes():
                         "INSERT INTO price_observations (route_id, source, date_vol, date_releve, jours_anticipation, prix_billet_eur, compagnie, escales, fourchette_basse, fourchette_haute, duree_totale_minutes, duree_escale_max_minutes, escales_details, horaires_vol, prix_cabine_eur, prix_soute_eur) VALUES (?, 'Google Flights', ?, ?, ?, ?, ?, 1, ?, ?, ?, 160, ?, ?, ?, ?)",
                         (rid, d_vol, d_rel, 60 + days_ago, p, comp, base_p - 25, base_p + 55, dur_m, esc_det, sched, p, p)
                     )
-                print(f"[OK] Route ajoutée au suivi : {orig} ➔ {dest} (id={rid})")
+                print(f"[OK] Route ajoutee au suivi : {orig} -> {dest} (id={rid})")
         conn.commit()
 
 
