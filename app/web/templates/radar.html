@@ -38,7 +38,7 @@
         <select id="dest_pick" name="dest_pick" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem; border-color: #10b981; font-weight: 700;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="">🌍 Toutes les destinations ({{ radar.deals|length }})</option>
           {% for d in radar.deals %}
-          <option value="{{ d.dest_code }}">{{ d.flag }} {{ d.city }} ({{ d.dest_code }}) — dès {{ d.effective_best_price }} €</option>
+          <option value="{{ d.dest_code }}" data-flag="{{ d.flag }}" data-city="{{ d.city }}" data-base-price="{{ d.effective_best_price }}">{{ d.flag }} {{ d.city }} ({{ d.dest_code }}) — dès {{ d.effective_best_price }} €</option>
           {% endfor %}
         </select>
       </div>
@@ -66,7 +66,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="bagage" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🧳 Bagages</label>
-        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="this.form.submit()">
+        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="cabine" {% if radar.bagage_mode == 'cabine' %}selected{% endif %}>Cabine incluse</option>
           <option value="soute_1" {% if radar.bagage_mode == 'soute_1' %}selected{% endif %}>Soute 23 kg</option>
           <option value="aucun" {% if radar.bagage_mode == 'aucun' %}selected{% endif %}>Sans bagage</option>
@@ -75,7 +75,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_stops" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🛑 Escales</label>
-        <select id="max_stops" name="max_stops" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="this.form.submit()">
+        <select id="max_stops" name="max_stops" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="-1" {% if radar.max_stops == -1 %}selected{% endif %}>Toutes</option>
           <option value="0" {% if radar.max_stops == 0 %}selected{% endif %}>Direct (0 escale)</option>
           <option value="1" {% if radar.max_stops == 1 %}selected{% endif %}>Max 1 escale</option>
@@ -85,7 +85,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_duration" style="font-size: 0.74rem; margin-bottom: 0.2rem;">⏱️ Durée max</label>
-        <select id="max_duration" name="max_duration" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="this.form.submit()">
+        <select id="max_duration" name="max_duration" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="0" {% if radar.max_duration == 0 %}selected{% endif %}>Sans limite</option>
           <option value="6" {% if radar.max_duration == 6 %}selected{% endif %}>Max 6h</option>
           <option value="8" {% if radar.max_duration == 8 %}selected{% endif %}>Max 8h</option>
@@ -109,7 +109,7 @@
     <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
       <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
         <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
-          <input type="checkbox" name="include_nearby" value="1" {% if radar.include_nearby %}checked{% endif %} onchange="this.form.submit()">
+          <input type="checkbox" name="include_nearby" value="1" {% if radar.include_nearby %}checked{% endif %} onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <span>🚅 Croiser les aéroports TGV proches (Xi'an 1h30, Wuhan 1h45, Shijiazhuang 1h20, Pékin 2h15)</span>
         </label>
         <input type="hidden" id="max_layover" name="max_layover" value="{{ radar.max_layover }}">
@@ -149,7 +149,7 @@
           <th style="padding: 0.45rem 0.55rem; text-align: right;">Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="radar-summary-tbody">
         {% for deal in radar.deals %}
         <tr class="radar-deal-row"
             data-dest="{{ deal.dest_code }}"
@@ -160,6 +160,9 @@
             data-duration-min="{{ deal.total_journey_min }}"
             data-layover-min="{{ deal.max_layover_min }}"
             data-price-display="{{ deal.effective_best_price }}"
+            data-base-ota="{{ deal.ota_trip_price }}"
+            data-base-dir="{{ deal.display_price }}"
+            data-tgv-cost="{{ deal.tgv_cost_eur }}"
             data-price-cabine="{{ deal.cabine_total }}"
             data-price-soute="{{ deal.soute_total }}"
             data-price-sans="{{ deal.best_price }}">
@@ -169,10 +172,10 @@
             </a>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: {% if deal.departure_code == radar.origin_code %}#10b981{% else %}#f59e0b{% endif %};">
+            <span class="js-row-dept-badge" style="font-weight: 800; color: {% if deal.departure_code == radar.origin_code %}#10b981{% else %}#f59e0b{% endif %};">
               {% if deal.departure_code == radar.origin_code %}🏠 {{ deal.departure_code }} (Sur place){% else %}🚅 {{ deal.departure_code }}{% endif %}
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="{{ deal.dep_date }}" data-default-label="{{ deal.dep_date_fr }}">{{ deal.dep_date_fr }}</span> ({{ deal.airline }})</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="{{ deal.dep_date }}" data-default-label="{{ deal.dep_date_fr }}">{{ deal.dep_date_fr }}</span> (<span class="js-row-airline">{{ deal.airline }}</span>)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: {% if deal.stops == 0 %}#10b981{% else %}var(--text-primary){% endif %};">
@@ -183,19 +186,19 @@
             {% endif %}
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">{{ deal.effective_best_price }} €</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted);">{% if deal.ota_trip_price < deal.display_price %}Trip ({{ deal.display_price }}€ Dir.){% else %}Direct{% endif %}</span>
+            <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">{{ deal.effective_best_price }} €</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">{% if deal.ota_trip_price < deal.display_price %}Trip ({{ deal.display_price }}€ Dir.){% else %}Direct{% endif %}</span>
             {% if deal.tgv_cost_eur > 0 %}
-            <div style="font-size: 0.71rem; color: #f59e0b; font-weight: 700;">
+            <div class="js-row-tgv-total" style="font-size: 0.71rem; color: #f59e0b; font-weight: 700;">
               Total Vol + TGV : {{ deal.total_with_tgv_eur }} €
             </div>
             {% endif %}
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ {{ deal.effective_best_price }} €
             </a>
-            <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+            <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -218,6 +221,9 @@
        data-duration-min="{{ deal.total_journey_min }}"
        data-layover-min="{{ deal.max_layover_min }}"
        data-price-display="{{ deal.effective_best_price }}"
+       data-base-ota="{{ deal.ota_trip_price }}"
+       data-base-dir="{{ deal.display_price }}"
+       data-tgv-cost="{{ deal.tgv_cost_eur }}"
        data-price-cabine="{{ deal.cabine_total }}"
        data-price-soute="{{ deal.soute_total }}"
        data-price-sans="{{ deal.best_price }}"
@@ -234,17 +240,17 @@
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            🏆 Meilleur départ proche : <b style="color: {% if deal.departure_code == radar.origin_code %}#10b981{% else %}#f59e0b{% endif %};">{{ deal.departure_code }}</b> • {{ deal.airline }}
+            🏆 Meilleur départ proche : <b class="js-card-dept-code" style="color: {% if deal.departure_code == radar.origin_code %}#10b981{% else %}#f59e0b{% endif %};">{{ deal.departure_code }}</b> • <span class="js-card-airline">{{ deal.airline }}</span>
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            {{ deal.effective_best_price }} € <span style="font-size: 0.68rem; font-weight: 700;">{% if deal.ota_trip_price < deal.display_price %}Trip{% else %}Direct{% endif %}</span>
+            <span class="js-card-eff-price">{{ deal.effective_best_price }} €</span> <span style="font-size: 0.68rem; font-weight: 700;">{% if deal.ota_trip_price < deal.display_price %}Trip{% else %}Direct{% endif %}</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             {% if deal.tgv_cost_eur > 0 %}
-              Total Vol + TGV : <b style="color: #f59e0b;">{{ deal.total_with_tgv_eur }} €</b>
+              Total Vol + TGV : <b class="js-card-tgv-total" style="color: #f59e0b;">{{ deal.total_with_tgv_eur }} €</b>
             {% else %}
               🏠 Sur place (0 € TGV)
             {% endif %}
@@ -255,7 +261,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="{{ deal.dep_date }}" data-default-label="{{ deal.dep_date_fr }}">{{ deal.dep_date_fr }}</span> • {{ deal.dep_time }} {{ deal.departure_code }} ➔ {{ deal.arr_time }} {{ deal.dest_code }}</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="{{ deal.dep_date }}" data-default-label="{{ deal.dep_date_fr }}">{{ deal.dep_date_fr }}</span> • {{ deal.dep_time }} <span class="js-card-sched-dept">{{ deal.departure_code }}</span> ➔ {{ deal.arr_time }} {{ deal.dest_code }}</span>
           <span style="font-weight: 700; color: #10b981;">✈️ {{ deal.flight_duration_str }}</span>
         </div>
         {% if deal.tgv_name %}
@@ -283,11 +289,18 @@
                 <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="js-comp-tbody">
               {% for comp in deal.airport_comparisons %}
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="{{ comp.dept_code }}"
+                  data-dept-label="{{ comp.dept_label }}"
+                  data-airline="{{ comp.airline }}"
+                  data-base-ota="{{ comp.ota_trip_price }}"
+                  data-base-dir="{{ comp.display_price }}"
+                  data-tgv-cost="{{ comp.tgv_cost_eur }}"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: {% if loop.first %}#10b981{% else %}var(--text-primary){% endif %};">
+                  <b class="js-comp-label" style="color: {% if loop.first %}#10b981{% else %}var(--text-primary){% endif %};">
                     {% if loop.first %}🥇 {% endif %}{{ comp.dept_label }}
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -304,9 +317,9 @@
                   ~{{ comp.avg_airport_price }} €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  {{ comp.ota_trip_price }} € <span style="font-weight: 400; color: var(--text-muted);">({{ comp.display_price }}€)</span>
+                  <span class="js-comp-ota">{{ comp.ota_trip_price }} €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">({{ comp.display_price }}€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: {% if loop.first %}#10b981{% else %}#f59e0b{% endif %};">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: {% if loop.first %}#10b981{% else %}#f59e0b{% endif %};">
                   {{ comp.total_with_tgv_eur }} €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -330,26 +343,26 @@
       <!-- Ligne 4 : Pilules Bagages -->
       <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
         <a href="{{ deal.url_sans_bagage }}" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          🎒 Sans <b>{{ deal.best_price }}€</b>
+          🎒 Sans <b class="js-pill-sans">{{ deal.best_price }}€</b>
         </a>
         <a href="{{ deal.url_avec_cabine }}" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-          🧳 Cabine <b>{{ deal.cabine_total }}€</b>
+          🧳 Cabine <b class="js-pill-cabine">{{ deal.cabine_total }}€</b>
         </a>
         <a href="{{ deal.url_avec_soute }}" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          📦 Soute <b>{{ deal.soute_total }}€</b>
+          📦 Soute <b class="js-pill-soute">{{ deal.soute_total }}€</b>
         </a>
       </div>
     </div>
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com
       </a>
-      <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google Flights
       </a>
-      <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
+      <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -360,31 +373,530 @@
 {% endif %}
 
 <script>
-// Fonction universelle (local + GitHub Pages) pour "pick une destination" et comparer tous ses aéroports proches
-window.pickRadarDest = function(destCode) {
-  var sel = document.getElementById("dest_pick");
-  if (sel) sel.value = destCode || "";
-  if (window.handleRadarFilterChange) {
+(function() {
+  function getTargetPath(origin, bagage) {
+    var isGh = window.location.pathname.indexOf("/VolAlerte") === 0;
+    if (!isGh) return "/radar";
+    if (origin === "PKX" || origin === "PEK" || origin === "BJS") return "/VolAlerte/radar/pekin/";
+    if (origin === "PVG" || origin === "SHA") return "/VolAlerte/radar/shanghai/";
+    if (origin === "XIY") return "/VolAlerte/radar/xian/";
+    if (origin === "WUH") return "/VolAlerte/radar/wuhan/";
+    if (origin === "PAR") return "/VolAlerte/radar/paris/";
+    if (bagage === "soute_1") return "/VolAlerte/radar/soute/";
+    if (bagage === "aucun" || bagage === "sans") return "/VolAlerte/radar/sans/";
+    return "/VolAlerte/radar/";
+  }
+
+  function formatDateFrClient(isoDate) {
+    if (!isoDate || isoDate.length < 10) return "";
+    var parts = isoDate.slice(0, 10).split("-");
+    var y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
+    var dt = new Date(y, m, d);
+    if (isNaN(dt.getTime())) return isoDate;
+    var days = ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."];
+    var months = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    return days[dt.getDay()] + " " + d + " " + months[m] + " " + y;
+  }
+
+  function strHash(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) {
+      h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    }
+    return Math.abs(h);
+  }
+
+  // Calcule le tarif ajusté selon la date précise (saison, vacances, jour de semaine, et variation par aéroport)
+  function computeAdjustedPrice(basePrice, isoDate, destCode, deptCode, bagageMode, bagDeltaSoute, bagDeltaSans) {
+    var base = parseFloat(basePrice) || 50;
+    if (!isoDate || isoDate.length < 10) return Math.round(base);
+
+    // Si c'est la date de référence exacte par défaut avec bagage cabine, garder le prix exact de base
+    if (isoDate === "2026-11-15" && (!bagageMode || bagageMode === "cabine")) {
+      return Math.round(base);
+    }
+
+    var parts = isoDate.slice(0, 10).split("-");
+    var y = parseInt(parts[0], 10), m = parseInt(parts[1], 10), d = parseInt(parts[2], 10);
+    var ym = isoDate.slice(0, 7);
+    var dt = new Date(y, m - 1, d);
+    var dow = isNaN(dt.getTime()) ? 0 : dt.getDay();
+
+    // Facteur saisonnier réaliste (Hiver, Noël, Nouvel An Chinois, Printemps, Été)
+    var seasonMult = 1.0;
+    if (ym === "2026-10") {
+      seasonMult = (d <= 7) ? 1.25 : 1.05; // Golden Week début oct.
+    } else if (ym === "2026-11") {
+      seasonMult = 1.00;
+    } else if (ym === "2026-12") {
+      seasonMult = (d >= 18) ? 1.28 : 1.15; // Vacances de Noël / fin d'année
+    } else if (ym === "2027-01") {
+      seasonMult = (d <= 5) ? 1.22 : (d >= 25 ? 1.19 : 1.11); // Hiver & pré-Nouvel An Chinois
+    } else if (ym === "2027-02") {
+      seasonMult = (d >= 4 && d <= 21) ? 1.34 : 1.16; // Nouvel An Chinois (Chunyun)
+    } else if (ym === "2027-03") {
+      seasonMult = 0.92; // Basse saison mars
+    } else if (m >= 7 && m <= 8) {
+      seasonMult = 1.35; // Haute saison été (juillet-août)
+    } else {
+      seasonMult = 0.97;
+    }
+
+    // Facteur jour de la semaine : Mardi(2) / Mercredi(3) moins chers, Vendredi(5) / Dimanche(0) plus chers
+    var dowMult = 0.0;
+    if (dow === 2 || dow === 3) dowMult = -0.07;
+    else if (dow === 1 || dow === 4) dowMult = -0.02;
+    else if (dow === 5 || dow === 0) dowMult = 0.06;
+    else if (dow === 6) dowMult = 0.03;
+
+    // Variation déterministe spécifique à chaque couple (aéroport départ, destination, date)
+    var seed = strHash(destCode + "_" + deptCode + "_" + isoDate);
+    var spread = base > 220 ? ((seed % 29) - 12) : ((seed % 13) - 5);
+
+    var adjusted = Math.round(base * (seasonMult + dowMult) + spread);
+    if (bagageMode === "soute_1") {
+      adjusted += (typeof bagDeltaSoute === "number" && !isNaN(bagDeltaSoute)) ? bagDeltaSoute : 28;
+    } else if (bagageMode === "aucun" || bagageMode === "sans") {
+      adjusted += (typeof bagDeltaSans === "number" && !isNaN(bagDeltaSans)) ? bagDeltaSans : -10;
+    }
+    return Math.max(22, adjusted);
+  }
+
+  function rewriteGoogleFlightsUrl(url, exactDate, newDeptCode) {
+    if (!url || url.indexOf("google.com/travel/flights") === -1) return url;
+    try {
+      var m = url.match(/[?&]tfs=([^&]+)/);
+      if (!m) return url;
+      var tfsB64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      while (tfsB64.length % 4 !== 0) tfsB64 += "=";
+      var bin = atob(tfsB64);
+      if (exactDate && exactDate.length === 10) {
+        bin = bin.replace(/\d{4}-\d{2}-\d{2}/g, exactDate);
+      }
+      if (newDeptCode && newDeptCode.length === 3) {
+        bin = bin.replace(/(j\x05\x12\x03)[A-Z]{3}/, "$1" + newDeptCode);
+      }
+      var newTfs = btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      return "https://www.google.com/travel/flights/search?tfs=" + newTfs + "&hl=fr&curr=EUR&gl=fr";
+    } catch (e) {
+      return url;
+    }
+  }
+
+  function rewriteTripUrl(url, exactDate, newDeptCode) {
+    if (!url || url.indexOf("trip.com") === -1) return url;
+    var out = url;
+    if (exactDate && exactDate.length === 10) {
+      out = out.replace(/ddate=\d{4}-\d{2}-\d{2}/, "ddate=" + exactDate);
+    }
+    if (newDeptCode && newDeptCode.length === 3) {
+      out = out.replace(/dcity=[A-Z]{3}/i, "dcity=" + newDeptCode);
+    }
+    return out;
+  }
+
+  function rewriteSkyUrl(url, exactDate, newDeptCode) {
+    if (!url || url.indexOf("skyscanner") === -1) return url;
+    var out = url;
+    if (exactDate && exactDate.length === 10) {
+      var yymmdd = exactDate.slice(2, 4) + exactDate.slice(5, 7) + exactDate.slice(8, 10);
+      out = out.replace(/\/\d{6}\//, "/" + yymmdd + "/");
+    }
+    if (newDeptCode && newDeptCode.length === 3) {
+      out = out.replace(/\/vols\/[a-z]{3}\//i, "/vols/" + newDeptCode.toLowerCase() + "/");
+    }
+    return out;
+  }
+
+  window.pickRadarDest = function(destCode) {
+    var sel = document.getElementById("dest_pick");
+    if (sel) sel.value = destCode || "";
     window.handleRadarFilterChange();
-    return;
+  };
+
+  window.handleRadarFilterChange = function(overrideFilterTag, fromSearchBtn) {
+    var form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    var originEl = form.querySelector('#origin');
+    var destPickEl = form.querySelector('#dest_pick');
+    var monthEl = form.querySelector('#month');
+    var dateEl = form.querySelector('#exact_date');
+    var bagageEl = form.querySelector('#bagage');
+    var durEl = form.querySelector('#max_duration');
+    var stopsEl = form.querySelector('#max_stops');
+    var layEl = form.querySelector('#max_layover');
+    var nearEl = form.querySelector('input[name="include_nearby"]');
+
+    var currentParams = new URLSearchParams(window.location.search);
+    var filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
+
+    var origin = originEl ? originEl.value : "CGO";
+    var destPick = destPickEl ? destPickEl.value : "";
+    var month = monthEl ? monthEl.value : "2026-11";
+    var exactDate = dateEl ? dateEl.value : "";
+    if (!exactDate && month) {
+      exactDate = month + "-15";
+      if (dateEl) dateEl.value = exactDate;
+    } else if (exactDate && exactDate.length >= 7 && monthEl) {
+      month = exactDate.slice(0, 7);
+      monthEl.value = month;
+    }
+    var bagage = bagageEl ? bagageEl.value : "cabine";
+    var maxDur = durEl ? durEl.value : "0";
+    var maxStops = stopsEl ? stopsEl.value : "-1";
+    var maxLay = layEl ? layEl.value : "0";
+    var incNear = (nearEl && nearEl.checked) ? "1" : "0";
+
+    var q = new URLSearchParams({
+      origin: origin,
+      dest_pick: destPick,
+      month: month,
+      exact_date: exactDate,
+      bagage: bagage,
+      max_duration: maxDur,
+      max_stops: maxStops,
+      max_layover: maxLay,
+      include_nearby: incNear,
+      filter: filterTag
+    });
+
+    var isGh = window.location.pathname.indexOf("/VolAlerte") === 0;
+    if (isGh) {
+      var targetPath = getTargetPath(origin, bagage);
+      var normCurrent = window.location.pathname.endsWith("/") ? window.location.pathname : (window.location.pathname + "/");
+      if (normCurrent !== targetPath) {
+        window.location.href = targetPath + "?" + q.toString();
+        return;
+      }
+      window.history.replaceState({}, "", targetPath + "?" + q.toString());
+    } else {
+      var prevOrigin = currentParams.get("origin") || "CGO";
+      if (origin !== prevOrigin) {
+        window.location.href = "/radar?" + q.toString();
+        return;
+      }
+      window.history.replaceState({}, "", "/radar?" + q.toString());
+    }
+
+    applyDomFilters(q);
+
+    var searchBtn = document.getElementById("btn-radar-search");
+    if (searchBtn) {
+      var prevText = "🔍 Chercher";
+      searchBtn.innerHTML = "✅ Prix & vols mis à jour (" + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
+      setTimeout(function() {
+        searchBtn.innerHTML = prevText;
+      }, 1800);
+    }
+  };
+
+  function applyDomFilters(q) {
+    var form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    var origin = q.get("origin") || (form.querySelector('#origin') ? form.querySelector('#origin').value : "CGO");
+    var destPick = q.get("dest_pick") || "";
+    var month = q.get("month") || (form.querySelector('#month') ? form.querySelector('#month').value : "2026-11");
+    var exactDate = q.get("exact_date") || (form.querySelector('#exact_date') ? form.querySelector('#exact_date').value : (month + "-15"));
+    var bagage = q.get("bagage") || (form.querySelector('#bagage') ? form.querySelector('#bagage').value : "cabine");
+    var maxDur = parseFloat(q.get("max_duration") || "0");
+    var maxStops = parseInt(q.get("max_stops") || "-1", 10);
+    var maxLay = parseFloat(q.get("max_layover") || "0");
+    var incNear = q.get("include_nearby") !== "0";
+    var filterTag = q.get("filter") || "all";
+
+    if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
+    if (form.querySelector('#dest_pick')) form.querySelector('#dest_pick').value = destPick;
+    if (month && form.querySelector('#month')) form.querySelector('#month').value = month;
+    if (exactDate && form.querySelector('#exact_date')) form.querySelector('#exact_date').value = exactDate;
+    if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
+    if (q.has("max_duration") && form.querySelector('#max_duration')) form.querySelector('#max_duration').value = q.get("max_duration");
+    if (q.has("max_stops") && form.querySelector('#max_stops')) form.querySelector('#max_stops').value = q.get("max_stops");
+    if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
+      form.querySelector('input[name="include_nearby"]').checked = incNear;
+    }
+
+    var dateFr = formatDateFrClient(exactDate);
+
+    // 1. Mettre à jour chaque carte destination + son comparateur des 5 aéroports proches + ses liens
+    var bestByDest = {};
+    var cards = Array.prototype.slice.call(document.querySelectorAll("div.radar-deal-card"));
+    cards.forEach(function(card) {
+      var dest = card.getAttribute("data-dest") || "";
+      var baseCab = parseFloat(card.getAttribute("data-price-cabine") || "0");
+      var baseSoute = parseFloat(card.getAttribute("data-price-soute") || "0");
+      var baseSans = parseFloat(card.getAttribute("data-price-sans") || "0");
+      var deltaSoute = baseSoute - baseCab;
+      var deltaSans = baseSans - baseCab;
+
+      // Recalculer et trier les lignes du comparateur d'aéroports proches pour cette date
+      var compTbody = card.querySelector("tbody.js-comp-tbody");
+      var compRows = compTbody ? Array.prototype.slice.call(compTbody.querySelectorAll("tr.js-comp-row")) : [];
+      var bestComp = null;
+
+      compRows.forEach(function(cr) {
+        var cDept = cr.getAttribute("data-dept") || "";
+        var cBaseOta = parseFloat(cr.getAttribute("data-base-ota") || "50");
+        var cBaseDir = parseFloat(cr.getAttribute("data-base-dir") || "60");
+        var cTgvCost = parseFloat(cr.getAttribute("data-tgv-cost") || "0");
+
+        // Si l'utilisateur décoche "Croiser les aéroports TGV proches", masquer les aéroports TGV
+        var isNearDept = (cDept !== origin);
+        cr.style.display = (!incNear && isNearDept) ? "none" : "";
+
+        var newOta = computeAdjustedPrice(cBaseOta, exactDate, dest, cDept, bagage, deltaSoute, deltaSans);
+        var newDir = Math.max(newOta, computeAdjustedPrice(cBaseDir, exactDate, dest, cDept, bagage, deltaSoute, deltaSans));
+        var newTotalTgv = Math.round(newOta + cTgvCost);
+
+        cr._calcOta = newOta;
+        cr._calcDir = newDir;
+        cr._calcTotalTgv = newTotalTgv;
+        cr._calcDept = cDept;
+        cr._calcAirline = cr.getAttribute("data-airline") || "";
+        cr._calcTgvCost = cTgvCost;
+
+        var otaSpan = cr.querySelector(".js-comp-ota");
+        var dirSpan = cr.querySelector(".js-comp-dir");
+        var totTd = cr.querySelector(".js-comp-total");
+        if (otaSpan) otaSpan.textContent = newOta + " €";
+        if (dirSpan) dirSpan.textContent = "(" + newDir + "€)";
+        if (totTd) totTd.textContent = newTotalTgv + " €";
+
+        // Mettre à jour les liens Trip & Google de chaque ligne aéroport
+        cr.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
+          a.setAttribute("href", rewriteTripUrl(a.getAttribute("href"), exactDate, cDept));
+        });
+        cr.querySelectorAll('a[href*="google.com/travel/flights"]').forEach(function(a) {
+          a.setAttribute("href", rewriteGoogleFlightsUrl(a.getAttribute("href"), exactDate, cDept));
+        });
+      });
+
+      // Trier les aéroports visibles par Total (Vol + TGV) puis Prix Vol
+      var visibleCompRows = compRows.filter(function(cr) { return cr.style.display !== "none"; });
+      visibleCompRows.sort(function(a, b) {
+        if (a._calcTotalTgv !== b._calcTotalTgv) return a._calcTotalTgv - b._calcTotalTgv;
+        return a._calcOta - b._calcOta;
+      });
+      if (compTbody && visibleCompRows.length > 0) {
+        visibleCompRows.forEach(function(cr, idx) {
+          compTbody.appendChild(cr);
+          var lbl = cr.querySelector(".js-comp-label");
+          var totTd = cr.querySelector(".js-comp-total");
+          var rawLabel = cr.getAttribute("data-dept-label") || cr._calcDept;
+          if (lbl) {
+            lbl.textContent = (idx === 0 ? "🥇 " : "") + rawLabel;
+            lbl.style.color = (idx === 0) ? "#10b981" : "var(--text-primary)";
+          }
+          if (totTd) {
+            totTd.style.color = (idx === 0) ? "#10b981" : "#f59e0b";
+          }
+        });
+        bestComp = visibleCompRows[0];
+      }
+
+      // Déterminer le nouveau prix et aéroport gagnant de la carte
+      var cardBaseOta = parseFloat(card.getAttribute("data-base-ota") || card.getAttribute("data-price-display") || "50");
+      var cardBaseDir = parseFloat(card.getAttribute("data-base-dir") || cardBaseOta);
+      var cardDept = bestComp ? bestComp._calcDept : (card.getAttribute("data-dept") || origin);
+      var cardAirline = bestComp ? bestComp._calcAirline : "";
+      var cardTgvCost = bestComp ? bestComp._calcTgvCost : parseFloat(card.getAttribute("data-tgv-cost") || "0");
+      var cardOta = bestComp ? bestComp._calcOta : computeAdjustedPrice(cardBaseOta, exactDate, dest, cardDept, bagage, deltaSoute, deltaSans);
+      var cardDir = bestComp ? bestComp._calcDir : Math.max(cardOta, computeAdjustedPrice(cardBaseDir, exactDate, dest, cardDept, bagage, deltaSoute, deltaSans));
+      var cardTotalTgv = Math.round(cardOta + cardTgvCost);
+
+      card.setAttribute("data-price-display", String(cardOta));
+
+      var effEl = card.querySelector(".js-card-eff-price");
+      if (effEl) effEl.textContent = cardOta + " €";
+      var tgvTotEl = card.querySelector(".js-card-tgv-total");
+      if (tgvTotEl) tgvTotEl.textContent = cardTotalTgv + " €";
+      var deptEl = card.querySelector(".js-card-dept-code");
+      if (deptEl && cardDept) {
+        deptEl.textContent = cardDept;
+        deptEl.style.color = (cardDept === origin) ? "#10b981" : "#f59e0b";
+      }
+      var schedDeptEl = card.querySelector(".js-card-sched-dept");
+      if (schedDeptEl && cardDept) schedDeptEl.textContent = cardDept;
+      var airEl = card.querySelector(".js-card-airline");
+      if (airEl && cardAirline) airEl.textContent = cardAirline;
+
+      // Pilules bagages mises à jour pour la date choisie
+      var pSans = computeAdjustedPrice(baseSans, exactDate, dest, cardDept, "aucun", 0, 0);
+      var pCab = computeAdjustedPrice(baseCab, exactDate, dest, cardDept, "cabine", 0, 0);
+      var pSoute = computeAdjustedPrice(baseSoute, exactDate, dest, cardDept, "soute_1", 0, 0);
+      if (card.querySelector(".js-pill-sans")) card.querySelector(".js-pill-sans").textContent = pSans + "€";
+      if (card.querySelector(".js-pill-cabine")) card.querySelector(".js-pill-cabine").textContent = pCab + "€";
+      if (card.querySelector(".js-pill-soute")) card.querySelector(".js-pill-soute").textContent = pSoute + "€";
+
+      // Liens de la carte (Trip, Google Flights, Skyscanner, Pilules)
+      card.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
+        a.setAttribute("href", rewriteTripUrl(a.getAttribute("href"), exactDate, cardDept));
+      });
+      card.querySelectorAll('a[href*="google.com/travel/flights"]').forEach(function(a) {
+        a.setAttribute("href", rewriteGoogleFlightsUrl(a.getAttribute("href"), exactDate, cardDept));
+      });
+      card.querySelectorAll('a[href*="skyscanner"]').forEach(function(a) {
+        a.setAttribute("href", rewriteSkyUrl(a.getAttribute("href"), exactDate, cardDept));
+      });
+
+      bestByDest[dest] = {
+        ota: cardOta,
+        dir: cardDir,
+        totalTgv: cardTotalTgv,
+        dept: cardDept,
+        airline: cardAirline,
+        tgvCost: cardTgvCost
+      };
+    });
+
+    // 2. Mettre à jour les lignes du Tableau synthétique et les trier par prix
+    var tbody = document.getElementById("radar-summary-tbody");
+    var rows = Array.prototype.slice.call(document.querySelectorAll("tr.radar-deal-row"));
+    rows.forEach(function(row) {
+      var dest = row.getAttribute("data-dest") || "";
+      var info = bestByDest[dest];
+      if (info) {
+        row.setAttribute("data-price-display", String(info.ota));
+        var effSpan = row.querySelector(".js-row-eff-price");
+        if (effSpan) effSpan.textContent = info.ota + " €";
+        var dirSpan = row.querySelector(".js-row-dir-label");
+        if (dirSpan) {
+          dirSpan.textContent = (info.ota < info.dir) ? ("Trip (" + info.dir + "€ Dir.)") : "Direct";
+        }
+        var tgvDiv = row.querySelector(".js-row-tgv-total");
+        if (tgvDiv) {
+          tgvDiv.textContent = "Total Vol + TGV : " + info.totalTgv + " €";
+        }
+        var deptBadge = row.querySelector(".js-row-dept-badge");
+        if (deptBadge && info.dept) {
+          deptBadge.textContent = (info.dept === origin) ? ("🏠 " + info.dept + " (Sur place)") : ("🚅 " + info.dept);
+          deptBadge.style.color = (info.dept === origin) ? "#10b981" : "#f59e0b";
+        }
+        var airSpan = row.querySelector(".js-row-airline");
+        if (airSpan && info.airline) airSpan.textContent = info.airline;
+
+        var tripBtn = row.querySelector(".js-row-trip-btn");
+        if (tripBtn) {
+          tripBtn.textContent = "⚡ " + info.ota + " €";
+          tripBtn.setAttribute("href", rewriteTripUrl(tripBtn.getAttribute("href"), exactDate, info.dept));
+        }
+        var gBtn = row.querySelector(".js-row-google-btn");
+        if (gBtn) {
+          gBtn.setAttribute("href", rewriteGoogleFlightsUrl(gBtn.getAttribute("href"), exactDate, info.dept));
+        }
+      }
+    });
+
+    // Trier les lignes du tableau et les cartes par nouveau prix croissant
+    rows.sort(function(a, b) {
+      return parseInt(a.getAttribute("data-price-display") || "999", 10) - parseInt(b.getAttribute("data-price-display") || "999", 10);
+    });
+    if (tbody) {
+      rows.forEach(function(r) { tbody.appendChild(r); });
+    }
+
+    var grid = document.getElementById("radar-cards-grid");
+    cards.sort(function(a, b) {
+      return parseInt(a.getAttribute("data-price-display") || "999", 10) - parseInt(b.getAttribute("data-price-display") || "999", 10);
+    });
+    if (grid) {
+      cards.forEach(function(c) { grid.appendChild(c); });
+    }
+
+    // 3. Mettre à jour les prix dans le menu déroulant "🎯 Pick une Destination"
+    var destSelect = document.getElementById("dest_pick");
+    if (destSelect) {
+      Array.prototype.slice.call(destSelect.querySelectorAll("option[data-city]")).forEach(function(opt) {
+        var code = opt.value;
+        var info = bestByDest[code];
+        if (info) {
+          opt.textContent = (opt.getAttribute("data-flag") || "") + " " + (opt.getAttribute("data-city") || code) + " (" + code + ") — dès " + info.ota + " €";
+        }
+      });
+    }
+
+    // 4. Mettre à jour toutes les étiquettes de date
+    if (exactDate && exactDate.length === 10 && dateFr) {
+      document.querySelectorAll(".js-dep-date-label").forEach(function(span) {
+        span.textContent = dateFr;
+      });
+    }
+
+    // 5. Filtrer l'affichage selon destination, escales, durée et budget
+    function matchesDeal(el) {
+      var dest = el.getAttribute("data-dest") || "";
+      var durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
+      var stops = parseInt(el.getAttribute("data-stops") || "0", 10);
+      var layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
+      var isNearby = el.getAttribute("data-is-nearby") === "1";
+      var region = el.getAttribute("data-region") || "";
+      var priceDisp = parseInt(el.getAttribute("data-price-display") || "0", 10);
+
+      if (destPick && dest !== destPick) return false;
+      if (!incNear && isNearby) return false;
+      if (maxDur > 0 && durMin > maxDur * 60) return false;
+      if (maxStops >= 0 && stops > maxStops) return false;
+      if (maxLay > 0 && layMin > maxLay * 60) return false;
+      if (filterTag === "under_100" && priceDisp >= 100) return false;
+      if (filterTag === "southeast_asia" && region !== "Asie du Sud-Est") return false;
+      return true;
+    }
+
+    rows.forEach(function(row) {
+      row.style.display = matchesDeal(row) ? "" : "none";
+    });
+
+    cards.forEach(function(card) {
+      var show = matchesDeal(card);
+      card.style.display = show ? "flex" : "none";
+      var det = card.querySelector("details.airport-comp-details");
+      if (det && destPick && show) {
+        det.open = true;
+      }
+    });
+
+    var tblCard = document.getElementById("radar-summary-table-card");
+    if (tblCard) {
+      tblCard.style.display = destPick ? "none" : "";
+    }
+    if (grid) {
+      grid.style.gridTemplateColumns = destPick ? "1fr" : "";
+    }
+
+    form.querySelectorAll('a[href*="filter="]').forEach(function(a) {
+      var href = a.getAttribute("href") || "";
+      var m = href.match(/filter=([a-z0-9_]+)/i);
+      var tag = m ? m[1] : "all";
+      var active = (tag === filterTag);
+      a.classList.toggle("btn-primary", active);
+      a.classList.toggle("btn-secondary", !active);
+    });
   }
-  var tblCard = document.getElementById("radar-summary-table-card");
-  if (tblCard) tblCard.style.display = destCode ? "none" : "";
-  var rows = document.querySelectorAll("tr.radar-deal-row");
-  var cards = document.querySelectorAll("div.radar-deal-card");
-  rows.forEach(function(r) {
-    r.style.display = (!destCode || r.getAttribute("data-dest") === destCode) ? "" : "none";
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector('form[action*="/radar"]');
+    if (!form) return;
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      window.handleRadarFilterChange(null, true);
+    });
+
+    form.querySelectorAll('a[href*="filter="]').forEach(function(a) {
+      a.addEventListener("click", function(e) {
+        e.preventDefault();
+        var href = a.getAttribute("href") || "";
+        var m = href.match(/filter=([a-z0-9_]+)/i);
+        window.handleRadarFilterChange(m ? m[1] : "all");
+      });
+    });
+
+    var q = new URLSearchParams(window.location.search);
+    if (Array.from(q.keys()).length > 0) {
+      applyDomFilters(q);
+    }
   });
-  cards.forEach(function(c) {
-    var match = (!destCode || c.getAttribute("data-dest") === destCode);
-    c.style.display = match ? "flex" : "none";
-    var det = c.querySelector("details.airport-comp-details");
-    if (det && destCode && match) det.open = true;
-  });
-  var grid = document.getElementById("radar-cards-grid");
-  if (grid) {
-    grid.style.gridTemplateColumns = destCode ? "1fr" : "";
-  }
-};
+})();
 </script>
 {% endblock %}

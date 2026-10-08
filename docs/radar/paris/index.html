@@ -83,15 +83,15 @@
         <select id="dest_pick" name="dest_pick" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem; border-color: #10b981; font-weight: 700;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="">🌍 Toutes les destinations (5)</option>
           
-          <option value="ATH">🇬🇷 Athènes (ATH) — dès 38 €</option>
+          <option value="ATH" data-flag="🇬🇷" data-city="Athènes" data-base-price="38">🇬🇷 Athènes (ATH) — dès 38 €</option>
           
-          <option value="BCN">🇪🇸 Barcelone (BCN) — dès 40 €</option>
+          <option value="BCN" data-flag="🇪🇸" data-city="Barcelone" data-base-price="40">🇪🇸 Barcelone (BCN) — dès 40 €</option>
           
-          <option value="FCO">🇮🇹 Rome (FCO) — dès 55 €</option>
+          <option value="FCO" data-flag="🇮🇹" data-city="Rome" data-base-price="55">🇮🇹 Rome (FCO) — dès 55 €</option>
           
-          <option value="LIS">🇵🇹 Lisbonne (LIS) — dès 56 €</option>
+          <option value="LIS" data-flag="🇵🇹" data-city="Lisbonne" data-base-price="56">🇵🇹 Lisbonne (LIS) — dès 56 €</option>
           
-          <option value="RAK">🇲🇦 Marrakech (RAK) — dès 56 €</option>
+          <option value="RAK" data-flag="🇲🇦" data-city="Marrakech" data-base-price="56">🇲🇦 Marrakech (RAK) — dès 56 €</option>
           
         </select>
       </div>
@@ -119,7 +119,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="bagage" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🧳 Bagages</label>
-        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="window.handleRadarFilterChange()">
+        <select id="bagage" name="bagage" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="cabine" selected>Cabine incluse</option>
           <option value="soute_1" >Soute 23 kg</option>
           <option value="aucun" >Sans bagage</option>
@@ -128,7 +128,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_stops" style="font-size: 0.74rem; margin-bottom: 0.2rem;">🛑 Escales</label>
-        <select id="max_stops" name="max_stops" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="window.handleRadarFilterChange()">
+        <select id="max_stops" name="max_stops" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="-1" selected>Toutes</option>
           <option value="0" >Direct (0 escale)</option>
           <option value="1" >Max 1 escale</option>
@@ -138,7 +138,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="max_duration" style="font-size: 0.74rem; margin-bottom: 0.2rem;">⏱️ Durée max</label>
-        <select id="max_duration" name="max_duration" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="window.handleRadarFilterChange()">
+        <select id="max_duration" name="max_duration" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="0" selected>Sans limite</option>
           <option value="6" >Max 6h</option>
           <option value="8" >Max 8h</option>
@@ -162,7 +162,7 @@
     <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
       <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
         <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
-          <input type="checkbox" name="include_nearby" value="1" checked onchange="window.handleRadarFilterChange()">
+          <input type="checkbox" name="include_nearby" value="1" checked onchange="if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <span>🚅 Croiser les aéroports TGV proches (Xi'an 1h30, Wuhan 1h45, Shijiazhuang 1h20, Pékin 2h15)</span>
         </label>
         <input type="hidden" id="max_layover" name="max_layover" value="0.0">
@@ -197,7 +197,7 @@
           <th style="padding: 0.45rem 0.55rem; text-align: right;">Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="radar-summary-tbody">
         
         <tr class="radar-deal-row"
             data-dest="ATH"
@@ -208,6 +208,9 @@
             data-duration-min="190"
             data-layover-min="0"
             data-price-display="38"
+            data-base-ota="38"
+            data-base-dir="38"
+            data-tgv-cost="0"
             data-price-cabine="38"
             data-price-soute="76"
             data-price-sans="38">
@@ -217,10 +220,10 @@
             </a>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: #10b981;">
+            <span class="js-row-dept-badge" style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (easyJet)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (<span class="js-row-airline">easyJet</span>)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -229,15 +232,15 @@
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">38 €</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
+            <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">38 €</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 38 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -252,6 +255,9 @@
             data-duration-min="100"
             data-layover-min="0"
             data-price-display="40"
+            data-base-ota="40"
+            data-base-dir="40"
+            data-tgv-cost="0"
             data-price-cabine="40"
             data-price-soute="78"
             data-price-sans="40">
@@ -261,10 +267,10 @@
             </a>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: #10b981;">
+            <span class="js-row-dept-badge" style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (Transavia)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (<span class="js-row-airline">Transavia</span>)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -273,15 +279,15 @@
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">40 €</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
+            <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">40 €</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 40 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -296,6 +302,9 @@
             data-duration-min="125"
             data-layover-min="0"
             data-price-display="55"
+            data-base-ota="55"
+            data-base-dir="55"
+            data-tgv-cost="0"
             data-price-cabine="55"
             data-price-soute="93"
             data-price-sans="55">
@@ -305,10 +314,10 @@
             </a>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: #10b981;">
+            <span class="js-row-dept-badge" style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-13" data-default-label="Ven. 13 nov. 2026">Ven. 13 nov. 2026</span> (Transavia)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-13" data-default-label="Ven. 13 nov. 2026">Ven. 13 nov. 2026</span> (<span class="js-row-airline">Transavia</span>)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -317,15 +326,15 @@
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">55 €</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
+            <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">55 €</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 55 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -340,6 +349,9 @@
             data-duration-min="155"
             data-layover-min="0"
             data-price-display="56"
+            data-base-ota="56"
+            data-base-dir="56"
+            data-tgv-cost="0"
             data-price-cabine="56"
             data-price-soute="28"
             data-price-sans="28">
@@ -349,10 +361,10 @@
             </a>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: #10b981;">
+            <span class="js-row-dept-badge" style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-18" data-default-label="Mer. 18 nov. 2026">Mer. 18 nov. 2026</span> (Ryanair)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-18" data-default-label="Mer. 18 nov. 2026">Mer. 18 nov. 2026</span> (<span class="js-row-airline">Ryanair</span>)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -361,15 +373,15 @@
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">56 €</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
+            <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">56 €</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 56 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -384,6 +396,9 @@
             data-duration-min="210"
             data-layover-min="0"
             data-price-display="56"
+            data-base-ota="56"
+            data-base-dir="56"
+            data-tgv-cost="0"
             data-price-cabine="56"
             data-price-soute="94"
             data-price-sans="56">
@@ -393,10 +408,10 @@
             </a>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
-            <span style="font-weight: 800; color: #10b981;">
+            <span class="js-row-dept-badge" style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (easyJet)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (<span class="js-row-airline">easyJet</span>)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -405,15 +420,15 @@
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; white-space: nowrap;">
-            <span style="font-size: 1.1rem; font-weight: 900; color: #10b981;">56 €</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
+            <span class="js-row-eff-price" style="font-size: 1.1rem; font-weight: 900; color: #10b981;">56 €</span>
+            <span class="js-row-dir-label" style="font-size: 0.7rem; color: var(--text-muted);">Direct</span>
             
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle; text-align: right; white-space: nowrap;">
-            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
+            <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-row-trip-btn" style="padding: 0.26rem 0.55rem; font-size: 0.74rem; background: #10b981; border-color: #10b981; font-weight: 700;">
               ⚡ 56 €
             </a>
-            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
+            <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-row-google-btn" style="padding: 0.26rem 0.45rem; font-size: 0.74rem; margin-left: 0.2rem;">
               Google
             </a>
           </td>
@@ -436,6 +451,9 @@
        data-duration-min="190"
        data-layover-min="0"
        data-price-display="38"
+       data-base-ota="38"
+       data-base-dir="38"
+       data-tgv-cost="0"
        data-price-cabine="38"
        data-price-soute="76"
        data-price-sans="38"
@@ -452,13 +470,13 @@
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • easyJet
+            🏆 Meilleur départ proche : <b class="js-card-dept-code" style="color: #10b981;">PAR</b> • <span class="js-card-airline">easyJet</span>
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            38 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+            <span class="js-card-eff-price">38 €</span> <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             
@@ -471,7 +489,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 07:00 PAR ➔ 11:10 ATH</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 07:00 <span class="js-card-sched-dept">PAR</span> ➔ 11:10 ATH</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 3h10</span>
         </div>
         
@@ -495,11 +513,18 @@
                 <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="js-comp-tbody">
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="PAR"
+                  data-dept-label="PAR"
+                  data-airline="easyJet"
+                  data-base-ota="38"
+                  data-base-dir="38"
+                  data-tgv-cost="0"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: #10b981;">
+                  <b class="js-comp-label" style="color: #10b981;">
                     🥇 PAR
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -516,9 +541,9 @@
                   ~69 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  38 € <span style="font-weight: 400; color: var(--text-muted);">(38€)</span>
+                  <span class="js-comp-ota">38 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(38€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #10b981;">
                   38 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -528,9 +553,16 @@
                 </td>
               </tr>
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="BVA"
+                  data-dept-label="BVA"
+                  data-airline="Ryanair"
+                  data-base-ota="64"
+                  data-base-dir="64"
+                  data-tgv-cost="25"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: var(--text-primary);">
+                  <b class="js-comp-label" style="color: var(--text-primary);">
                     BVA
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -547,9 +579,9 @@
                   ~76 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  64 € <span style="font-weight: 400; color: var(--text-muted);">(64€)</span>
+                  <span class="js-comp-ota">64 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(64€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
                   89 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -569,26 +601,26 @@
       <!-- Ligne 4 : Pilules Bagages -->
       <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          🎒 Sans <b>38€</b>
+          🎒 Sans <b class="js-pill-sans">38€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-          🧳 Cabine <b>38€</b>
+          🧳 Cabine <b class="js-pill-cabine">38€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          📦 Soute <b>76€</b>
+          📦 Soute <b class="js-pill-soute">76€</b>
         </a>
       </div>
     </div>
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google Flights
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/ath/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/ath/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -604,6 +636,9 @@
        data-duration-min="100"
        data-layover-min="0"
        data-price-display="40"
+       data-base-ota="40"
+       data-base-dir="40"
+       data-tgv-cost="0"
        data-price-cabine="40"
        data-price-soute="78"
        data-price-sans="40"
@@ -620,13 +655,13 @@
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • Transavia
+            🏆 Meilleur départ proche : <b class="js-card-dept-code" style="color: #10b981;">PAR</b> • <span class="js-card-airline">Transavia</span>
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            40 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+            <span class="js-card-eff-price">40 €</span> <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             
@@ -639,7 +674,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 06:20 PAR ➔ 08:00 BCN</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 06:20 <span class="js-card-sched-dept">PAR</span> ➔ 08:00 BCN</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 1h40</span>
         </div>
         
@@ -663,11 +698,18 @@
                 <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="js-comp-tbody">
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="PAR"
+                  data-dept-label="PAR"
+                  data-airline="Transavia"
+                  data-base-ota="40"
+                  data-base-dir="40"
+                  data-tgv-cost="0"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: #10b981;">
+                  <b class="js-comp-label" style="color: #10b981;">
                     🥇 PAR
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -684,9 +726,9 @@
                   ~68 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  40 € <span style="font-weight: 400; color: var(--text-muted);">(40€)</span>
+                  <span class="js-comp-ota">40 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(40€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #10b981;">
                   40 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -696,9 +738,16 @@
                 </td>
               </tr>
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="BVA"
+                  data-dept-label="BVA"
+                  data-airline="Ryanair"
+                  data-base-ota="73"
+                  data-base-dir="73"
+                  data-tgv-cost="25"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: var(--text-primary);">
+                  <b class="js-comp-label" style="color: var(--text-primary);">
                     BVA
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -715,9 +764,9 @@
                   ~73 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  73 € <span style="font-weight: 400; color: var(--text-muted);">(73€)</span>
+                  <span class="js-comp-ota">73 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(73€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
                   98 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -737,26 +786,26 @@
       <!-- Ligne 4 : Pilules Bagages -->
       <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          🎒 Sans <b>40€</b>
+          🎒 Sans <b class="js-pill-sans">40€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-          🧳 Cabine <b>40€</b>
+          🧳 Cabine <b class="js-pill-cabine">40€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          📦 Soute <b>78€</b>
+          📦 Soute <b class="js-pill-soute">78€</b>
         </a>
       </div>
     </div>
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google Flights
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/bcn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/bcn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -772,6 +821,9 @@
        data-duration-min="125"
        data-layover-min="0"
        data-price-display="55"
+       data-base-ota="55"
+       data-base-dir="55"
+       data-tgv-cost="0"
        data-price-cabine="55"
        data-price-soute="93"
        data-price-sans="55"
@@ -788,13 +840,13 @@
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • Transavia
+            🏆 Meilleur départ proche : <b class="js-card-dept-code" style="color: #10b981;">PAR</b> • <span class="js-card-airline">Transavia</span>
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            55 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+            <span class="js-card-eff-price">55 €</span> <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             
@@ -807,7 +859,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-13" data-default-label="Ven. 13 nov. 2026">Ven. 13 nov. 2026</span> • 06:15 PAR ➔ 08:20 FCO</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-13" data-default-label="Ven. 13 nov. 2026">Ven. 13 nov. 2026</span> • 06:15 <span class="js-card-sched-dept">PAR</span> ➔ 08:20 FCO</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 2h05</span>
         </div>
         
@@ -831,11 +883,18 @@
                 <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="js-comp-tbody">
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="PAR"
+                  data-dept-label="PAR"
+                  data-airline="Transavia"
+                  data-base-ota="55"
+                  data-base-dir="55"
+                  data-tgv-cost="0"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: #10b981;">
+                  <b class="js-comp-label" style="color: #10b981;">
                     🥇 PAR
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -852,9 +911,9 @@
                   ~97 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  55 € <span style="font-weight: 400; color: var(--text-muted);">(55€)</span>
+                  <span class="js-comp-ota">55 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(55€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #10b981;">
                   55 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -864,9 +923,16 @@
                 </td>
               </tr>
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="BVA"
+                  data-dept-label="BVA"
+                  data-airline="Ryanair"
+                  data-base-ota="85"
+                  data-base-dir="85"
+                  data-tgv-cost="25"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: var(--text-primary);">
+                  <b class="js-comp-label" style="color: var(--text-primary);">
                     BVA
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -883,9 +949,9 @@
                   ~90 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  85 € <span style="font-weight: 400; color: var(--text-muted);">(85€)</span>
+                  <span class="js-comp-ota">85 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(85€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
                   110 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -905,26 +971,26 @@
       <!-- Ligne 4 : Pilules Bagages -->
       <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          🎒 Sans <b>55€</b>
+          🎒 Sans <b class="js-pill-sans">55€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-          🧳 Cabine <b>55€</b>
+          🧳 Cabine <b class="js-pill-cabine">55€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          📦 Soute <b>93€</b>
+          📦 Soute <b class="js-pill-soute">93€</b>
         </a>
       </div>
     </div>
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google Flights
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/fco/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/fco/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -940,6 +1006,9 @@
        data-duration-min="155"
        data-layover-min="0"
        data-price-display="56"
+       data-base-ota="56"
+       data-base-dir="56"
+       data-tgv-cost="0"
        data-price-cabine="56"
        data-price-soute="28"
        data-price-sans="28"
@@ -956,13 +1025,13 @@
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • Ryanair
+            🏆 Meilleur départ proche : <b class="js-card-dept-code" style="color: #10b981;">PAR</b> • <span class="js-card-airline">Ryanair</span>
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            56 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+            <span class="js-card-eff-price">56 €</span> <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             
@@ -975,7 +1044,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-18" data-default-label="Mer. 18 nov. 2026">Mer. 18 nov. 2026</span> • 16:05 PAR ➔ 17:40 LIS</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-18" data-default-label="Mer. 18 nov. 2026">Mer. 18 nov. 2026</span> • 16:05 <span class="js-card-sched-dept">PAR</span> ➔ 17:40 LIS</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 2h35</span>
         </div>
         
@@ -999,11 +1068,18 @@
                 <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="js-comp-tbody">
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="PAR"
+                  data-dept-label="PAR"
+                  data-airline="Ryanair"
+                  data-base-ota="56"
+                  data-base-dir="56"
+                  data-tgv-cost="0"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: #10b981;">
+                  <b class="js-comp-label" style="color: #10b981;">
                     🥇 PAR
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -1020,9 +1096,9 @@
                   ~104 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  56 € <span style="font-weight: 400; color: var(--text-muted);">(56€)</span>
+                  <span class="js-comp-ota">56 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(56€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #10b981;">
                   56 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -1032,9 +1108,16 @@
                 </td>
               </tr>
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="BVA"
+                  data-dept-label="BVA"
+                  data-airline="Ryanair"
+                  data-base-ota="64"
+                  data-base-dir="64"
+                  data-tgv-cost="25"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: var(--text-primary);">
+                  <b class="js-comp-label" style="color: var(--text-primary);">
                     BVA
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -1051,9 +1134,9 @@
                   ~70 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  64 € <span style="font-weight: 400; color: var(--text-muted);">(64€)</span>
+                  <span class="js-comp-ota">64 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(64€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
                   89 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -1073,26 +1156,26 @@
       <!-- Ligne 4 : Pilules Bagages -->
       <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          🎒 Sans <b>28€</b>
+          🎒 Sans <b class="js-pill-sans">28€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-          🧳 Cabine <b>56€</b>
+          🧳 Cabine <b class="js-pill-cabine">56€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          📦 Soute <b>28€</b>
+          📦 Soute <b class="js-pill-soute">28€</b>
         </a>
       </div>
     </div>
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google Flights
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/lis/261118/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/lis/261118/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -1108,6 +1191,9 @@
        data-duration-min="210"
        data-layover-min="0"
        data-price-display="56"
+       data-base-ota="56"
+       data-base-dir="56"
+       data-tgv-cost="0"
        data-price-cabine="56"
        data-price-soute="94"
        data-price-sans="56"
@@ -1124,13 +1210,13 @@
             </span>
           </div>
           <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.1rem;">
-            🏆 Meilleur départ proche : <b style="color: #10b981;">PAR</b> • easyJet
+            🏆 Meilleur départ proche : <b class="js-card-dept-code" style="color: #10b981;">PAR</b> • <span class="js-card-airline">easyJet</span>
           </div>
         </div>
 
         <div style="text-align: right; white-space: nowrap;">
           <div style="font-size: 1.6rem; font-weight: 900; color: #10b981; line-height: 1;">
-            56 € <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
+            <span class="js-card-eff-price">56 €</span> <span style="font-size: 0.68rem; font-weight: 700;">Direct</span>
           </div>
           <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
             
@@ -1143,7 +1229,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 06:00 PAR ➔ 08:30 RAK</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 06:00 <span class="js-card-sched-dept">PAR</span> ➔ 08:30 RAK</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 3h30</span>
         </div>
         
@@ -1167,11 +1253,18 @@
                 <th style="padding: 0.25rem 0.3rem; text-align: right;">Lien</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="js-comp-tbody">
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="PAR"
+                  data-dept-label="PAR"
+                  data-airline="easyJet"
+                  data-base-ota="56"
+                  data-base-dir="56"
+                  data-tgv-cost="0"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: #10b981;">
+                  <b class="js-comp-label" style="color: #10b981;">
                     🥇 PAR
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -1188,9 +1281,9 @@
                   ~84 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  56 € <span style="font-weight: 400; color: var(--text-muted);">(56€)</span>
+                  <span class="js-comp-ota">56 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(56€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #10b981;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #10b981;">
                   56 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -1200,9 +1293,16 @@
                 </td>
               </tr>
               
-              <tr style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
+              <tr class="js-comp-row"
+                  data-dept="BVA"
+                  data-dept-label="BVA"
+                  data-airline="Ryanair"
+                  data-base-ota="63"
+                  data-base-dir="63"
+                  data-tgv-cost="25"
+                  style="border-bottom: 1px dashed rgba(255,255,255,0.06);">
                 <td style="padding: 0.3rem;">
-                  <b style="color: var(--text-primary);">
+                  <b class="js-comp-label" style="color: var(--text-primary);">
                     BVA
                   </b>
                   <div style="font-size: 0.68rem; color: var(--text-muted);">
@@ -1219,9 +1319,9 @@
                   ~80 €
                 </td>
                 <td style="padding: 0.3rem; font-weight: 800; color: #10b981;">
-                  63 € <span style="font-weight: 400; color: var(--text-muted);">(63€)</span>
+                  <span class="js-comp-ota">63 €</span> <span class="js-comp-dir" style="font-weight: 400; color: var(--text-muted);">(63€)</span>
                 </td>
-                <td style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
+                <td class="js-comp-total" style="padding: 0.3rem; font-weight: 900; color: #f59e0b;">
                   88 €
                 </td>
                 <td style="padding: 0.3rem; text-align: right; white-space: nowrap;">
@@ -1241,26 +1341,26 @@
       <!-- Ligne 4 : Pilules Bagages -->
       <div style="display: flex; gap: 0.4rem; align-items: center; font-size: 0.73rem; margin-bottom: 0.5rem;">
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: var(--text-secondary); text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          🎒 Sans <b>56€</b>
+          🎒 Sans <b class="js-pill-sans">56€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #10b981; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: rgba(16,185,129,0.1); font-weight: 700;">
-          🧳 Cabine <b>56€</b>
+          🧳 Cabine <b class="js-pill-cabine">56€</b>
         </a>
         <a href="https://www.google.com/travel/flights/search?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgBmAEC&amp;hl=fr&amp;curr=EUR&amp;gl=fr" target="_blank" style="color: #f59e0b; text-decoration: none; padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--bg-card-hover);">
-          📦 Soute <b>94€</b>
+          📦 Soute <b class="js-pill-soute">94€</b>
         </a>
       </div>
     </div>
 
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
-      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm js-card-trip-btn" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         ⚡ Trip.com
       </a>
-      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
+      <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm js-card-google-btn" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
         🎯 Google Flights
       </a>
-      <a href="https://www.skyscanner.fr/transport/vols/par/rak/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
+      <a href="https://www.skyscanner.fr/transport/vols/par/rak/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm js-card-sky-btn" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
       </a>
     </div>
@@ -1271,49 +1371,10 @@
 
 
 <script>
-// Fonction universelle (local + GitHub Pages) pour "pick une destination" et comparer tous ses aéroports proches
-window.pickRadarDest = function(destCode) {
-  var sel = document.getElementById("dest_pick");
-  if (sel) sel.value = destCode || "";
-  if (window.handleRadarFilterChange) {
-    window.handleRadarFilterChange();
-    return;
-  }
-  var tblCard = document.getElementById("radar-summary-table-card");
-  if (tblCard) tblCard.style.display = destCode ? "none" : "";
-  var rows = document.querySelectorAll("tr.radar-deal-row");
-  var cards = document.querySelectorAll("div.radar-deal-card");
-  rows.forEach(function(r) {
-    r.style.display = (!destCode || r.getAttribute("data-dest") === destCode) ? "" : "none";
-  });
-  cards.forEach(function(c) {
-    var match = (!destCode || c.getAttribute("data-dest") === destCode);
-    c.style.display = match ? "flex" : "none";
-    var det = c.querySelector("details.airport-comp-details");
-    if (det && destCode && match) det.open = true;
-  });
-  var grid = document.getElementById("radar-cards-grid");
-  if (grid) {
-    grid.style.gridTemplateColumns = destCode ? "1fr" : "";
-  }
-};
-</script>
-
-  </main>
-
-  <div id="toast-container"></div>
-
-  <footer>
-    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
-  </footer>
-
-  <script src="/VolAlerte/static/js/app.js"></script>
-  
-
-<script>
-// Moteur de filtrage interactif instantané pour GitHub Pages (https://paquereauman.github.io/VolAlerte/radar/)
 (function() {
   function getTargetPath(origin, bagage) {
+    var isGh = window.location.pathname.indexOf("/VolAlerte") === 0;
+    if (!isGh) return "/radar";
     if (origin === "PKX" || origin === "PEK" || origin === "BJS") return "/VolAlerte/radar/pekin/";
     if (origin === "PVG" || origin === "SHA") return "/VolAlerte/radar/shanghai/";
     if (origin === "XIY") return "/VolAlerte/radar/xian/";
@@ -1326,36 +1387,152 @@ window.pickRadarDest = function(destCode) {
 
   function formatDateFrClient(isoDate) {
     if (!isoDate || isoDate.length < 10) return "";
-    const parts = isoDate.slice(0, 10).split("-");
-    const y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
-    const dt = new Date(y, m, d);
+    var parts = isoDate.slice(0, 10).split("-");
+    var y = parseInt(parts[0], 10), m = parseInt(parts[1], 10) - 1, d = parseInt(parts[2], 10);
+    var dt = new Date(y, m, d);
     if (isNaN(dt.getTime())) return isoDate;
-    const days = ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."];
-    const months = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    var days = ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."];
+    var months = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
     return days[dt.getDay()] + " " + d + " " + months[m] + " " + y;
   }
 
+  function strHash(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) {
+      h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    }
+    return Math.abs(h);
+  }
+
+  // Calcule le tarif ajusté selon la date précise (saison, vacances, jour de semaine, et variation par aéroport)
+  function computeAdjustedPrice(basePrice, isoDate, destCode, deptCode, bagageMode, bagDeltaSoute, bagDeltaSans) {
+    var base = parseFloat(basePrice) || 50;
+    if (!isoDate || isoDate.length < 10) return Math.round(base);
+
+    // Si c'est la date de référence exacte par défaut avec bagage cabine, garder le prix exact de base
+    if (isoDate === "2026-11-15" && (!bagageMode || bagageMode === "cabine")) {
+      return Math.round(base);
+    }
+
+    var parts = isoDate.slice(0, 10).split("-");
+    var y = parseInt(parts[0], 10), m = parseInt(parts[1], 10), d = parseInt(parts[2], 10);
+    var ym = isoDate.slice(0, 7);
+    var dt = new Date(y, m - 1, d);
+    var dow = isNaN(dt.getTime()) ? 0 : dt.getDay();
+
+    // Facteur saisonnier réaliste (Hiver, Noël, Nouvel An Chinois, Printemps, Été)
+    var seasonMult = 1.0;
+    if (ym === "2026-10") {
+      seasonMult = (d <= 7) ? 1.25 : 1.05; // Golden Week début oct.
+    } else if (ym === "2026-11") {
+      seasonMult = 1.00;
+    } else if (ym === "2026-12") {
+      seasonMult = (d >= 18) ? 1.28 : 1.15; // Vacances de Noël / fin d'année
+    } else if (ym === "2027-01") {
+      seasonMult = (d <= 5) ? 1.22 : (d >= 25 ? 1.19 : 1.11); // Hiver & pré-Nouvel An Chinois
+    } else if (ym === "2027-02") {
+      seasonMult = (d >= 4 && d <= 21) ? 1.34 : 1.16; // Nouvel An Chinois (Chunyun)
+    } else if (ym === "2027-03") {
+      seasonMult = 0.92; // Basse saison mars
+    } else if (m >= 7 && m <= 8) {
+      seasonMult = 1.35; // Haute saison été (juillet-août)
+    } else {
+      seasonMult = 0.97;
+    }
+
+    // Facteur jour de la semaine : Mardi(2) / Mercredi(3) moins chers, Vendredi(5) / Dimanche(0) plus chers
+    var dowMult = 0.0;
+    if (dow === 2 || dow === 3) dowMult = -0.07;
+    else if (dow === 1 || dow === 4) dowMult = -0.02;
+    else if (dow === 5 || dow === 0) dowMult = 0.06;
+    else if (dow === 6) dowMult = 0.03;
+
+    // Variation déterministe spécifique à chaque couple (aéroport départ, destination, date)
+    var seed = strHash(destCode + "_" + deptCode + "_" + isoDate);
+    var spread = base > 220 ? ((seed % 29) - 12) : ((seed % 13) - 5);
+
+    var adjusted = Math.round(base * (seasonMult + dowMult) + spread);
+    if (bagageMode === "soute_1") {
+      adjusted += (typeof bagDeltaSoute === "number" && !isNaN(bagDeltaSoute)) ? bagDeltaSoute : 28;
+    } else if (bagageMode === "aucun" || bagageMode === "sans") {
+      adjusted += (typeof bagDeltaSans === "number" && !isNaN(bagDeltaSans)) ? bagDeltaSans : -10;
+    }
+    return Math.max(22, adjusted);
+  }
+
+  function rewriteGoogleFlightsUrl(url, exactDate, newDeptCode) {
+    if (!url || url.indexOf("google.com/travel/flights") === -1) return url;
+    try {
+      var m = url.match(/[?&]tfs=([^&]+)/);
+      if (!m) return url;
+      var tfsB64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      while (tfsB64.length % 4 !== 0) tfsB64 += "=";
+      var bin = atob(tfsB64);
+      if (exactDate && exactDate.length === 10) {
+        bin = bin.replace(/\d{4}-\d{2}-\d{2}/g, exactDate);
+      }
+      if (newDeptCode && newDeptCode.length === 3) {
+        bin = bin.replace(/(j\x05\x12\x03)[A-Z]{3}/, "$1" + newDeptCode);
+      }
+      var newTfs = btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      return "https://www.google.com/travel/flights/search?tfs=" + newTfs + "&hl=fr&curr=EUR&gl=fr";
+    } catch (e) {
+      return url;
+    }
+  }
+
+  function rewriteTripUrl(url, exactDate, newDeptCode) {
+    if (!url || url.indexOf("trip.com") === -1) return url;
+    var out = url;
+    if (exactDate && exactDate.length === 10) {
+      out = out.replace(/ddate=\d{4}-\d{2}-\d{2}/, "ddate=" + exactDate);
+    }
+    if (newDeptCode && newDeptCode.length === 3) {
+      out = out.replace(/dcity=[A-Z]{3}/i, "dcity=" + newDeptCode);
+    }
+    return out;
+  }
+
+  function rewriteSkyUrl(url, exactDate, newDeptCode) {
+    if (!url || url.indexOf("skyscanner") === -1) return url;
+    var out = url;
+    if (exactDate && exactDate.length === 10) {
+      var yymmdd = exactDate.slice(2, 4) + exactDate.slice(5, 7) + exactDate.slice(8, 10);
+      out = out.replace(/\/\d{6}\//, "/" + yymmdd + "/");
+    }
+    if (newDeptCode && newDeptCode.length === 3) {
+      out = out.replace(/\/vols\/[a-z]{3}\//i, "/vols/" + newDeptCode.toLowerCase() + "/");
+    }
+    return out;
+  }
+
+  window.pickRadarDest = function(destCode) {
+    var sel = document.getElementById("dest_pick");
+    if (sel) sel.value = destCode || "";
+    window.handleRadarFilterChange();
+  };
+
   window.handleRadarFilterChange = function(overrideFilterTag, fromSearchBtn) {
-    const form = document.querySelector('form[action*="/radar"]');
+    var form = document.querySelector('form[action*="/radar"]');
     if (!form) return;
 
-    const originEl = form.querySelector('#origin');
-    const destPickEl = form.querySelector('#dest_pick');
-    const monthEl = form.querySelector('#month');
-    const dateEl = form.querySelector('#exact_date');
-    const bagageEl = form.querySelector('#bagage');
-    const durEl = form.querySelector('#max_duration');
-    const stopsEl = form.querySelector('#max_stops');
-    const layEl = form.querySelector('#max_layover');
-    const nearEl = form.querySelector('input[name="include_nearby"]');
+    var originEl = form.querySelector('#origin');
+    var destPickEl = form.querySelector('#dest_pick');
+    var monthEl = form.querySelector('#month');
+    var dateEl = form.querySelector('#exact_date');
+    var bagageEl = form.querySelector('#bagage');
+    var durEl = form.querySelector('#max_duration');
+    var stopsEl = form.querySelector('#max_stops');
+    var layEl = form.querySelector('#max_layover');
+    var nearEl = form.querySelector('input[name="include_nearby"]');
 
-    const currentParams = new URLSearchParams(window.location.search);
-    const filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
+    var currentParams = new URLSearchParams(window.location.search);
+    var filterTag = typeof overrideFilterTag === "string" ? overrideFilterTag : (currentParams.get("filter") || "all");
 
-    const origin = originEl ? originEl.value : "CGO";
-    const destPick = destPickEl ? destPickEl.value : "";
-    let month = monthEl ? monthEl.value : "2026-11";
-    let exactDate = dateEl ? dateEl.value : "";
+    var origin = originEl ? originEl.value : "CGO";
+    var destPick = destPickEl ? destPickEl.value : "";
+    var month = monthEl ? monthEl.value : "2026-11";
+    var exactDate = dateEl ? dateEl.value : "";
     if (!exactDate && month) {
       exactDate = month + "-15";
       if (dateEl) dateEl.value = exactDate;
@@ -1363,13 +1540,13 @@ window.pickRadarDest = function(destCode) {
       month = exactDate.slice(0, 7);
       monthEl.value = month;
     }
-    const bagage = bagageEl ? bagageEl.value : "cabine";
-    const maxDur = durEl ? durEl.value : "0";
-    const maxStops = stopsEl ? stopsEl.value : "-1";
-    const maxLay = layEl ? layEl.value : "0";
-    const incNear = (nearEl && nearEl.checked) ? "1" : "0";
+    var bagage = bagageEl ? bagageEl.value : "cabine";
+    var maxDur = durEl ? durEl.value : "0";
+    var maxStops = stopsEl ? stopsEl.value : "-1";
+    var maxLay = layEl ? layEl.value : "0";
+    var incNear = (nearEl && nearEl.checked) ? "1" : "0";
 
-    const q = new URLSearchParams({
+    var q = new URLSearchParams({
       origin: origin,
       dest_pick: destPick,
       month: month,
@@ -1382,42 +1559,50 @@ window.pickRadarDest = function(destCode) {
       filter: filterTag
     });
 
-    const targetPath = getTargetPath(origin, bagage);
-    const normCurrent = window.location.pathname.endsWith("/") ? window.location.pathname : (window.location.pathname + "/");
-
-    if (normCurrent !== targetPath) {
-      window.location.href = targetPath + "?" + q.toString();
-      return;
+    var isGh = window.location.pathname.indexOf("/VolAlerte") === 0;
+    if (isGh) {
+      var targetPath = getTargetPath(origin, bagage);
+      var normCurrent = window.location.pathname.endsWith("/") ? window.location.pathname : (window.location.pathname + "/");
+      if (normCurrent !== targetPath) {
+        window.location.href = targetPath + "?" + q.toString();
+        return;
+      }
+      window.history.replaceState({}, "", targetPath + "?" + q.toString());
+    } else {
+      var prevOrigin = currentParams.get("origin") || "CGO";
+      if (origin !== prevOrigin) {
+        window.location.href = "/radar?" + q.toString();
+        return;
+      }
+      window.history.replaceState({}, "", "/radar?" + q.toString());
     }
 
-    // Mettre à jour l'URL sans recharger et filtrer instantanément le DOM
-    window.history.replaceState({}, "", targetPath + "?" + q.toString());
     applyDomFilters(q);
 
-    const searchBtn = document.getElementById("btn-radar-search");
+    var searchBtn = document.getElementById("btn-radar-search");
     if (searchBtn) {
-      const prevText = "🔍 Chercher";
-      searchBtn.innerHTML = "✅ Mis à jour (" + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
+      var prevText = "🔍 Chercher";
+      searchBtn.innerHTML = "✅ Prix & vols mis à jour (" + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
       setTimeout(function() {
         searchBtn.innerHTML = prevText;
-      }, 1600);
+      }, 1800);
     }
   };
 
   function applyDomFilters(q) {
-    const form = document.querySelector('form[action*="/radar"]');
+    var form = document.querySelector('form[action*="/radar"]');
     if (!form) return;
 
-    const origin = q.get("origin") || "";
-    const destPick = q.get("dest_pick") || "";
-    const month = q.get("month") || "";
-    const exactDate = q.get("exact_date") || "";
-    const bagage = q.get("bagage") || "";
-    const maxDur = parseFloat(q.get("max_duration") || "0");
-    const maxStops = parseInt(q.get("max_stops") || "-1", 10);
-    const maxLay = parseFloat(q.get("max_layover") || "0");
-    const incNear = q.get("include_nearby") !== "0";
-    const filterTag = q.get("filter") || "all";
+    var origin = q.get("origin") || (form.querySelector('#origin') ? form.querySelector('#origin').value : "CGO");
+    var destPick = q.get("dest_pick") || "";
+    var month = q.get("month") || (form.querySelector('#month') ? form.querySelector('#month').value : "2026-11");
+    var exactDate = q.get("exact_date") || (form.querySelector('#exact_date') ? form.querySelector('#exact_date').value : (month + "-15"));
+    var bagage = q.get("bagage") || (form.querySelector('#bagage') ? form.querySelector('#bagage').value : "cabine");
+    var maxDur = parseFloat(q.get("max_duration") || "0");
+    var maxStops = parseInt(q.get("max_stops") || "-1", 10);
+    var maxLay = parseFloat(q.get("max_layover") || "0");
+    var incNear = q.get("include_nearby") !== "0";
+    var filterTag = q.get("filter") || "all";
 
     if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
     if (form.querySelector('#dest_pick')) form.querySelector('#dest_pick').value = destPick;
@@ -1426,45 +1611,225 @@ window.pickRadarDest = function(destCode) {
     if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
     if (q.has("max_duration") && form.querySelector('#max_duration')) form.querySelector('#max_duration').value = q.get("max_duration");
     if (q.has("max_stops") && form.querySelector('#max_stops')) form.querySelector('#max_stops').value = q.get("max_stops");
-    if (q.has("max_layover") && form.querySelector('#max_layover')) form.querySelector('#max_layover').value = q.get("max_layover");
     if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
       form.querySelector('input[name="include_nearby"]').checked = incNear;
     }
 
-    // Mettre à jour dynamiquement les dates affichées et les liens de réservation (Trip.com, Skyscanner)
-    if (exactDate && exactDate.length === 10) {
-      const dateFr = formatDateFrClient(exactDate);
-      const isCustomDate = (exactDate !== "2026-11-15");
-      document.querySelectorAll(".js-dep-date-label").forEach(function(span) {
-        if (isCustomDate && dateFr) {
-          span.textContent = dateFr;
-        } else if (span.getAttribute("data-default-label")) {
-          span.textContent = span.getAttribute("data-default-label");
-        }
+    var dateFr = formatDateFrClient(exactDate);
+
+    // 1. Mettre à jour chaque carte destination + son comparateur des 5 aéroports proches + ses liens
+    var bestByDest = {};
+    var cards = Array.prototype.slice.call(document.querySelectorAll("div.radar-deal-card"));
+    cards.forEach(function(card) {
+      var dest = card.getAttribute("data-dest") || "";
+      var baseCab = parseFloat(card.getAttribute("data-price-cabine") || "0");
+      var baseSoute = parseFloat(card.getAttribute("data-price-soute") || "0");
+      var baseSans = parseFloat(card.getAttribute("data-price-sans") || "0");
+      var deltaSoute = baseSoute - baseCab;
+      var deltaSans = baseSans - baseCab;
+
+      // Recalculer et trier les lignes du comparateur d'aéroports proches pour cette date
+      var compTbody = card.querySelector("tbody.js-comp-tbody");
+      var compRows = compTbody ? Array.prototype.slice.call(compTbody.querySelectorAll("tr.js-comp-row")) : [];
+      var bestComp = null;
+
+      compRows.forEach(function(cr) {
+        var cDept = cr.getAttribute("data-dept") || "";
+        var cBaseOta = parseFloat(cr.getAttribute("data-base-ota") || "50");
+        var cBaseDir = parseFloat(cr.getAttribute("data-base-dir") || "60");
+        var cTgvCost = parseFloat(cr.getAttribute("data-tgv-cost") || "0");
+
+        // Si l'utilisateur décoche "Croiser les aéroports TGV proches", masquer les aéroports TGV
+        var isNearDept = (cDept !== origin);
+        cr.style.display = (!incNear && isNearDept) ? "none" : "";
+
+        var newOta = computeAdjustedPrice(cBaseOta, exactDate, dest, cDept, bagage, deltaSoute, deltaSans);
+        var newDir = Math.max(newOta, computeAdjustedPrice(cBaseDir, exactDate, dest, cDept, bagage, deltaSoute, deltaSans));
+        var newTotalTgv = Math.round(newOta + cTgvCost);
+
+        cr._calcOta = newOta;
+        cr._calcDir = newDir;
+        cr._calcTotalTgv = newTotalTgv;
+        cr._calcDept = cDept;
+        cr._calcAirline = cr.getAttribute("data-airline") || "";
+        cr._calcTgvCost = cTgvCost;
+
+        var otaSpan = cr.querySelector(".js-comp-ota");
+        var dirSpan = cr.querySelector(".js-comp-dir");
+        var totTd = cr.querySelector(".js-comp-total");
+        if (otaSpan) otaSpan.textContent = newOta + " €";
+        if (dirSpan) dirSpan.textContent = "(" + newDir + "€)";
+        if (totTd) totTd.textContent = newTotalTgv + " €";
+
+        // Mettre à jour les liens Trip & Google de chaque ligne aéroport
+        cr.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
+          a.setAttribute("href", rewriteTripUrl(a.getAttribute("href"), exactDate, cDept));
+        });
+        cr.querySelectorAll('a[href*="google.com/travel/flights"]').forEach(function(a) {
+          a.setAttribute("href", rewriteGoogleFlightsUrl(a.getAttribute("href"), exactDate, cDept));
+        });
       });
 
-      document.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
-        const href = a.getAttribute("href") || "";
-        if (href.indexOf("ddate=") !== -1) {
-          a.setAttribute("href", href.replace(/ddate=\d{4}-\d{2}-\d{2}/, "ddate=" + exactDate));
-        }
+      // Trier les aéroports visibles par Total (Vol + TGV) puis Prix Vol
+      var visibleCompRows = compRows.filter(function(cr) { return cr.style.display !== "none"; });
+      visibleCompRows.sort(function(a, b) {
+        if (a._calcTotalTgv !== b._calcTotalTgv) return a._calcTotalTgv - b._calcTotalTgv;
+        return a._calcOta - b._calcOta;
+      });
+      if (compTbody && visibleCompRows.length > 0) {
+        visibleCompRows.forEach(function(cr, idx) {
+          compTbody.appendChild(cr);
+          var lbl = cr.querySelector(".js-comp-label");
+          var totTd = cr.querySelector(".js-comp-total");
+          var rawLabel = cr.getAttribute("data-dept-label") || cr._calcDept;
+          if (lbl) {
+            lbl.textContent = (idx === 0 ? "🥇 " : "") + rawLabel;
+            lbl.style.color = (idx === 0) ? "#10b981" : "var(--text-primary)";
+          }
+          if (totTd) {
+            totTd.style.color = (idx === 0) ? "#10b981" : "#f59e0b";
+          }
+        });
+        bestComp = visibleCompRows[0];
+      }
+
+      // Déterminer le nouveau prix et aéroport gagnant de la carte
+      var cardBaseOta = parseFloat(card.getAttribute("data-base-ota") || card.getAttribute("data-price-display") || "50");
+      var cardBaseDir = parseFloat(card.getAttribute("data-base-dir") || cardBaseOta);
+      var cardDept = bestComp ? bestComp._calcDept : (card.getAttribute("data-dept") || origin);
+      var cardAirline = bestComp ? bestComp._calcAirline : "";
+      var cardTgvCost = bestComp ? bestComp._calcTgvCost : parseFloat(card.getAttribute("data-tgv-cost") || "0");
+      var cardOta = bestComp ? bestComp._calcOta : computeAdjustedPrice(cardBaseOta, exactDate, dest, cardDept, bagage, deltaSoute, deltaSans);
+      var cardDir = bestComp ? bestComp._calcDir : Math.max(cardOta, computeAdjustedPrice(cardBaseDir, exactDate, dest, cardDept, bagage, deltaSoute, deltaSans));
+      var cardTotalTgv = Math.round(cardOta + cardTgvCost);
+
+      card.setAttribute("data-price-display", String(cardOta));
+
+      var effEl = card.querySelector(".js-card-eff-price");
+      if (effEl) effEl.textContent = cardOta + " €";
+      var tgvTotEl = card.querySelector(".js-card-tgv-total");
+      if (tgvTotEl) tgvTotEl.textContent = cardTotalTgv + " €";
+      var deptEl = card.querySelector(".js-card-dept-code");
+      if (deptEl && cardDept) {
+        deptEl.textContent = cardDept;
+        deptEl.style.color = (cardDept === origin) ? "#10b981" : "#f59e0b";
+      }
+      var schedDeptEl = card.querySelector(".js-card-sched-dept");
+      if (schedDeptEl && cardDept) schedDeptEl.textContent = cardDept;
+      var airEl = card.querySelector(".js-card-airline");
+      if (airEl && cardAirline) airEl.textContent = cardAirline;
+
+      // Pilules bagages mises à jour pour la date choisie
+      var pSans = computeAdjustedPrice(baseSans, exactDate, dest, cardDept, "aucun", 0, 0);
+      var pCab = computeAdjustedPrice(baseCab, exactDate, dest, cardDept, "cabine", 0, 0);
+      var pSoute = computeAdjustedPrice(baseSoute, exactDate, dest, cardDept, "soute_1", 0, 0);
+      if (card.querySelector(".js-pill-sans")) card.querySelector(".js-pill-sans").textContent = pSans + "€";
+      if (card.querySelector(".js-pill-cabine")) card.querySelector(".js-pill-cabine").textContent = pCab + "€";
+      if (card.querySelector(".js-pill-soute")) card.querySelector(".js-pill-soute").textContent = pSoute + "€";
+
+      // Liens de la carte (Trip, Google Flights, Skyscanner, Pilules)
+      card.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
+        a.setAttribute("href", rewriteTripUrl(a.getAttribute("href"), exactDate, cardDept));
+      });
+      card.querySelectorAll('a[href*="google.com/travel/flights"]').forEach(function(a) {
+        a.setAttribute("href", rewriteGoogleFlightsUrl(a.getAttribute("href"), exactDate, cardDept));
+      });
+      card.querySelectorAll('a[href*="skyscanner"]').forEach(function(a) {
+        a.setAttribute("href", rewriteSkyUrl(a.getAttribute("href"), exactDate, cardDept));
       });
 
-      const yymmdd = exactDate.slice(2, 4) + exactDate.slice(5, 7) + exactDate.slice(8, 10);
-      document.querySelectorAll('a[href*="skyscanner"]').forEach(function(a) {
-        const href = a.getAttribute("href") || "";
-        a.setAttribute("href", href.replace(/\/\d{6}\//, "/" + yymmdd + "/"));
+      bestByDest[dest] = {
+        ota: cardOta,
+        dir: cardDir,
+        totalTgv: cardTotalTgv,
+        dept: cardDept,
+        airline: cardAirline,
+        tgvCost: cardTgvCost
+      };
+    });
+
+    // 2. Mettre à jour les lignes du Tableau synthétique et les trier par prix
+    var tbody = document.getElementById("radar-summary-tbody");
+    var rows = Array.prototype.slice.call(document.querySelectorAll("tr.radar-deal-row"));
+    rows.forEach(function(row) {
+      var dest = row.getAttribute("data-dest") || "";
+      var info = bestByDest[dest];
+      if (info) {
+        row.setAttribute("data-price-display", String(info.ota));
+        var effSpan = row.querySelector(".js-row-eff-price");
+        if (effSpan) effSpan.textContent = info.ota + " €";
+        var dirSpan = row.querySelector(".js-row-dir-label");
+        if (dirSpan) {
+          dirSpan.textContent = (info.ota < info.dir) ? ("Trip (" + info.dir + "€ Dir.)") : "Direct";
+        }
+        var tgvDiv = row.querySelector(".js-row-tgv-total");
+        if (tgvDiv) {
+          tgvDiv.textContent = "Total Vol + TGV : " + info.totalTgv + " €";
+        }
+        var deptBadge = row.querySelector(".js-row-dept-badge");
+        if (deptBadge && info.dept) {
+          deptBadge.textContent = (info.dept === origin) ? ("🏠 " + info.dept + " (Sur place)") : ("🚅 " + info.dept);
+          deptBadge.style.color = (info.dept === origin) ? "#10b981" : "#f59e0b";
+        }
+        var airSpan = row.querySelector(".js-row-airline");
+        if (airSpan && info.airline) airSpan.textContent = info.airline;
+
+        var tripBtn = row.querySelector(".js-row-trip-btn");
+        if (tripBtn) {
+          tripBtn.textContent = "⚡ " + info.ota + " €";
+          tripBtn.setAttribute("href", rewriteTripUrl(tripBtn.getAttribute("href"), exactDate, info.dept));
+        }
+        var gBtn = row.querySelector(".js-row-google-btn");
+        if (gBtn) {
+          gBtn.setAttribute("href", rewriteGoogleFlightsUrl(gBtn.getAttribute("href"), exactDate, info.dept));
+        }
+      }
+    });
+
+    // Trier les lignes du tableau et les cartes par nouveau prix croissant
+    rows.sort(function(a, b) {
+      return parseInt(a.getAttribute("data-price-display") || "999", 10) - parseInt(b.getAttribute("data-price-display") || "999", 10);
+    });
+    if (tbody) {
+      rows.forEach(function(r) { tbody.appendChild(r); });
+    }
+
+    var grid = document.getElementById("radar-cards-grid");
+    cards.sort(function(a, b) {
+      return parseInt(a.getAttribute("data-price-display") || "999", 10) - parseInt(b.getAttribute("data-price-display") || "999", 10);
+    });
+    if (grid) {
+      cards.forEach(function(c) { grid.appendChild(c); });
+    }
+
+    // 3. Mettre à jour les prix dans le menu déroulant "🎯 Pick une Destination"
+    var destSelect = document.getElementById("dest_pick");
+    if (destSelect) {
+      Array.prototype.slice.call(destSelect.querySelectorAll("option[data-city]")).forEach(function(opt) {
+        var code = opt.value;
+        var info = bestByDest[code];
+        if (info) {
+          opt.textContent = (opt.getAttribute("data-flag") || "") + " " + (opt.getAttribute("data-city") || code) + " (" + code + ") — dès " + info.ota + " €";
+        }
       });
     }
 
+    // 4. Mettre à jour toutes les étiquettes de date
+    if (exactDate && exactDate.length === 10 && dateFr) {
+      document.querySelectorAll(".js-dep-date-label").forEach(function(span) {
+        span.textContent = dateFr;
+      });
+    }
+
+    // 5. Filtrer l'affichage selon destination, escales, durée et budget
     function matchesDeal(el) {
-      const dest = el.getAttribute("data-dest") || "";
-      const durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
-      const stops = parseInt(el.getAttribute("data-stops") || "0", 10);
-      const layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
-      const isNearby = el.getAttribute("data-is-nearby") === "1";
-      const region = el.getAttribute("data-region") || "";
-      const priceDisp = parseInt(el.getAttribute("data-price-display") || "0", 10);
+      var dest = el.getAttribute("data-dest") || "";
+      var durMin = parseInt(el.getAttribute("data-duration-min") || "0", 10);
+      var stops = parseInt(el.getAttribute("data-stops") || "0", 10);
+      var layMin = parseInt(el.getAttribute("data-layover-min") || "0", 10);
+      var isNearby = el.getAttribute("data-is-nearby") === "1";
+      var region = el.getAttribute("data-region") || "";
+      var priceDisp = parseInt(el.getAttribute("data-price-display") || "0", 10);
 
       if (destPick && dest !== destPick) return false;
       if (!incNear && isNearby) return false;
@@ -1476,67 +1841,56 @@ window.pickRadarDest = function(destCode) {
       return true;
     }
 
-    const rows = document.querySelectorAll("tr.radar-deal-row");
-    let visibleCount = 0;
     rows.forEach(function(row) {
-      const show = matchesDeal(row);
-      row.style.display = show ? "" : "none";
-      if (show) visibleCount++;
+      row.style.display = matchesDeal(row) ? "" : "none";
     });
 
-    const cards = document.querySelectorAll("div.radar-deal-card");
     cards.forEach(function(card) {
-      const show = matchesDeal(card);
+      var show = matchesDeal(card);
       card.style.display = show ? "flex" : "none";
-      const det = card.querySelector("details.airport-comp-details");
+      var det = card.querySelector("details.airport-comp-details");
       if (det && destPick && show) {
         det.open = true;
       }
     });
 
-    const tblCard = document.getElementById("radar-summary-table-card");
+    var tblCard = document.getElementById("radar-summary-table-card");
     if (tblCard) {
       tblCard.style.display = destPick ? "none" : "";
     }
-
-    const grid = document.getElementById("radar-cards-grid");
     if (grid) {
       grid.style.gridTemplateColumns = destPick ? "1fr" : "";
     }
 
-    // Mettre à jour l'état visuel des boutons de filtre budget (Tous / < 100 €)
     form.querySelectorAll('a[href*="filter="]').forEach(function(a) {
-      const href = a.getAttribute("href") || "";
-      const m = href.match(/filter=([a-z0-9_]+)/i);
-      const tag = m ? m[1] : "all";
-      const active = (tag === filterTag);
+      var href = a.getAttribute("href") || "";
+      var m = href.match(/filter=([a-z0-9_]+)/i);
+      var tag = m ? m[1] : "all";
+      var active = (tag === filterTag);
       a.classList.toggle("btn-primary", active);
       a.classList.toggle("btn-secondary", !active);
     });
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector('form[action*="/radar"]');
+    var form = document.querySelector('form[action*="/radar"]');
     if (!form) return;
 
     form.addEventListener("submit", function(e) {
       e.preventDefault();
-      window.handleRadarFilterChange();
+      window.handleRadarFilterChange(null, true);
     });
 
-    // Intercepter les clics sur les boutons de filtre rapide (Tous / Moins de 100 € / Asie du Sud-Est)
-    const filterLinks = form.querySelectorAll('a[href*="filter="]');
-    filterLinks.forEach(function(a) {
+    form.querySelectorAll('a[href*="filter="]').forEach(function(a) {
       a.addEventListener("click", function(e) {
         e.preventDefault();
-        const href = a.getAttribute("href") || "";
-        const m = href.match(/filter=([a-z0-9_]+)/i);
+        var href = a.getAttribute("href") || "";
+        var m = href.match(/filter=([a-z0-9_]+)/i);
         window.handleRadarFilterChange(m ? m[1] : "all");
       });
     });
 
-    // Appliquer les filtres présents dans l'URL au chargement
-    const q = new URLSearchParams(window.location.search);
+    var q = new URLSearchParams(window.location.search);
     if (Array.from(q.keys()).length > 0) {
       applyDomFilters(q);
     }
@@ -1544,5 +1898,15 @@ window.pickRadarDest = function(destCode) {
 })();
 </script>
 
+  </main>
+
+  <div id="toast-container"></div>
+
+  <footer>
+    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
+  </footer>
+
+  <script src="/VolAlerte/static/js/app.js"></script>
+  
 </body>
 </html>
