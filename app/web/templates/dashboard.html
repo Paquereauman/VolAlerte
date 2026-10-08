@@ -1,302 +1,137 @@
 {% extends "base.html" %}
 
-{% block title %}Tableau de bord - VolAlerte{% endblock %}
+{% block title %}Accueil & Surveillance — VolAlerte{% endblock %}
 
 {% block content %}
 {% if request.query_params.get('added_from_radar') %}
-<div class="card" style="background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-  <span style="font-weight: 700; color: #10b981;">✓ Trajet ajouté avec succès depuis le Radar Bons Plans ! La surveillance quotidienne est maintenant active.</span>
-  <a href="/" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: underline;">Fermer</a>
+<div class="card" style="background: rgba(16, 185, 129, 0.14); border: 1px solid #10b981; padding: 0.7rem 1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+  <span style="font-weight: 700; color: #10b981; font-size: 0.88rem;">✓ Trajet ajouté à la surveillance quotidienne.</span>
+  <a href="/" style="font-size: 0.8rem; color: var(--text-muted);">Fermer</a>
 </div>
 {% endif %}
-<div class="grid grid-3" style="margin-bottom: 2rem;">
-  <!-- Widget Statut Trajets -->
-  <div class="card" style="margin-bottom: 0;">
-    <div style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;">TRAJETS SURVEILLÉS</div>
-    <div style="font-size: 1.8rem; font-weight: 800; margin: 0.25rem 0;">{{ routes|length }} trajet(s) actif(s)</div>
-    <div style="font-size: 0.8rem; color: var(--text-muted);">
-      {% if last_run %}
-        Dernière vérif : {{ last_run.date }} ({{ last_run.statut }})
-      {% else %}
-        Aucune vérification enregistrée
-      {% endif %}
-    </div>
-  </div>
 
-  <!-- Widget Quota SerpApi -->
-  <div class="card" style="margin-bottom: 0;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <span style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;">QUOTA SERPAPI (MOIS EN COURS)</span>
-      <span class="badge {% if serpapi_used >= 90 %}badge-danger{% elif serpapi_used >= 70 %}badge-warning{% else %}badge-info{% endif %}">
-        {{ serpapi_used }} / {{ serpapi_max }}
-      </span>
+<!-- EN-TÊTE ÉPURÉ + RACCOURCIS COMPARATEUR D'AÉROPORTS PROCHES -->
+<div class="card" style="margin-bottom: 1.25rem; padding: 0.9rem 1.1rem; border-left: 3px solid #10b981;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+    <div>
+      <div style="font-size: 1.15rem; font-weight: 800;">
+        🎯 Quel aéroport proche choisir depuis chez toi ? <span style="color: #10b981; font-size: 0.85rem;">(Vol + TGV &amp; Prix Moyen)</span>
+      </div>
+      <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.15rem;">
+        Clique sur une destination pour comparer Zhengzhou (CGO), Xi'an (1h30 TGV), Wuhan (1h45), Shijiazhuang (1h20) et Pékin (2h15)
+      </div>
     </div>
-    <div class="progress-container">
-      {% set pct = (serpapi_used / serpapi_max * 100)|int %}
-      <div class="progress-bar {% if serpapi_used >= 90 %}danger{% elif serpapi_used >= 70 %}warning{% endif %}" style="width: {{ pct }}%;"></div>
-    </div>
-    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
-      {% if serpapi_used >= 90 %}
-        ⚠️ Garde-fou actif : Google n'est appelé que pour confirmer une alerte.
-      {% else %}
-        Limite mensuelle gratuite SerpApi Google Flights.
-      {% endif %}
-    </div>
-  </div>
-
-  <!-- Widget Alertes Récentes -->
-  <div class="card" style="margin-bottom: 0;">
-    <div style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;">DERNIÈRES ALERTES</div>
-    <div style="font-size: 1.8rem; font-weight: 800; margin: 0.25rem 0; color: var(--accent);">
-      {{ recent_alerts|length }} alerte(s)
-    </div>
-    <div style="font-size: 0.8rem; color: var(--text-muted);">
-      <a href="/alerts">Consulter l'historique des alertes →</a>
+    <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+      <a href="/radar?dest_pick=HAN" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.76rem;">🇻🇳 Hanoï</a>
+      <a href="/radar?dest_pick=CNX" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.76rem;">🇹🇭 Chiang Mai</a>
+      <a href="/radar?dest_pick=BKK" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.76rem;">🇹🇭 Bangkok</a>
+      <a href="/radar?dest_pick=ICN" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.76rem;">🇰🇷 Séoul</a>
+      <a href="/radar?dest_pick=CJU" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.76rem;">🇰🇷 Jeju (42€)</a>
+      <a href="/radar?dest_pick=NRT" class="btn btn-secondary btn-sm" style="padding: 0.28rem 0.6rem; font-size: 0.76rem;">🇯🇵 Tokyo</a>
+      <a href="/radar" class="btn btn-primary btn-sm" style="padding: 0.28rem 0.65rem; font-size: 0.76rem; background: #10b981; border-color: #10b981;">📡 Tout le Radar →</a>
     </div>
   </div>
 </div>
 
-<h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-  <span>✈️ Trajets en cours de surveillance</span>
-  <a href="/settings" class="btn btn-secondary btn-sm">+ Configurer les trajets</a>
-</h2>
+<!-- EN-TÊTE TRAJETS SURVEILLÉS -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+  <h2 style="font-size: 1.15rem; font-weight: 800; margin: 0;">
+    ✈️ Mes trajets surveillés ({{ routes|length }})
+  </h2>
+  <div style="display: flex; gap: 0.4rem;">
+    <a href="/alerts" class="btn btn-secondary btn-sm" style="font-size: 0.76rem; padding: 0.3rem 0.6rem;">🔔 Alertes ({{ recent_alerts|length }})</a>
+    <a href="/settings" class="btn btn-secondary btn-sm" style="font-size: 0.76rem; padding: 0.3rem 0.6rem;">⚙️ Gérer</a>
+  </div>
+</div>
 
 {% if not routes %}
-<div class="card" style="text-align: center; padding: 3rem;">
-  <p style="font-size: 1.1rem; color: var(--text-secondary);">Aucun trajet configuré pour le moment.</p>
-  <a href="/settings" class="btn btn-primary" style="margin-top: 1rem;">Ajouter un premier trajet</a>
+<div class="card" style="text-align: center; padding: 2rem;">
+  <p style="font-size: 0.95rem; color: var(--text-secondary);">Aucun trajet configuré.</p>
+  <a href="/settings" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Ajouter un trajet</a>
 </div>
 {% else %}
-<div class="grid grid-2">
+<div class="grid grid-2" style="gap: 0.95rem;">
   {% for r in routes %}
-  <div class="card route-card {% if not r.actif %}paused{% endif %}">
-    <div class="card-header">
-      <div>
-        <div class="route-cities">
-          <span>{{ r.origine }}</span>
-          <span style="color: var(--accent);">➔</span>
-          <span>{{ r.destination }}</span>
-        </div>
-        <div class="route-date" style="font-size: 0.88rem; color: var(--text-primary); font-weight: 700; margin-top: 0.25rem;">
-          📅 Vol le <span style="color: #10b981;">{{ r.dep_date_fr }}</span> • 🛫 <b>{{ r.schedule_str }}</b>
-        </div>
-        <div style="margin-top: 0.35rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-          {% if r.compagnie %}
-          <span class="badge badge-info" style="font-size: 0.76rem;">✈️ {{ r.compagnie }} ({{ r.flight_numbers }})</span>
-          {% endif %}
-          {% if r.flight_duration_str %}
-          <span class="badge badge-info" style="font-size: 0.76rem;">⏱️ {{ r.flight_duration_str }}</span>
-          {% endif %}
-          <span class="badge {% if r.stops == 0 %}badge-success{% else %}badge-info{% endif %}" style="font-size: 0.76rem;">{{ r.escales_details }}</span>
-        </div>
-      </div>
-      <div>
-        {% if r.actif %}
-          <span class="badge badge-success">Actif</span>
-        {% else %}
-          <span class="badge badge-muted">En pause</span>
-        {% endif %}
-      </div>
-    </div>
-
-    <!-- PRIX MOYEN DU MOIS & MEILLEUR PRIX CONSTATÉ -->
-    <div style="margin-bottom: 1rem;">
-      <div style="display: flex; justify-content: space-between; align-items: stretch; gap: 0.75rem; flex-wrap: wrap;">
-        
-        <!-- Bloc 1 : PRIX MOYEN DU MOIS (RÉFÉRENCE MENSUELLE) -->
-        <div style="background-color: var(--bg-card-hover); border: 1.5px solid var(--accent); padding: 0.75rem 1rem; border-radius: 8px; flex: 1.2; min-width: 180px;">
-          <div style="font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.35rem;">
-            <span>📊 PRIX MOYEN DU MOIS</span>
-            <span style="font-size: 0.7rem; font-weight: 600; color: var(--text-secondary);">({{ r.month_name }})</span>
-          </div>
-          <div style="font-size: 2.1rem; font-weight: 800; color: var(--text-primary); margin: 0.15rem 0; line-height: 1.1;">
-            {% if r.monthly_avg_total is not none %}
-              {{ r.monthly_avg_total|int }} €
-            {% else %}
-              <span style="font-size: 1.15rem; color: var(--text-muted); font-weight: 700;">En collecte</span>
-            {% endif %}
-          </div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">
-            {% if r.range_low and r.range_high %}
-              Fourchette habituelle : <b>{{ r.range_low|int }} € - {{ r.range_high|int }} €</b>
-            {% elif r.source_avg %}
-              {{ r.source_avg }}
-            {% else %}
-              Données historiques en collecte
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Bloc 2 : MEILLEUR PRIX TROUVÉ -->
-        <div style="background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.4); padding: 0.75rem 1rem; border-radius: 8px; flex: 1; min-width: 170px;">
-          <div style="font-size: 0.72rem; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.5px;">
-            🏷️ MEILLEUR PRIX TROUVÉ
-          </div>
-          <div style="font-size: 2.1rem; font-weight: 800; color: #10b981; margin: 0.15rem 0; line-height: 1.1;">
-            {% if r.total_price is not none %}
-              {{ r.total_price|int }} €
-            {% else %}
-              -- €
-            {% endif %}
-          </div>
-          <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;">
-            {% if r.monthly_savings and r.monthly_savings > 0 %}
-              ↘ Économie : -{{ r.monthly_savings|int }} € (-{{ r.monthly_savings_pct|int }}%)
-            {% else %}
-              ✓ Prix le plus bas constaté
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Badges Google & Tendance -->
-        <div style="display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 0.4rem; min-width: 140px;">
-          {% if r.last_obs and r.last_obs.niveau_google %}
-            {% if r.last_obs.niveau_google == 'bas' %}
-              <span class="badge badge-success">Niveau Google : Bas</span>
-            {% elif r.last_obs.niveau_google == 'habituel' %}
-              <span class="badge badge-info">Niveau Google : Habituel</span>
-            {% else %}
-              <span class="badge badge-warning">Niveau Google : Élevé</span>
-            {% endif %}
-          {% endif %}
-
-          {% if r.trend == 'en baisse' %}
-            <span class="badge badge-success">↘ Tendance : En baisse</span>
-          {% elif r.trend == 'en hausse' %}
-            <span class="badge badge-warning">↗ Tendance : En hausse</span>
-          {% else %}
-            <span class="badge badge-info">➔ Tendance : Stable</span>
-          {% endif %}
-        </div>
-
-      </div>
-
-      <!-- Détail des options de bagages et seuil -->
-      <div class="price-breakdown" style="display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed var(--border);">
-        {% if r.last_ticket is not none %}
-          <div style="font-size: 0.85rem;">
-            <b>Option surveillée :</b> <span class="badge badge-info" style="font-size: 0.8rem;">{{ r.bagage }}</span>
-            ({{ r.total_price|int }} €) • Seuil alerte : <b>{{ r.seuil_eur|int }} €</b>
-            • Billet seul : <b>{{ r.last_ticket|int }} €</b>
-            {% if r.monthly_ticket_avg %}
-              <i>(Moy. mois : {{ r.monthly_ticket_avg|int }} €)</i>
-            {% endif %}
-          </div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">
-            🎒 Billet seul : <b>{{ r.last_ticket|int }} €</b>
-            • 🧳 Avec cabine : <b style="color: #10b981;">{{ r.total_cabine|int }} €</b>
-            • 📦 Avec soute : <b style="color: #f59e0b;">{{ r.total_soute|int }} €</b>
-          </div>
-        {% else %}
-          En attente de relevé
-        {% endif %}
-      </div>
-
-      {% if r.nearby_deal %}
-      <div style="margin-top: 0.75rem; background: rgba(245, 158, 11, 0.1); border: 1.5px solid rgba(245, 158, 11, 0.45); padding: 0.65rem 0.85rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+  <div class="card route-card {% if not r.actif %}paused{% endif %}" style="margin-bottom: 0; padding: 1.05rem 1.15rem; display: flex; flex-direction: column; justify-content: space-between;">
+    <div>
+      <!-- Ligne 1 : Trajet + Prix -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem;">
         <div>
-          <div style="font-size: 0.78rem; font-weight: 800; color: #f59e0b;">
-            🚅 MEILLEUR PRIX DÉTECTÉ DEPUIS {{ r.nearby_deal.name }} (-{{ r.nearby_deal.savings }} € sur le vol / -{{ r.nearby_deal.net_savings }} € net TGV déduit)
+          <div style="font-size: 1.12rem; font-weight: 800; display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;">
+            <span>{{ r.origine }}</span>
+            <span style="color: var(--accent);">➔</span>
+            <span>{{ r.destination }}</span>
           </div>
-          <div style="font-size: 0.8rem; color: var(--text-primary); margin-top: 0.15rem;">
-            📅 <b>{{ r.nearby_deal.dep_date_fr }}</b> • 🛫 <b>{{ r.nearby_deal.schedule_str }}</b> (✈️ Vol {{ r.nearby_deal.duration_str }}) • {{ r.nearby_deal.airline }} (<code>{{ r.nearby_deal.flight_numbers }}</code>, <b>{{ r.nearby_deal.stops_label }}</b>)
-          </div>
-          <div style="font-size: 0.78rem; color: #f59e0b; font-weight: 700; margin-top: 0.15rem;">
-            🚅 Temps de train estimé : {{ r.nearby_deal.tgv_time_str }} • ⏱️ Total Train + Vol : ~{{ r.nearby_deal.total_journey_str }} ({{ r.nearby_deal.price_with_tgv }} € train inclus)
+          <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.15rem;">
+            📅 <b style="color: #10b981;">{{ r.dep_date_fr }}</b> • {{ r.schedule_str }}
+            {% if r.compagnie %} • <b>{{ r.compagnie }}</b>{% endif %}
+            ({{ r.escales_details }})
           </div>
         </div>
-        <a href="{{ r.nearby_deal.booking_url }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #f59e0b; border-color: #f59e0b; color: #000; font-weight: 800;">
-          🎯 Réserver {{ r.nearby_deal.code }} ({{ r.nearby_deal.price }} €)
-        </a>
+
+        <div style="text-align: right; white-space: nowrap;">
+          <div style="font-size: 1.65rem; font-weight: 900; color: #10b981; line-height: 1;">
+            {{ r.total_price|int if r.total_price else '--' }} €
+          </div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.12rem;">
+            Moy. mois : <b>{{ r.monthly_avg_total|int if r.monthly_avg_total else '--' }} €</b>
+            {% if r.range_low and r.range_high %}({{ r.range_low|int }}–{{ r.range_high|int }} €){% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Ligne 2 : Bagages compacts + Seuil -->
+      {% if r.last_ticket is not none %}
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 0.6rem; padding: 0.4rem 0.6rem; background: rgba(15, 23, 42, 0.5); border-radius: 6px;">
+        <span>🎒 Sans <b>{{ r.last_ticket|int }}€</b> • 🧳 Cabine <b style="color:#10b981;">{{ r.total_cabine|int }}€</b> • 📦 Soute <b style="color:#f59e0b;">{{ r.total_soute|int }}€</b></span>
+        <span>🔔 Seuil : <b>{{ r.seuil_eur|int }} €</b></span>
+      </div>
+      {% endif %}
+
+      <!-- Ligne 3 : Bon plan TGV Aéroport Voisin (si moins cher) -->
+      {% if r.nearby_deal %}
+      <div style="margin-bottom: 0.6rem; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.5rem 0.7rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;">
+        <div style="font-size: 0.75rem;">
+          <div style="font-weight: 800; color: #f59e0b;">
+            🚅 Aéroport proche moins cher : {{ r.nearby_deal.name }} ({{ r.nearby_deal.price }} € vol / {{ r.nearby_deal.price_with_tgv }} € avec TGV)
+          </div>
+          <div style="color: var(--text-secondary); margin-top: 0.1rem;">
+            {{ r.nearby_deal.tgv_time_str }} • Total Train + Vol : <b>~{{ r.nearby_deal.total_journey_str }}</b> ({{ r.nearby_deal.airline }}, {{ r.nearby_deal.stops_label }})
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.3rem;">
+          <a href="/radar?dest_pick={{ r.d_iata }}" class="btn btn-secondary btn-sm" style="font-size: 0.72rem; padding: 0.24rem 0.5rem;">
+            Comparer aéroports
+          </a>
+          <a href="{{ r.nearby_deal.booking_url }}" target="_blank" class="btn btn-primary btn-sm" style="background: #f59e0b; border-color: #f59e0b; color: #000; font-weight: 800; font-size: 0.72rem; padding: 0.24rem 0.5rem;">
+            {{ r.nearby_deal.code }} ({{ r.nearby_deal.price }} €)
+          </a>
+        </div>
       </div>
       {% endif %}
     </div>
 
-    <!-- Meilleure fenêtre de réservation -->
-    <div style="background-color: var(--bg-card-hover); padding: 0.85rem; border-radius: 8px; margin-bottom: 1.25rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">MEILLEUR MOMENT POUR RÉSERVER</span>
-        <span class="badge {% if r.best_window.confidence == 'fiable' %}badge-success{% elif r.best_window.confidence == 'indicatif' %}badge-info{% else %}badge-muted{% endif %}">
-          {{ r.best_window.confidence|capitalize }}
-          {% if r.best_window.count > 0 %}({{ r.best_window.count }} prix){% endif %}
-        </span>
-      </div>
-      <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">
-        {% if r.best_window.confidence != 'données insuffisantes' %}
-          🎯 Fenêtre optimale : {{ r.best_window.window }} (médiane {{ r.best_window.median|int }} €)
-        {% else %}
-          ⏳ Données insuffisantes (relevés en cours de collecte)
-        {% endif %}
-      </div>
-    </div>
-
-    <!-- Footer de la carte -->
-    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
-      <span style="font-size: 0.75rem; color: var(--text-muted);">
-        {% if r.obs_date %}
-          📅 Relevé : <b>{{ r.obs_date }}</b> • 🔍 <b>{{ r.obs_source }}</b>
-        {% else %}
-          Pas encore de relevé
-        {% endif %}
-      </span>
-      <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-        <a href="{{ r.google_booking_link }}" target="_blank" class="btn btn-primary btn-sm" style="background-color: #10b981; border-color: #10b981; font-weight: 700;">
-          🎯 Réserver ({{ r.total_price|int if r.total_price else '--' }} €)
-        </a>
+    <!-- Ligne 4 : Actions épurées -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 0.55rem; flex-wrap: wrap; gap: 0.4rem;">
+      <a href="/radar?dest_pick={{ r.d_iata }}" style="font-size: 0.74rem; color: var(--accent); font-weight: 700; text-decoration: none;">
+        🏆 Comparer les aéroports proches pour {{ r.d_iata }} →
+      </a>
+      <div style="display: flex; gap: 0.35rem;">
         {% if r.trip_com_link %}
-        <a href="{{ r.trip_com_link }}" target="_blank" class="btn btn-secondary btn-sm" title="Comparer sur Trip.com en EUR">
-          ✈️ Trip.com
+        <a href="{{ r.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.75rem; padding: 0.3rem 0.55rem;">
+          ⚡ Trip.com
         </a>
         {% endif %}
-        {% if r.skyscanner_link %}
-        <a href="{{ r.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" title="Comparer sur Skyscanner en EUR">
-          Skyscanner
+        <a href="{{ r.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.3rem 0.55rem;">
+          🎯 Google ({{ r.total_price|int if r.total_price else '--' }} €)
         </a>
-        {% endif %}
-        <a href="/route/{{ r.id }}" class="btn btn-secondary btn-sm">Détail →</a>
+        <a href="/route/{{ r.id }}" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.3rem 0.55rem;">
+          📈 Courbe
+        </a>
       </div>
     </div>
   </div>
   {% endfor %}
 </div>
 {% endif %}
-
-<!-- Alertes récentes -->
-{% if recent_alerts %}
-<div class="card" style="margin-top: 2rem;">
-  <div class="card-header">
-    <div class="card-title">🔔 Alertes récemment déclenchées</div>
-    <a href="/alerts" class="btn btn-secondary btn-sm">Voir tout</a>
-  </div>
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Trajet</th>
-          <th>Prix Total</th>
-          <th>Message</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for a in recent_alerts %}
-        <tr>
-          <td style="white-space: nowrap; color: var(--text-secondary);">{{ a.date }}</td>
-          <td style="font-weight: 600;">Trajet #{{ a.route_id }}</td>
-          <td style="font-weight: 800; color: var(--success);">{{ a.prix_total|int }} €</td>
-          <td style="font-size: 0.85rem;">{{ a.message }}</td>
-          <td>
-            {% if a.lien %}
-              <a href="{{ a.lien }}" target="_blank" class="btn btn-secondary btn-sm">Vérifier</a>
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
-{% endif %}
-
 {% endblock %}
