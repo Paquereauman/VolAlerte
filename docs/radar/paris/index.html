@@ -62,10 +62,6 @@
     <a href="#retour-nantes" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.35rem 0.65rem;">
       🇫🇷 Retour Nantes
     </a>
-    <a href="/VolAlerte/radar/?origin=PAR&month=2026-11&bagage=cabine&refresh=1"
-       class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.35rem 0.65rem;">
-      🔄 Live
-    </a>
   </div>
 </div>
 
@@ -167,7 +163,7 @@
 
     </div>
 
-    <!-- Ligne secondaire : Raccourcis destinations populaires + TGV -->
+    <!-- Ligne secondaire : Option TGV + Filtre budget -->
     <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
       <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
         <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
@@ -177,28 +173,13 @@
         <input type="hidden" id="max_layover" name="max_layover" value="0.0">
       </div>
 
-      <!-- Boutons rapides : Pick direct d'une destination ou filtre -->
-      <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
-        <button type="button" onclick="window.pickRadarDest('')" class="btn btn-sm btn-primary" id="btn-dest-all" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🌍 Toutes
-        </button>
-        <button type="button" onclick="window.pickRadarDest('HAN')" class="btn btn-sm btn-secondary" id="btn-dest-HAN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇻🇳 Hanoï
-        </button>
-        <button type="button" onclick="window.pickRadarDest('CNX')" class="btn btn-sm btn-secondary" id="btn-dest-CNX" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇹🇭 Chiang Mai
-        </button>
-        <button type="button" onclick="window.pickRadarDest('BKK')" class="btn btn-sm btn-secondary" id="btn-dest-BKK" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇹🇭 Bangkok
-        </button>
-        <button type="button" onclick="window.pickRadarDest('ICN')" class="btn btn-sm btn-secondary" id="btn-dest-ICN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇰🇷 Séoul
-        </button>
-        <button type="button" onclick="window.pickRadarDest('NRT')" class="btn btn-sm btn-secondary" id="btn-dest-NRT" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇯🇵 Tokyo
-        </button>
+      <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+        <a href="/VolAlerte/radar/?origin=PAR&month=2026-11&bagage=cabine&filter=all"
+           class="btn btn-sm btn-primary" style="padding: 0.2rem 0.55rem; font-size: 0.74rem;">
+          🌍 Tous les prix
+        </a>
         <a href="/VolAlerte/radar/?origin=PAR&month=2026-11&bagage=cabine&filter=under_100"
-           class="btn btn-sm btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+           class="btn btn-sm btn-secondary" style="padding: 0.2rem 0.55rem; font-size: 0.74rem;">
           💰 &lt; 100 €
         </a>
       </div>
@@ -607,10 +588,10 @@
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
       <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=ATH&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com (38 €)
+        ⚡ Trip.com
       </a>
       <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0FUSEIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIbndjZVlVb3VTTjRBVmJ3VVFCRy0tLS0tLS0tLXRsZWoyN0FBQUFBR3JHQmNNTjNVb3FBEgZVMjQ4NTUaCgiDHRACGgNFVVI4HXC8IA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google (38 €)
+        🎯 Google Flights
       </a>
       <a href="https://www.skyscanner.fr/transport/vols/par/ath/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -775,10 +756,10 @@
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
       <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=BCN&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com (40 €)
+        ⚡ Trip.com
       </a>
       <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA0JDTkIBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIcWhIMEhhMnIySmNBUHhzN2dCRy0tLS0tLXRiYnRxMS1uMUFBQUFBR3JHQmNNT2ljZGtBEgZUTzQ3NTAaCgigHxACGgNFVVI4HXD7Ig==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google (40 €)
+        🎯 Google Flights
       </a>
       <a href="https://www.skyscanner.fr/transport/vols/par/bcn/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -943,10 +924,10 @@
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
       <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=FCO&amp;ddate=2026-11-13&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com (55 €)
+        ⚡ Trip.com
       </a>
       <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTNqBRIDUEFScgUSA0ZDT0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIME1YQjhiaXFIZklBU254cEFCRy0tLS0tLS0tLXRiY2djNUFBQUFBR3JHQmNNTjhTejhBEgZUTzM5MTAaCgj8KhACGgNFVVI4HXCJMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google (55 €)
+        🎯 Google Flights
       </a>
       <a href="https://www.skyscanner.fr/transport/vols/par/fco/261113/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -1111,10 +1092,10 @@
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
       <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=LIS&amp;ddate=2026-11-18&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com (56 €)
+        ⚡ Trip.com
       </a>
       <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMThqBRIDUEFScgUSA0xJU0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIaE42alJXT0pfdWdBVXJUUlFCRy0tLS0tLS0tLXRsYmRvNEFBQUFBR3JHQ2pJRHFPVzBBEgZGUjEwODQaCgjvFRACGgNFVVI4HXC7GA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google (56 €)
+        🎯 Google Flights
       </a>
       <a href="https://www.skyscanner.fr/transport/vols/par/lis/261118/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -1279,10 +1260,10 @@
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
       <a href="https://fr.trip.com/flights/showfarefirst?dcity=PAR&amp;acity=RAK&amp;ddate=2026-11-15&amp;triptype=ow&amp;class=y&amp;quantity=1&amp;curr=EUR&amp;locale=fr-FR" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com (56 €)
+        ⚡ Trip.com
       </a>
       <a href="https://www.google.com/travel/flights/booking?tfs=GhoSCjIwMjYtMTEtMTVqBRIDUEFScgUSA1JBS0IBAUgBagQQARgAmAEC&amp;hl=fr&amp;curr=EUR&amp;tfu=CjRIR0FORGJVWDFMdUVBVTcxYXdCRy0tLS0tLS0tLS10YmljOEFBQUFBR3JHQmNNTlk5bE1BEgZVMjQ2NjMaCgjXKxACGgNFVVI4HXDuMA==&amp;gl=fr" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google (56 €)
+        🎯 Google Flights
       </a>
       <a href="https://www.skyscanner.fr/transport/vols/par/rak/261115/?adultsv2=1&amp;cabinclass=economy&amp;currency=EUR&amp;locale=fr-FR&amp;market=FR" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -1478,6 +1459,8 @@ window.pickRadarDest = function(destCode) {
     window.handleRadarFilterChange();
     return;
   }
+  var tblCard = document.getElementById("radar-summary-table-card");
+  if (tblCard) tblCard.style.display = destCode ? "none" : "";
   var rows = document.querySelectorAll("tr.radar-deal-row");
   var cards = document.querySelectorAll("div.radar-deal-card");
   rows.forEach(function(r) {
@@ -1691,19 +1674,24 @@ window.pickRadarDest = function(destCode) {
       }
     });
 
+    const tblCard = document.getElementById("radar-summary-table-card");
+    if (tblCard) {
+      tblCard.style.display = destPick ? "none" : "";
+    }
+
     const grid = document.getElementById("radar-cards-grid");
     if (grid) {
       grid.style.gridTemplateColumns = destPick ? "1fr" : "";
     }
 
-    // Mettre à jour l'état visuel des boutons de raccourci destination
-    ["", "HAN", "CNX", "BKK", "ICN", "NRT"].forEach(function(code) {
-      const btn = document.getElementById(code ? ("btn-dest-" + code) : "btn-dest-all");
-      if (btn) {
-        const active = (destPick === code);
-        btn.classList.toggle("btn-primary", active);
-        btn.classList.toggle("btn-secondary", !active);
-      }
+    // Mettre à jour l'état visuel des boutons de filtre budget (Tous / < 100 €)
+    form.querySelectorAll('a[href*="filter="]').forEach(function(a) {
+      const href = a.getAttribute("href") || "";
+      const m = href.match(/filter=([a-z0-9_]+)/i);
+      const tag = m ? m[1] : "all";
+      const active = (tag === filterTag);
+      a.classList.toggle("btn-primary", active);
+      a.classList.toggle("btn-secondary", !active);
     });
   }
 

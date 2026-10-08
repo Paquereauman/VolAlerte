@@ -17,10 +17,6 @@
     <a href="#retour-nantes" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.35rem 0.65rem;">
       🇫🇷 Retour Nantes
     </a>
-    <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&bagage={{ radar.bagage_mode }}&refresh=1"
-       class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.35rem 0.65rem;">
-      🔄 Live
-    </a>
   </div>
 </div>
 
@@ -114,7 +110,7 @@
 
     </div>
 
-    <!-- Ligne secondaire : Raccourcis destinations populaires + TGV -->
+    <!-- Ligne secondaire : Option TGV + Filtre budget -->
     <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
       <div style="display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;">
         <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.8rem; font-weight: 600;">
@@ -124,28 +120,13 @@
         <input type="hidden" id="max_layover" name="max_layover" value="{{ radar.max_layover }}">
       </div>
 
-      <!-- Boutons rapides : Pick direct d'une destination ou filtre -->
-      <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
-        <button type="button" onclick="window.pickRadarDest('')" class="btn btn-sm btn-primary" id="btn-dest-all" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🌍 Toutes
-        </button>
-        <button type="button" onclick="window.pickRadarDest('HAN')" class="btn btn-sm btn-secondary" id="btn-dest-HAN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇻🇳 Hanoï
-        </button>
-        <button type="button" onclick="window.pickRadarDest('CNX')" class="btn btn-sm btn-secondary" id="btn-dest-CNX" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇹🇭 Chiang Mai
-        </button>
-        <button type="button" onclick="window.pickRadarDest('BKK')" class="btn btn-sm btn-secondary" id="btn-dest-BKK" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇹🇭 Bangkok
-        </button>
-        <button type="button" onclick="window.pickRadarDest('ICN')" class="btn btn-sm btn-secondary" id="btn-dest-ICN" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇰🇷 Séoul
-        </button>
-        <button type="button" onclick="window.pickRadarDest('NRT')" class="btn btn-sm btn-secondary" id="btn-dest-NRT" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
-          🇯🇵 Tokyo
-        </button>
+      <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+        <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&bagage={{ radar.bagage_mode }}&filter=all"
+           class="btn btn-sm {% if radar.filter_tag == 'all' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.2rem 0.55rem; font-size: 0.74rem;">
+          🌍 Tous les prix
+        </a>
         <a href="/radar?origin={{ radar.origin_code }}&month={{ radar.target_month }}&bagage={{ radar.bagage_mode }}&filter=under_100"
-           class="btn btn-sm {% if radar.filter_tag == 'under_100' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.2rem 0.5rem; font-size: 0.74rem;">
+           class="btn btn-sm {% if radar.filter_tag == 'under_100' %}btn-primary{% else %}btn-secondary{% endif %}" style="padding: 0.2rem 0.55rem; font-size: 0.74rem;">
           💰 &lt; 100 €
         </a>
       </div>
@@ -368,10 +349,10 @@
     <!-- Ligne 5 : Boutons d'action -->
     <div style="display: flex; gap: 0.4rem; align-items: center; padding-top: 0.45rem; border-top: 1px solid var(--border);">
       <a href="{{ deal.trip_com_link }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1.2; text-align: center; background: #10b981; border-color: #10b981; font-weight: 700; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        ⚡ Trip.com ({{ deal.ota_trip_price }} €)
+        ⚡ Trip.com
       </a>
       <a href="{{ deal.google_booking_link }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.78rem; padding: 0.36rem 0.5rem;">
-        🎯 Google ({{ deal.display_price }} €)
+        🎯 Google Flights
       </a>
       <a href="{{ deal.skyscanner_link }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 0.36rem 0.55rem;" title="Skyscanner">
         Sky
@@ -443,6 +424,8 @@ window.pickRadarDest = function(destCode) {
     window.handleRadarFilterChange();
     return;
   }
+  var tblCard = document.getElementById("radar-summary-table-card");
+  if (tblCard) tblCard.style.display = destCode ? "none" : "";
   var rows = document.querySelectorAll("tr.radar-deal-row");
   var cards = document.querySelectorAll("div.radar-deal-card");
   rows.forEach(function(r) {

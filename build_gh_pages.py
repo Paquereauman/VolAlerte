@@ -231,19 +231,24 @@ RADAR_CLIENT_FILTER_JS = r"""
       }
     });
 
+    const tblCard = document.getElementById("radar-summary-table-card");
+    if (tblCard) {
+      tblCard.style.display = destPick ? "none" : "";
+    }
+
     const grid = document.getElementById("radar-cards-grid");
     if (grid) {
       grid.style.gridTemplateColumns = destPick ? "1fr" : "";
     }
 
-    // Mettre à jour l'état visuel des boutons de raccourci destination
-    ["", "HAN", "CNX", "BKK", "ICN", "NRT"].forEach(function(code) {
-      const btn = document.getElementById(code ? ("btn-dest-" + code) : "btn-dest-all");
-      if (btn) {
-        const active = (destPick === code);
-        btn.classList.toggle("btn-primary", active);
-        btn.classList.toggle("btn-secondary", !active);
-      }
+    // Mettre à jour l'état visuel des boutons de filtre budget (Tous / < 100 €)
+    form.querySelectorAll('a[href*="filter="]').forEach(function(a) {
+      const href = a.getAttribute("href") || "";
+      const m = href.match(/filter=([a-z0-9_]+)/i);
+      const tag = m ? m[1] : "all";
+      const active = (tag === filterTag);
+      a.classList.toggle("btn-primary", active);
+      a.classList.toggle("btn-secondary", !active);
     });
   }
 
