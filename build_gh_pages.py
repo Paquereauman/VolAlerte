@@ -72,7 +72,7 @@ RADAR_CLIENT_FILTER_JS = """
     return days[dt.getDay()] + " " + d + " " + months[m] + " " + y;
   }
 
-  window.handleRadarFilterChange = function(overrideFilterTag) {
+  window.handleRadarFilterChange = function(overrideFilterTag, fromSearchBtn) {
     const form = document.querySelector('form[action*="/radar"]');
     if (!form) return;
 
@@ -91,11 +91,14 @@ RADAR_CLIENT_FILTER_JS = """
 
     const origin = originEl ? originEl.value : "CGO";
     const destPick = destPickEl ? destPickEl.value : "";
-    const month = monthEl ? monthEl.value : "2026-11";
+    let month = monthEl ? monthEl.value : "2026-11";
     let exactDate = dateEl ? dateEl.value : "";
     if (!exactDate && month) {
       exactDate = month + "-15";
       if (dateEl) dateEl.value = exactDate;
+    } else if (exactDate && exactDate.length >= 7 && monthEl) {
+      month = exactDate.slice(0, 7);
+      monthEl.value = month;
     }
     const bagage = bagageEl ? bagageEl.value : "cabine";
     const maxDur = durEl ? durEl.value : "0";
@@ -127,6 +130,15 @@ RADAR_CLIENT_FILTER_JS = """
     // Mettre à jour l'URL sans recharger et filtrer instantanément le DOM
     window.history.replaceState({}, "", targetPath + "?" + q.toString());
     applyDomFilters(q);
+
+    const searchBtn = document.getElementById("btn-radar-search");
+    if (searchBtn) {
+      const prevText = "🔍 Chercher";
+      searchBtn.innerHTML = "✅ Mis à jour (" + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
+      setTimeout(function() {
+        searchBtn.innerHTML = prevText;
+      }, 1600);
+    }
   };
 
   function applyDomFilters(q) {
@@ -154,6 +166,32 @@ RADAR_CLIENT_FILTER_JS = """
     if (q.has("max_layover") && form.querySelector('#max_layover')) form.querySelector('#max_layover').value = q.get("max_layover");
     if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
       form.querySelector('input[name="include_nearby"]').checked = incNear;
+    }
+
+    // Mettre à jour dynamiquement les dates affichées et les liens de réservation (Trip.com, Skyscanner)
+    if (exactDate && exactDate.length === 10) {
+      const dateFr = formatDateFrClient(exactDate);
+      const isCustomDate = (exactDate !== "2026-11-15");
+      document.querySelectorAll(".js-dep-date-label").forEach(function(span) {
+        if (isCustomDate && dateFr) {
+          span.textContent = dateFr;
+        } else if (span.getAttribute("data-default-label")) {
+          span.textContent = span.getAttribute("data-default-label");
+        }
+      });
+
+      document.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
+        const href = a.getAttribute("href") || "";
+        if (href.indexOf("ddate=") !== -1) {
+          a.setAttribute("href", href.replace(/ddate=\d{4}-\d{2}-\d{2}/, "ddate=" + exactDate));
+        }
+      });
+
+      const yymmdd = exactDate.slice(2, 4) + exactDate.slice(5, 7) + exactDate.slice(8, 10);
+      document.querySelectorAll('a[href*="skyscanner"]').forEach(function(a) {
+        const href = a.getAttribute("href") || "";
+        a.setAttribute("href", href.replace(/\/\d{6}\//, "/" + yymmdd + "/"));
+      });
     }
 
     function matchesDeal(el) {

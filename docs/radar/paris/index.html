@@ -107,7 +107,7 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <label class="form-label" for="month" style="font-size: 0.74rem; margin-bottom: 0.2rem;">📅 Mois</label>
-        <select id="month" name="month" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="document.getElementById('exact_date').value=''; window.handleRadarFilterChange();">
+        <select id="month" name="month" class="form-control" style="padding: 0.4rem 0.6rem; font-size: 0.84rem;" onchange="var d=document.getElementById('exact_date'); if(d){d.value=this.value+'-15';} if(window.handleRadarFilterChange){window.handleRadarFilterChange();}else{this.form.submit();}">
           <option value="2026-10" >Octobre 2026</option>
           <option value="2026-11" selected>Novembre 2026</option>
           <option value="2026-12" >Décembre 2026</option>
@@ -115,6 +115,15 @@
           <option value="2027-02" >Février 2027</option>
           <option value="2027-03" >Mars 2027</option>
         </select>
+      </div>
+
+      <!-- Sélecteur de Date précise directement visible -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="exact_date" style="font-size: 0.74rem; margin-bottom: 0.2rem; color: #38bdf8; font-weight: 700;">📆 Date précise</label>
+        <input type="date" id="exact_date" name="exact_date" class="form-control"
+               style="padding: 0.36rem 0.55rem; font-size: 0.84rem; border-color: rgba(56, 189, 248, 0.5);"
+               value="2026-11-15" min="2026-10-07" max="2027-09-30"
+               onchange="var m=document.getElementById('month'); if(m && this.value && this.value.length>=7){m.value=this.value.slice(0,7);} if(window.handleRadarFilterChange){window.handleRadarFilterChange();}">
       </div>
 
       <div class="form-group" style="margin-bottom: 0;">
@@ -147,6 +156,15 @@
         </select>
       </div>
 
+      <!-- Bouton Chercher bien visible -->
+      <div class="form-group" style="margin-bottom: 0;">
+        <button type="submit" id="btn-radar-search" class="btn btn-primary"
+                style="width: 100%; padding: 0.44rem 0.85rem; font-size: 0.86rem; font-weight: 800; background: #10b981; border-color: #10b981; cursor: pointer;"
+                onclick="if(window.handleRadarFilterChange){event.preventDefault();window.handleRadarFilterChange(null, true);}">
+          🔍 Chercher
+        </button>
+      </div>
+
     </div>
 
     <!-- Ligne secondaire : Raccourcis destinations populaires + TGV -->
@@ -156,21 +174,7 @@
           <input type="checkbox" name="include_nearby" value="1" checked onchange="window.handleRadarFilterChange()">
           <span>🚅 Croiser les aéroports TGV proches (Xi'an 1h30, Wuhan 1h45, Shijiazhuang 1h20, Pékin 2h15)</span>
         </label>
-
-        <details style="font-size: 0.76rem; color: var(--text-secondary);">
-          <summary style="cursor: pointer; user-select: none;">⚙️ Date précise / Escale</summary>
-          <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.4rem; flex-wrap: wrap;">
-            <input type="date" id="exact_date" name="exact_date" class="form-control"
-                   style="padding: 0.25rem 0.5rem; font-size: 0.78rem; width: auto;"
-                   value="2026-11-15" min="2026-10-07" max="2027-09-30"
-                   onchange="window.handleRadarFilterChange()">
-            <select id="max_layover" name="max_layover" class="form-control" style="padding: 0.25rem 0.5rem; font-size: 0.78rem; width: auto;" onchange="window.handleRadarFilterChange()">
-              <option value="0" selected>Escale : sans limite</option>
-              <option value="2.5" >Escale max 2h30</option>
-              <option value="4" >Escale max 4h00</option>
-            </select>
-          </div>
-        </details>
+        <input type="hidden" id="max_layover" name="max_layover" value="0.0">
       </div>
 
       <!-- Boutons rapides : Pick direct d'une destination ou filtre -->
@@ -240,7 +244,7 @@
             <span style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Dim. 15 nov. 2026 (easyJet)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (easyJet)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -284,7 +288,7 @@
             <span style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Dim. 15 nov. 2026 (Transavia)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (Transavia)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -328,7 +332,7 @@
             <span style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Ven. 13 nov. 2026 (Transavia)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-13" data-default-label="Ven. 13 nov. 2026">Ven. 13 nov. 2026</span> (Transavia)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -372,7 +376,7 @@
             <span style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Mer. 18 nov. 2026 (Ryanair)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-18" data-default-label="Mer. 18 nov. 2026">Mer. 18 nov. 2026</span> (Ryanair)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -416,7 +420,7 @@
             <span style="font-weight: 800; color: #10b981;">
               🏠 PAR (Sur place)
             </span>
-            <span style="color: var(--text-secondary); font-size: 0.75rem;">• Dim. 15 nov. 2026 (easyJet)</span>
+            <span style="color: var(--text-secondary); font-size: 0.75rem;">• <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> (easyJet)</span>
           </td>
           <td style="padding: 0.5rem 0.55rem; vertical-align: middle;">
             <span style="font-weight: 700; color: #10b981;">
@@ -491,7 +495,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 07:00 PAR ➔ 11:10 ATH</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 07:00 PAR ➔ 11:10 ATH</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 3h10</span>
         </div>
         
@@ -659,7 +663,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 06:20 PAR ➔ 08:00 BCN</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 06:20 PAR ➔ 08:00 BCN</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 1h40</span>
         </div>
         
@@ -827,7 +831,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Ven. 13 nov. 2026 • 06:15 PAR ➔ 08:20 FCO</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-13" data-default-label="Ven. 13 nov. 2026">Ven. 13 nov. 2026</span> • 06:15 PAR ➔ 08:20 FCO</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 2h05</span>
         </div>
         
@@ -995,7 +999,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Mer. 18 nov. 2026 • 16:05 PAR ➔ 17:40 LIS</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-18" data-default-label="Mer. 18 nov. 2026">Mer. 18 nov. 2026</span> • 16:05 PAR ➔ 17:40 LIS</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 2h35</span>
         </div>
         
@@ -1163,7 +1167,7 @@
       <!-- Ligne 2 : Résumé Horaire + Train -->
       <div style="background: rgba(15, 23, 42, 0.55); border: 1px solid var(--border); border-radius: 6px; padding: 0.48rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.79rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem;">
-          <span style="font-weight: 700; color: var(--text-primary);">📅 Dim. 15 nov. 2026 • 06:00 PAR ➔ 08:30 RAK</span>
+          <span style="font-weight: 700; color: var(--text-primary);">📅 <span class="js-dep-date-label" data-default-date="2026-11-15" data-default-label="Dim. 15 nov. 2026">Dim. 15 nov. 2026</span> • 06:00 PAR ➔ 08:30 RAK</span>
           <span style="font-weight: 700; color: #10b981;">✈️ 3h30</span>
         </div>
         
@@ -1528,7 +1532,7 @@ window.pickRadarDest = function(destCode) {
     return days[dt.getDay()] + " " + d + " " + months[m] + " " + y;
   }
 
-  window.handleRadarFilterChange = function(overrideFilterTag) {
+  window.handleRadarFilterChange = function(overrideFilterTag, fromSearchBtn) {
     const form = document.querySelector('form[action*="/radar"]');
     if (!form) return;
 
@@ -1547,11 +1551,14 @@ window.pickRadarDest = function(destCode) {
 
     const origin = originEl ? originEl.value : "CGO";
     const destPick = destPickEl ? destPickEl.value : "";
-    const month = monthEl ? monthEl.value : "2026-11";
+    let month = monthEl ? monthEl.value : "2026-11";
     let exactDate = dateEl ? dateEl.value : "";
     if (!exactDate && month) {
       exactDate = month + "-15";
       if (dateEl) dateEl.value = exactDate;
+    } else if (exactDate && exactDate.length >= 7 && monthEl) {
+      month = exactDate.slice(0, 7);
+      monthEl.value = month;
     }
     const bagage = bagageEl ? bagageEl.value : "cabine";
     const maxDur = durEl ? durEl.value : "0";
@@ -1583,6 +1590,15 @@ window.pickRadarDest = function(destCode) {
     // Mettre à jour l'URL sans recharger et filtrer instantanément le DOM
     window.history.replaceState({}, "", targetPath + "?" + q.toString());
     applyDomFilters(q);
+
+    const searchBtn = document.getElementById("btn-radar-search");
+    if (searchBtn) {
+      const prevText = "🔍 Chercher";
+      searchBtn.innerHTML = "✅ Mis à jour (" + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
+      setTimeout(function() {
+        searchBtn.innerHTML = prevText;
+      }, 1600);
+    }
   };
 
   function applyDomFilters(q) {
@@ -1610,6 +1626,32 @@ window.pickRadarDest = function(destCode) {
     if (q.has("max_layover") && form.querySelector('#max_layover')) form.querySelector('#max_layover').value = q.get("max_layover");
     if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
       form.querySelector('input[name="include_nearby"]').checked = incNear;
+    }
+
+    // Mettre à jour dynamiquement les dates affichées et les liens de réservation (Trip.com, Skyscanner)
+    if (exactDate && exactDate.length === 10) {
+      const dateFr = formatDateFrClient(exactDate);
+      const isCustomDate = (exactDate !== "2026-11-15");
+      document.querySelectorAll(".js-dep-date-label").forEach(function(span) {
+        if (isCustomDate && dateFr) {
+          span.textContent = dateFr;
+        } else if (span.getAttribute("data-default-label")) {
+          span.textContent = span.getAttribute("data-default-label");
+        }
+      });
+
+      document.querySelectorAll('a[href*="trip.com"]').forEach(function(a) {
+        const href = a.getAttribute("href") || "";
+        if (href.indexOf("ddate=") !== -1) {
+          a.setAttribute("href", href.replace(/ddate=\d{4}-\d{2}-\d{2}/, "ddate=" + exactDate));
+        }
+      });
+
+      const yymmdd = exactDate.slice(2, 4) + exactDate.slice(5, 7) + exactDate.slice(8, 10);
+      document.querySelectorAll('a[href*="skyscanner"]').forEach(function(a) {
+        const href = a.getAttribute("href") || "";
+        a.setAttribute("href", href.replace(/\/\d{6}\//, "/" + yymmdd + "/"));
+      });
     }
 
     function matchesDeal(el) {
