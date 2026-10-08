@@ -15,7 +15,7 @@
   
   <div class="demo-banner">
     <span>💡</span>
-    <span><b>Mode Démo Actif</b> : Données et relevés simulés réalistes. Aucune clé API requise. Vous pouvez le désactiver dans les Réglages.</span>
+    <span data-i18n-html="demo_banner"><b>Mode Démo Actif</b> : Données et relevés simulés réalistes. Aucune clé API requise. Vous pouvez le désactiver dans les Réglages.</span>
   </div>
   
 
@@ -27,22 +27,27 @@
 
     <nav class="nav-links">
       <a href="/VolAlerte/" class="nav-link active">
-        <span>📊</span> Tableau de bord
+        <span>📊</span> <span data-i18n="nav_dashboard">Tableau de bord</span>
       </a>
       <a href="/VolAlerte/radar/" class="nav-link ">
-        <span>📡</span> Radar Bons Plans
+        <span>📡</span> <span data-i18n="nav_radar">Radar Bons Plans</span>
       </a>
       <a href="/VolAlerte/alerts/" class="nav-link ">
-        <span>🔔</span> Alertes
+        <span>🔔</span> <span data-i18n="nav_alerts">Alertes</span>
       </a>
       <a href="/VolAlerte/settings/" class="nav-link ">
-        <span>⚙️</span> Réglages
+        <span>⚙️</span> <span data-i18n="nav_settings">Réglages</span>
       </a>
     </nav>
 
-    <div class="nav-actions">
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+      <div class="lang-switcher" style="display: inline-flex; background: var(--bg-card-hover, rgba(30,41,59,0.8)); border: 1px solid var(--border); border-radius: 6px; padding: 0.12rem; gap: 0.15rem;">
+        <button type="button" class="btn btn-sm js-lang-btn" data-lang="fr" onclick="window.setVolAlerteLang('fr')" style="padding: 0.2rem 0.45rem; font-size: 0.74rem; font-weight: 700; border: none;">🇫🇷 FR</button>
+        <button type="button" class="btn btn-sm js-lang-btn" data-lang="en" onclick="window.setVolAlerteLang('en')" style="padding: 0.2rem 0.45rem; font-size: 0.74rem; font-weight: 700; border: none;">🇬🇧 EN</button>
+        <button type="button" class="btn btn-sm js-lang-btn" data-lang="zh" onclick="window.setVolAlerteLang('zh')" style="padding: 0.2rem 0.45rem; font-size: 0.74rem; font-weight: 700; border: none;">🇨🇳 中文</button>
+      </div>
       <button id="theme-toggle-btn" class="btn btn-secondary btn-sm" title="Changer le thème">☀️</button>
-      <button id="btn-run-now" class="btn btn-primary btn-sm">⚡ Vérifier maintenant</button>
+      <button id="btn-run-now" class="btn btn-primary btn-sm" data-i18n="btn_run_now">⚡ Vérifier maintenant</button>
     </div>
   </header>
 
@@ -333,7 +338,7 @@
   <div id="toast-container"></div>
 
   <footer>
-    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
+    <p data-i18n="footer_text">VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
   </footer>
 
   <script src="/VolAlerte/static/js/app.js"></script>

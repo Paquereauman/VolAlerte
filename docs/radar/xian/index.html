@@ -15,7 +15,7 @@
   
   <div class="demo-banner">
     <span>💡</span>
-    <span><b>Mode Démo Actif</b> : Données et relevés simulés réalistes. Aucune clé API requise. Vous pouvez le désactiver dans les Réglages.</span>
+    <span data-i18n-html="demo_banner"><b>Mode Démo Actif</b> : Données et relevés simulés réalistes. Aucune clé API requise. Vous pouvez le désactiver dans les Réglages.</span>
   </div>
   
 
@@ -27,22 +27,27 @@
 
     <nav class="nav-links">
       <a href="/VolAlerte/" class="nav-link ">
-        <span>📊</span> Tableau de bord
+        <span>📊</span> <span data-i18n="nav_dashboard">Tableau de bord</span>
       </a>
       <a href="/VolAlerte/radar/" class="nav-link active">
-        <span>📡</span> Radar Bons Plans
+        <span>📡</span> <span data-i18n="nav_radar">Radar Bons Plans</span>
       </a>
       <a href="/VolAlerte/alerts/" class="nav-link ">
-        <span>🔔</span> Alertes
+        <span>🔔</span> <span data-i18n="nav_alerts">Alertes</span>
       </a>
       <a href="/VolAlerte/settings/" class="nav-link ">
-        <span>⚙️</span> Réglages
+        <span>⚙️</span> <span data-i18n="nav_settings">Réglages</span>
       </a>
     </nav>
 
-    <div class="nav-actions">
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+      <div class="lang-switcher" style="display: inline-flex; background: var(--bg-card-hover, rgba(30,41,59,0.8)); border: 1px solid var(--border); border-radius: 6px; padding: 0.12rem; gap: 0.15rem;">
+        <button type="button" class="btn btn-sm js-lang-btn" data-lang="fr" onclick="window.setVolAlerteLang('fr')" style="padding: 0.2rem 0.45rem; font-size: 0.74rem; font-weight: 700; border: none;">🇫🇷 FR</button>
+        <button type="button" class="btn btn-sm js-lang-btn" data-lang="en" onclick="window.setVolAlerteLang('en')" style="padding: 0.2rem 0.45rem; font-size: 0.74rem; font-weight: 700; border: none;">🇬🇧 EN</button>
+        <button type="button" class="btn btn-sm js-lang-btn" data-lang="zh" onclick="window.setVolAlerteLang('zh')" style="padding: 0.2rem 0.45rem; font-size: 0.74rem; font-weight: 700; border: none;">🇨🇳 中文</button>
+      </div>
       <button id="theme-toggle-btn" class="btn btn-secondary btn-sm" title="Changer le thème">☀️</button>
-      <button id="btn-run-now" class="btn btn-primary btn-sm">⚡ Vérifier maintenant</button>
+      <button id="btn-run-now" class="btn btn-primary btn-sm" data-i18n="btn_run_now">⚡ Vérifier maintenant</button>
     </div>
   </header>
 
@@ -5457,27 +5462,37 @@
 
     var searchBtn = document.getElementById("btn-radar-search");
     if (searchBtn) {
-      var prevText = "🔍 Chercher";
-      searchBtn.innerHTML = "✅ Prix & vols mis à jour (" + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
+      var lang = window.getVolAlerteLang ? window.getVolAlerteLang() : "fr";
+      var prevText = lang === "zh" ? "🔍 搜索比价" : (lang === "en" ? "🔍 Search" : "🔍 Chercher");
+      var updPrefix = lang === "zh" ? "✅ 已更新 (" : (lang === "en" ? "✅ Updated (" : "✅ Prix & vols mis à jour (");
+      searchBtn.innerHTML = updPrefix + (exactDate ? formatDateFrClient(exactDate) : month) + ")";
       setTimeout(function() {
-        searchBtn.innerHTML = prevText;
+        var curLang = window.getVolAlerteLang ? window.getVolAlerteLang() : "fr";
+        searchBtn.innerHTML = curLang === "zh" ? "🔍 搜索比价" : (curLang === "en" ? "🔍 Search" : "🔍 Chercher");
       }, 1800);
     }
+  };
+
+  window.refreshRadarLanguage = function() {
+    var q = new URLSearchParams(window.location.search);
+    applyDomFilters(q);
   };
 
   function applyDomFilters(q) {
     var form = document.querySelector('form[action*="/radar"]');
     if (!form) return;
 
+    var lang = window.getVolAlerteLang ? window.getVolAlerteLang() : "fr";
     var origin = q.get("origin") || (form.querySelector('#origin') ? form.querySelector('#origin').value : "CGO");
-    var destPick = q.get("dest_pick") || "";
+    var destPick = q.get("dest_pick") || (form.querySelector('#dest_pick') ? form.querySelector('#dest_pick').value : "");
     var month = q.get("month") || (form.querySelector('#month') ? form.querySelector('#month').value : "2026-11");
     var exactDate = q.get("exact_date") || (form.querySelector('#exact_date') ? form.querySelector('#exact_date').value : (month + "-15"));
     var bagage = q.get("bagage") || (form.querySelector('#bagage') ? form.querySelector('#bagage').value : "cabine");
-    var maxDur = parseFloat(q.get("max_duration") || "0");
-    var maxStops = parseInt(q.get("max_stops") || "-1", 10);
+    var maxDur = parseFloat(q.get("max_duration") || (form.querySelector('#max_duration') ? form.querySelector('#max_duration').value : "0"));
+    var maxStops = parseInt(q.get("max_stops") || (form.querySelector('#max_stops') ? form.querySelector('#max_stops').value : "-1"), 10);
     var maxLay = parseFloat(q.get("max_layover") || "0");
-    var incNear = q.get("include_nearby") !== "0";
+    var nearChk = form.querySelector('input[name="include_nearby"]');
+    var incNear = q.has("include_nearby") ? (q.get("include_nearby") !== "0") : (nearChk ? nearChk.checked : true);
     var filterTag = q.get("filter") || "all";
 
     if (origin && form.querySelector('#origin')) form.querySelector('#origin').value = origin;
@@ -5487,11 +5502,16 @@
     if (bagage && form.querySelector('#bagage')) form.querySelector('#bagage').value = bagage;
     if (q.has("max_duration") && form.querySelector('#max_duration')) form.querySelector('#max_duration').value = q.get("max_duration");
     if (q.has("max_stops") && form.querySelector('#max_stops')) form.querySelector('#max_stops').value = q.get("max_stops");
-    if (q.has("include_nearby") && form.querySelector('input[name="include_nearby"]')) {
-      form.querySelector('input[name="include_nearby"]').checked = incNear;
+    if (q.has("include_nearby") && nearChk) {
+      nearChk.checked = incNear;
     }
 
-    var dateFr = formatDateFrClient(exactDate);
+    var dateFr = window.formatDateByLang ? window.formatDateByLang(exactDate, lang) : formatDateFrClient(exactDate);
+    var cieUnit = lang === "zh" ? "€ 官网价)" : (lang === "en" ? "€ Airline)" : "€ Cie)");
+    var directWord = lang === "zh" ? "直飞" : "Direct";
+    var localWord = lang === "zh" ? "(本地直发)" : (lang === "en" ? "(Local)" : "(Sur place)");
+    var totalTgvPrefix = lang === "zh" ? "机票 + 高铁总计：" : (lang === "en" ? "Flight + Train Total: " : "Total Vol + TGV : ");
+    var fromWord = lang === "zh" ? " — 低至 " : (lang === "en" ? " — from " : " — dès ");
 
     // 1. Mettre à jour chaque carte destination + son comparateur des 5 aéroports proches + ses liens
     var bestByDest = {};
@@ -5559,6 +5579,9 @@
           var lbl = cr.querySelector(".js-comp-label");
           var totTd = cr.querySelector(".js-comp-total");
           var rawLabel = cr.getAttribute("data-dept-label") || cr._calcDept;
+          if (window.translateCityText) {
+            rawLabel = window.translateCityText(rawLabel, lang);
+          }
           if (lbl) {
             lbl.textContent = (idx === 0 ? "🥇 " : "") + rawLabel;
             lbl.style.color = (idx === 0) ? "#10b981" : "var(--text-primary)";
@@ -5586,7 +5609,7 @@
       if (effEl) effEl.textContent = cardOta + " €";
       var dirSubEl = card.querySelector(".js-card-dir-sub");
       if (dirSubEl) {
-        dirSubEl.textContent = (cardOta < cardDir) ? ("OTA (" + cardDir + "€ Cie)") : "Direct";
+        dirSubEl.textContent = (cardOta < cardDir) ? ("OTA (" + cardDir + cieUnit) : directWord;
       }
       var cardGoogleBtn = card.querySelector(".js-card-google-btn");
       if (cardGoogleBtn) {
@@ -5645,15 +5668,15 @@
         if (effSpan) effSpan.textContent = info.ota + " €";
         var dirSpan = row.querySelector(".js-row-dir-label");
         if (dirSpan) {
-          dirSpan.textContent = (info.ota < info.dir) ? ("OTA (" + info.dir + "€ Cie)") : "Direct";
+          dirSpan.textContent = (info.ota < info.dir) ? ("OTA (" + info.dir + cieUnit) : directWord;
         }
         var tgvDiv = row.querySelector(".js-row-tgv-total");
         if (tgvDiv) {
-          tgvDiv.textContent = "Total Vol + TGV : " + info.totalTgv + " €";
+          tgvDiv.textContent = totalTgvPrefix + info.totalTgv + " €";
         }
         var deptBadge = row.querySelector(".js-row-dept-badge");
         if (deptBadge && info.dept) {
-          deptBadge.textContent = (info.dept === origin) ? ("🏠 " + info.dept + " (Sur place)") : ("🚅 " + info.dept);
+          deptBadge.textContent = (info.dept === origin) ? ("🏠 " + info.dept + " " + localWord) : ("🚅 " + info.dept);
           deptBadge.style.color = (info.dept === origin) ? "#10b981" : "#f59e0b";
         }
         var airSpan = row.querySelector(".js-row-airline");
@@ -5687,15 +5710,16 @@
       cards.forEach(function(c) { grid.appendChild(c); });
     }
 
-    // 3. Mettre à jour les prix dans le menu déroulant "🎯 Pick une Destination"
+    // 3. Mettre à jour les prix et noms de villes dans le menu déroulant "🎯 Pick une Destination"
     var destSelect = document.getElementById("dest_pick");
     if (destSelect) {
       Array.prototype.slice.call(destSelect.querySelectorAll("option[data-city]")).forEach(function(opt) {
         var code = opt.value;
         var info = bestByDest[code];
-        if (info) {
-          opt.textContent = (opt.getAttribute("data-flag") || "") + " " + (opt.getAttribute("data-city") || code) + " (" + code + ") — dès " + info.ota + " €";
-        }
+        var rawCity = opt.getAttribute("data-city") || code;
+        var cityName = window.translateCityText ? window.translateCityText(rawCity, lang) : rawCity;
+        var p = info ? info.ota : (opt.getAttribute("data-base-price") || "");
+        opt.textContent = (opt.getAttribute("data-flag") || "") + " " + cityName + " (" + code + ")" + fromWord + p + " €";
       });
     }
 
@@ -5788,7 +5812,7 @@
   <div id="toast-container"></div>
 
   <footer>
-    <p>VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
+    <p data-i18n="footer_text">VolAlerte • Suivi autonome de prix avec calcul réel bagages inclus • 100% local sur votre PC</p>
   </footer>
 
   <script src="/VolAlerte/static/js/app.js"></script>
