@@ -853,6 +853,78 @@ CATALOG_ASIA = [
                 "cabine_extra": 0.0, "soute_extra": 0.0
             }
         }
+    },
+    {
+        "dest_code": "CDG", "city": "Paris (Roissy CDG)", "country": "France", "flag": "🇫🇷", "region": "Europe",
+        "good_deal_max_eur": 395,
+        "ota_tip": "Depuis Zhengzhou (CGO), Hainan Airlines vole vers Paris CDG à ~361 € (bagage cabine + soute 23kg inclus). Via Xi'an (1h30 TGV) ou Shanghai PVG, les tarifs descendent dès 333–348 € !",
+        "departures": {
+            "CGO": {
+                "price": 361.0, "airline": "Hainan Airlines", "stops": 1,
+                "flight_duration_min": 1085, "max_layover_min": 180, "layover_details": "1 escale (Cabine + Soute 23kg inclus)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "XIY": {
+                "price": 348.0, "airline": "China Eastern / Hainan", "stops": 1,
+                "flight_duration_min": 990, "max_layover_min": 150, "layover_details": "1 escale courte",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "WUH": {
+                "price": 355.0, "airline": "China Southern", "stops": 1,
+                "flight_duration_min": 1020, "max_layover_min": 160, "layover_details": "1 escale à Canton / Pékin",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "PVG": {
+                "price": 333.0, "airline": "Gulf Air / China Eastern", "stops": 1,
+                "flight_duration_min": 1140, "max_layover_min": 175, "layover_details": "1 escale",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "PEK": {
+                "price": 391.0, "airline": "Air China / Etihad", "stops": 1,
+                "flight_duration_min": 1080, "max_layover_min": 140, "layover_details": "1 escale fluide",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin (2h15, ~38 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            }
+        }
+    },
+    {
+        "dest_code": "NTE", "city": "Nantes (NTE)", "country": "France", "flag": "🇫🇷", "region": "Europe",
+        "good_deal_max_eur": 440,
+        "ota_tip": "Astuce France : au lieu d'un billet unique hors de prix (800 €+), vole vers Paris CDG (361 € depuis CGO ou 348 € depuis Xi'an) puis prends le TGV direct CDG Terminal 2 ➔ Nantes (42 €, 3h15) = 403 € tout compris !",
+        "departures": {
+            "CGO": {
+                "price": 403.0, "airline": "Hainan (CDG) + TGV CDG 2 ➔ Nantes", "stops": 1,
+                "flight_duration_min": 1280, "max_layover_min": 180, "layover_details": "Vol CGO➔CDG (361€) + TGV direct T2➔Nantes (42€)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "XIY": {
+                "price": 390.0, "airline": "China Eastern (CDG) + TGV ➔ Nantes", "stops": 1,
+                "flight_duration_min": 1185, "max_layover_min": 150, "layover_details": "Vol XIY➔CDG (348€) + TGV direct T2➔Nantes (42€)",
+                "tgv_approach_min": 90, "tgv_name": "TGV Zhengzhou ➔ Xi'an (1h30, ~22 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "WUH": {
+                "price": 397.0, "airline": "China Southern (CDG) + TGV ➔ Nantes", "stops": 1,
+                "flight_duration_min": 1215, "max_layover_min": 160, "layover_details": "Vol WUH➔CDG (355€) + TGV direct T2➔Nantes (42€)",
+                "tgv_approach_min": 105, "tgv_name": "TGV Zhengzhou ➔ Wuhan (1h45, ~24 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "PVG": {
+                "price": 375.0, "airline": "Gulf Air / MU (CDG) + TGV ➔ Nantes", "stops": 1,
+                "flight_duration_min": 1335, "max_layover_min": 175, "layover_details": "Vol PVG➔CDG (333€) + TGV direct T2➔Nantes (42€)",
+                "tgv_approach_min": 240, "tgv_name": "TGV Zhengzhou ➔ Shanghai (4h00, ~55 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            },
+            "PEK": {
+                "price": 433.0, "airline": "Etihad / Air China (CDG) + TGV ➔ Nantes", "stops": 1,
+                "flight_duration_min": 1275, "max_layover_min": 140, "layover_details": "Vol PEK➔CDG (391€) + TGV direct T2➔Nantes (42€)",
+                "tgv_approach_min": 135, "tgv_name": "TGV Zhengzhou ➔ Pékin (2h15, ~38 €)",
+                "cabine_extra": 0.0, "soute_extra": 0.0
+            }
+        }
     }
 ]
 
@@ -1522,7 +1594,7 @@ def scan_radar_deals(
 
     deals.sort(key=lambda d: (d["effective_best_price"], d["display_price"]))
 
-    nantes_combos = build_nantes_return_combos(flight_date, bagage_mode=bagage_mode)
+    nantes_combos = []
 
     return {
         "origin_code": origin_code,

@@ -10,13 +10,8 @@
       📡 Radar Bons Plans &amp; Aéroports Proches <span style="color: #10b981;">EUR (€)</span>
     </h1>
     <p style="color: var(--text-secondary); font-size: 0.82rem; margin: 0.15rem 0 0 0;">
-      Choisis une destination pour voir quel aéroport proche de chez toi est le moins cher (Vol + TGV &amp; Prix Moyen)
+      Choisis une destination (Asie ou France : Paris / Nantes) pour voir quel aéroport proche de chez toi (Zhengzhou + TGV) est le moins cher
     </p>
-  </div>
-  <div style="display: flex; gap: 0.5rem; align-items: center;">
-    <a href="#retour-nantes" class="btn btn-secondary btn-sm" style="font-size: 0.78rem; padding: 0.35rem 0.65rem;">
-      🇫🇷 Retour Nantes
-    </a>
   </div>
 </div>
 
@@ -361,57 +356,6 @@
 
   </div>
   {% endfor %}
-</div>
-{% endif %}
-
-<!-- SECTION RETOUR À NANTES (NTE) ÉPURÉE -->
-{% if radar.nantes_combos %}
-<div id="retour-nantes" class="card" style="margin-top: 1.5rem; border-top: 3px solid #10b981; padding: 1rem 1.15rem;">
-  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem;">
-    <div>
-      <h2 style="font-size: 1.15rem; font-weight: 800; margin: 0;">
-        🇫🇷 Retour à Nantes (NTE) — Combinaisons Train + Vol + Chambre 2p
-      </h2>
-      <p style="color: var(--text-secondary); font-size: 0.78rem; margin: 0.1rem 0 0 0;">
-        Évite le billet unique hors de prix (800 €+) grâce aux hubs directs + TGV
-      </p>
-    </div>
-  </div>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0.75rem;">
-    {% for c in radar.nantes_combos %}
-    <div style="background: var(--bg-card-hover); border: 1px solid {% if loop.first %}#10b981{% else %}var(--border){% endif %}; border-radius: 8px; padding: 0.85rem;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.4rem;">
-        <div>
-          <span class="badge {% if loop.first %}badge-success{% else %}badge-info{% endif %}" style="font-size: 0.68rem;">{{ c.badge }}</span>
-          <div style="font-size: 0.95rem; font-weight: 800; margin-top: 0.25rem;">{{ c.title }}</div>
-        </div>
-        <div style="text-align: right; white-space: nowrap;">
-          <div style="font-size: 1.35rem; font-weight: 900; color: #10b981; line-height: 1;">{{ c.total_sans_hotel }} €</div>
-          <div style="font-size: 0.68rem; color: var(--text-muted);">sans hôtel / pers.</div>
-        </div>
-      </div>
-
-      <div style="font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 0.55rem; line-height: 1.4;">
-        <div>• {{ c.leg1_label }} (<b>{{ c.leg1_price }} €</b>)</div>
-        <div>• {{ c.leg2_label }} (<b>{{ c.leg2_price }} €</b>)</div>
-        <div style="color: #f59e0b;">• 🛏️ Chambre 2p ({{ c.hotel_city }}) : <b>{{ c.hotel_room_2p_eur }} €</b> (+{{ c.hotel_per_person_eur }} €/pers. • Total Duo : <b>{{ c.total_duo_avec_hotel }} €</b>)</div>
-      </div>
-
-      <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
-        <a href="{{ c.leg1_url }}" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; text-align: center; font-size: 0.74rem; padding: 0.3rem 0.45rem; background: #10b981; border-color: #10b981;">
-          Vol ({{ c.leg1_price }} €)
-        </a>
-        <a href="{{ c.leg2_url }}" target="_blank" class="btn btn-secondary btn-sm" style="flex: 1; text-align: center; font-size: 0.74rem; padding: 0.3rem 0.45rem;">
-          {{ c.leg2_btn_text }}
-        </a>
-        <a href="{{ c.hotel_booking_url }}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.74rem; padding: 0.3rem 0.45rem; color: #f59e0b;">
-          🏨 {{ c.hotel_room_2p_eur }} €
-        </a>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
 </div>
 {% endif %}
 
