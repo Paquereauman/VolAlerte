@@ -47,10 +47,25 @@ app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 templates = Jinja2Templates(directory=str(templates_dir))
 
 @app.on_event("startup")
-def on_startup():
+async def on_startup():
     init_db()
     if settings.DEMO_MODE:
         seed_demo_database()
+    # Vérification automatique tous les 2 jours (48h) si le dernier relevé date de plus de 48h
+    try:
+        last_run = get_last_run()
+        should_refresh = False
+        if not last_run or not last_run.get("date"):
+            should_refresh = True
+        else:
+            last_dt = datetime.datetime.fromisoformat(str(last_run["date"])[:19])
+            if (datetime.datetime.now() - last_dt).total_seconds() >= 48 * 3600:
+                should_refresh = True
+        if should_refresh:
+            import asyncio
+            asyncio.create_task(execute_daily_run())
+    except Exception:
+        pass
 
 def _extract_iata_code(text: str, default: str = "CGO") -> str:
     s = (text or "").upper()
